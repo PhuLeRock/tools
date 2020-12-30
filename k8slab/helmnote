@@ -1,0 +1,64 @@
+    1  kubectl get po
+    2  kubectl get node
+    3  kubectl get node -o wide
+    4  cd /vagrant/services/
+    5  ls
+    6  cat deploy_sample.sh 
+    7  sh deploy_sample.sh 
+    8  cd ..
+    9  ls
+   10  cd ingress/deployments/
+   11  ls
+   12  sh install.sh 
+   13  kubectl get ingf
+   14  kubectl get ing
+   15  vi install.sh 
+   16  kubectl get po 
+   17  kubectl get po -n nginx-ingress
+   18  kubectl get po -n nginx-ingress -o wide
+   19  cd ../../services/
+   20  ls
+   21  vi docker-compose.yaml 
+   22  sed 's,apply,delete' deploy_sample.sh > delete_sample.sh 
+   23  sed 's,apply,delete' deploy_sample.sh 
+   24  sed s,apply,delete deploy_sample.sh 
+   25  sed 's,apply,delete,g' deploy_sample.sh 
+   26  sed 's,apply,delete,g' deploy_sample.sh >> delete_sample.sh
+   27  cat de
+   28  cat delete_sample.sh 
+   29  sh delete_sample.sh 
+   30  cd ~/
+   31  vi linux
+   32  sed 's/unix/linux/3g' linux 
+   33  cat linux 
+   34  sed 's/unix/linux/3g' linux 
+   35  rm -rf linux 
+   36  kubectl get all
+   37  kubectl get po
+   38  kubectl get svc
+   39  kubectl get node -o wide
+   40  mv linux-amd64/helm /usr/local/bin/helm
+   41  helm version
+   42  helm repo add stable https://kubernetes-charts.storage.googleapis.com/
+   43  helm search wordpress
+   44  helm search stable/wordpress
+   45  helm search repo stable
+   46  helm 
+   47  helm repo update
+   48  helm ls
+   49  helm install --hel
+   50  helm install --help
+   51  helm install mariadb stable/mariadb
+   52  helm show value mariadb 
+   53  helm show values mariadb 
+   54  helm ls
+   55  helm show values stable/mariadb 
+   56  helm status mariadb
+   57  hlem
+   58  helm
+   59  wget https://get.helm.sh/helm-v3.3.4-linux-amd64.tar.gz
+   60  tar -vzxf helm-v3.3.4-linux-amd64.tar.gz 
+   61  mv linux-amd64/helm /usr/local/bin/helm
+   62  sudo bash
+   63  history 
+   64  history >> helmnote

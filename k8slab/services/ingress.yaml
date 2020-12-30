@@ -1,0 +1,35 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-wildcard-host
+spec:
+  defaultBackend:
+    service: 
+      name: mainsite
+      port:
+        number: 80
+  rules:
+  - host: "phulerock.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: mainsite
+            port:
+              number: 80
+      - pathType: Prefix
+        path: "/ServiceA"
+        backend:
+          service:
+            name: service-a
+            port:
+              number: 80
+      - pathType: Prefix
+        path: "/ServiceB"
+        backend:
+          service:
+            name: service-b
+            port:
+              number: 80

@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-b
+  labels:
+    app: service-b
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: service-b
+  template:
+    metadata:
+      labels:
+        app: service-b
+    spec:
+      containers:
+      - name: service-b
+        image: phulerock/services_web:1.0
+        ports:
+        - containerPort: 80
+        env:
+          - name: varservicename
+            value: ServiceB
