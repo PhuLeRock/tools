@@ -1,0 +1,92 @@
+
+make --prefix=/ssg/haproxy TARGET=custom CPU=native USE_PCRE=1 USE_LIBCRYPT=1 USE_LINUX_SPLICE=1 USE_LINUX_TPROXY=1
+
+native : use the build machine's specific processor optimizations. Use with
+    extreme care, and never in virtualized environments (known to break).
+    
+- linux2628   for Linux 2.6.28, 3.x, and above (enables splice and tproxy)
+
+If your system supports PCRE (Perl Compatible Regular Expressions), then you
+really should build with libpcre which is between 2 and 10 times faster than
+other libc implementations
+
+A Linux-specific feature is support for the splice() system call. This system call allows data to be moved between file descriptors within kernel space, not touching user space. It entirely depends on your setup if this feature will be of any use to you. As splicing can be disabled within the configuration file of HAProxy, I would recommend compiling HAProxy with support for splicing.
+
+###########
+make install
+install -d "/usr/local/sbin"
+install haproxy "/usr/local/sbin"
+install haproxy-systemd-wrapper "/usr/local/sbin"
+install -d "/usr/local/share/man"/man1
+install -m 644 doc/haproxy.1 "/usr/local/share/man"/man1
+install -d "/usr/local/doc/haproxy"
+for x in configuration architecture haproxy-en haproxy-fr; do \
+		install -m 644 doc/$x.txt "/usr/local/doc/haproxy" ; \
+#######
+useradd haproxy
+
+haproxy -f /ssg/haproxy/etc/haproxy.cfg -p /var/run/haproxy.pid
+
+
+note: 
+- hien tai compile thieu prefix, cfg chua co multidomain, script init chua ok
+- phai tao error file de chu dong chinh sua
+listen 0.0.0.0:8080
+    mode http
+    stats enable
+    stats uri /
+    stats realm Strictly\ Private
+    stats auth A_Username:YourPassword
+    stats auth Another_User:passwd
+
+#### ? ########
+hdr, hdr_end, hdr_dom la gi ?
+hdr([<name>[,<occ>]])     : exact string match
+  hdr_beg([<name>[,<occ>]]) : prefix match
+  hdr_dir([<name>[,<occ>]]) : subdir match
+  hdr_dom([<name>[,<occ>]]) : domain match
+  hdr_end([<name>[,<occ>]]) : suffix match
+  hdr_len([<name>[,<occ>]]) : length match
+  hdr_reg([<name>[,<occ>]]) : regex match
+  hdr_sub([<name>[,<occ>]]) : substring match
+acl <aclname> <criterion> [flags] [operator] [<value>] ...
+-i : ignore case during matching of all subsequent patterns.
+-f : load patterns from a file.
+-m : use a specific pattern matching method
+-n : forbid the DNS resolutions
+-M : load the file pointed by -f like a map file.
+-u : force the unique id of the ACL
+-- : force end of flags. Useful when a string looks like one of the flags.  
+  
+  
+  
+timeout client= The inactivity timeout applies when the client is expected to acknowledge or
+send data.
+
+timeout server=In HTTP mode, this timeout is particularly important to consider
+during the first phase of the server's response, when it has to send the
+headers, as it directly represents the server's processing time for the
+request. To find out what value to put there, it's often good to start with
+what would be considered as unacceptable response times, then check the logs
+to observe the response time distribution, and adjust the value accordingly.	
+
+timeout connect== This parameter is specific to backends, but can be specified once for all in
+"defaults" sections. This is in fact one of the easiest solutions not to
+forget about it. An unspecified timeout results in an infinite timeout, which
+is not recommended. Such a usage is accepted and works but reports a warning
+during startup because it may results in accumulation of failed sessions in
+the system if the system's timeouts are not configured either.
+
+
+########## TEST #####
+
+
+### DDOS 
+net.ipv4.tcp_syncookies = 1
+net.ipv4.conf.all.rp_filter = 1
+net.ipv4.tcp_max_syn_backlog = 1024 
+
+defaults
+  timeout http-request 5s << may be affective with chrome preload
+
+

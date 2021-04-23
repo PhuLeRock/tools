@@ -1,0 +1,25 @@
+# buy
+They give you two: CA.crt and certificate.crt
+openssl req -new -newkey rsa:2048 -nodes -keyout tms.harveynash.vn.key -out tms.harveynash.vn.csr
+- send .csr to the vendor, they will add this to there server.
+# self-sign
+openssl req -new -newkey rsa:2048 -nodes -keyout tms.harveynash.vn.key -out tms.harveynash.vn.csr
+- remove passpharse
+mv tms.harveynash.vn.key tms.harveynash.vn.org
+openssl rsa -in tms.harveynash.vn.org -out tms.harveynash.vn.key
+- gen .crt 
+openssl x509 -req -days 365 -in tms.harveynash.vn.scr -signkey tms.harveynash.vn.key -out tms.harveynash.vn.crt
+
+apache config:
+<VirtualHost *:443>
+        ServerName tms.harveynash.vn
+		SSLProtocol all -SSLv2
+		SSLCipherSuite ALL:!ADH:!EXPORT:!SSLv2:RC4+RSA:+HIGH:+MEDIUM:+LOW
+		SSLEngine on
+		SSLCertificateFile "/etc/httpd/conf/tmscert/tms.cer"
+		SSLCertificateKeyFile "/etc/httpd/conf/tmscert/tms.harveynash.vn.key"
+		
+nginx config:
+ssl on;
+        ssl_certificate      /ssg/nginx/conf/ca/568e.vn/ssl-bundle.crt;
+        ssl_certificate_key  /ssg/nginx/conf/ca/568e.vn/568e.vn.key;

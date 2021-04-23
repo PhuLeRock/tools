@@ -1,0 +1,173 @@
+# Global Directives
+checktimeout=10
+checkinterval=60
+autoreload=yes
+logfile="/var/log/ldirectord.log"
+fallback=10.30.8.253:8000
+#logfile="local0"
+quiescent=no
+#
+##NEW IP o day nhe
+#
+#Mainsite
+virtual=118.102.1.137:80
+	real=10.30.7.61:80 masq
+	real=10.30.7.62:80 masq
+	service=http
+	request="__checking.html"
+        scheduler=wlc
+	netmask=255.255.255.192
+        persistent=900
+        protocol=tcp
+#Forum
+virtual=118.102.1.169:80
+    real=10.30.7.17:80 masq 5
+    real=10.30.7.18:80 masq 5
+    real=10.30.7.19:80 masq 5
+    service=http
+    request="__checking.html"
+    scheduler=wlc
+    protocol=tcp
+    checktype=negotiate
+    persistent=900
+#Forum-ssl
+virtual=118.102.1.169:443
+    real=10.30.7.17:443 masq 5
+    real=10.30.7.18:443 masq 5
+    real=10.30.7.19:443 masq 5
+    service=https
+    request="__checking.html"
+    scheduler=wlc
+    protocol=tcp
+    checktype=negotiate
+    persistent=900
+#Promotion
+virtual=118.102.1.153:80
+    real=10.30.7.102:80 masq
+    real=10.30.7.107:80 masq
+    service=http
+    checktype=ping
+    scheduler=wlc
+    protocol=tcp
+    persistent=900
+
+virtual=118.102.1.153:443
+    real=10.30.7.102:443 masq
+    real=10.30.7.107:443 masq
+    service=https
+    request="__checking.html"
+    scheduler=wlc
+    protocol=tcp
+    checktype=negotiate
+    persistent=900
+
+#Promotion Code(tangpham.zing.vn)
+
+virtual=118.102.1.156:80
+    real=10.30.7.106:80 masq
+    real=10.30.7.111:80 masq
+    service=http
+    checktype=ping
+    scheduler=wlc
+    protocol=tcp
+    persistent=900
+virtual=118.102.1.156:443
+    real=10.30.7.106:443 masq
+    real=10.30.7.111:443 masq
+    service=https
+    request="__checking.html"
+    scheduler=wlc
+    protocol=tcp
+    checktype=negotiate
+    persistent=900
+
+# DichVu Zing
+virtual=118.102.1.157:80
+    real=10.30.7.112:80 masq
+    real=10.30.7.113:80 masq
+    service=http
+    checktype=ping
+    scheduler=wlc
+    protocol=tcp
+    persistent=900
+virtual=118.102.1.157:443
+    real=10.30.7.112:443 masq
+    real=10.30.7.113:443 masq
+    service=https
+    request="__checking.html"
+    scheduler=wlc
+    protocol=tcp
+    checktype=negotiate
+    persistent=900
+
+
+#Support
+virtual=118.102.1.145:443
+       real=10.30.7.97:443 masq
+#       real=10.30.7.98:443 masq       
+       service=https
+       checktype=negotiate
+       request="_checking.html"
+       scheduler=wlc
+       netmask=255.255.255.192
+       persistent=900
+       protocol=tcp
+virtual=118.102.1.145:80
+       real=10.30.7.97:80 masq
+       service=http
+       checktype=ping
+       scheduler=wlc
+       netmask=255.255.255.192
+       persistent=900
+       protocol=tcp
+virtual=118.102.1.146:443
+       real=10.30.7.97:443 masq
+       service=https
+       checktype=negotiate
+       request="_checking.html"
+#       checktype=ping
+       scheduler=wlc
+       netmask=255.255.255.192
+       persistent=900
+       protocol=tcp
+virtual=118.102.1.146:80
+       real=10.30.7.97:80 masq
+       service=http
+       checktype=ping
+       scheduler=wlc
+       netmask=255.255.255.192
+       persistent=900
+       protocol=tcp
+#Haylentieng.vn
+virtual=118.102.1.154:80
+#        real=10.30.7.103:80 masq
+	real=10.30.7.108:80 masq
+        service=http
+        request="_checking.html"
+        scheduler=wlc
+        persistent=900
+        protocol=tcp
+
+#Image Direct routing
+#IMG
+virtual=118.102.1.164:80
+       real=118.102.1.161:80 gate 10
+       real=118.102.1.162:80 gate 10
+       real=118.102.1.163:80 gate 10
+       service=http
+       request="index.html"
+       scheduler=wlc
+       netmask=255.255.255.192
+       persistent=900
+       protocol=tcp
+#IMGS
+virtual=118.102.1.164:443
+    real=118.102.1.161:443 gate 10
+    real=118.102.1.162:443 gate 10
+    real=118.102.1.163:443 gate 10
+    service=https
+    request="index.html"
+    scheduler=wlc
+    protocol=tcp
+    checktype=negotiate
+    persistent=900

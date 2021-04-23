@@ -1,0 +1,7 @@
+nginx in vhost
+client_max_body_size 100m;
+
+php.ini [PHP]
+file_uploads = On
+upload_max_filesize = 50M
+max_file_uploads = 20

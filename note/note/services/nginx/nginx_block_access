@@ -1,0 +1,11 @@
+ location ~ ^/(wp-admin|wp-login\.php) {
+                allow 1.2.3.4;
+                deny all;
+  }
+ 
+ 
+  location ~ ^/blog/(wp-admin|wp-login\.php) {
+                allow 1.2.3.4;
+                deny all;
+  }
+ 

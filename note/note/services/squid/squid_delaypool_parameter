@@ -1,0 +1,5 @@
+delay_parameters 2 5000/150000 5000/120000
+
+2 = có nghĩa là pool 2
+5000/150000 = phần đầu tiên này dành cho cả một lớp mạng, sau khi download file đến ngưỡng 150000 byte, thì bị bóp lại tốc độ còn 5000 byte / s
+5000/120000 = phần thứ 2 dành cho từng IP trong lớp mạng này, sau khi đạt 120000 byte, thì bóp lại còn 5000 byte / s

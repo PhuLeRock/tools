@@ -1,0 +1,86 @@
+
+OS: centos 5.2 32bit
+apache php mysql php-mysql pma
+rm -rf /etc/httpd/*
+yum install  yum install httpd mysql-server php php-gd php-pdo php-cli php-mysql libjpeg
+
+[root@yumrepo src]# yum -y install glib
+
+wget http://www.balabit.com/downloads/files/syslog-ng/sources/stable/src/syslog-ng-2.0.9.tar.gz
+wget http://www.balabit.com/downloads/files/syslog-ng/sources/stable/src/eventlog-0.2.7.tar.gz
+################################################################################
+cd eventlog*; ./configure; make; make install 
+#Some environmental variables also need to be set prior to the installation of the syslog-ng files.
+PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/; export PKG_CONFIG_PATH
+cd ../syslog-ng*; make clean; ./configure --sysconfdir=/etc; make; make install
+/etc/init.d/syslog stop
+chkconfig syslog off
+rpm -e --nodeps sysklogd
+
+cd syslog-ng*/contrib/rhel-packaging
+
+cp syslog-ng.logrotate /etc/logrotate.d/syslog-ng
+cp syslog-ng.conf /etc/
+cp syslog-ng.init /etc/init.d/syslog-ng
+
+vi /etc/init.d/syslog-ng 
+chmod 755 /etc/init.d/syslog-ng
+#edit /etc/init.d/syslog-ng 
+binary="/sbin/syslog-ng"
+to 
+binary="/usr/local/sbin/syslog-ng" # losscation specify when "updatedb && locate syslog-ng | grep bin"
+
+chkconfig syslog off
+chkconfig syslog-ng on
+
+###############################  MYSQL   #####################################
+mysql -u root
+
+CREATE DATABASE syslog;
+mkfifo /var/log/mysql.pipe
+############################ php-syslog-ng ##############################################
+wget http://php-syslog-ng.googlecode.com/files/php-syslog-ng-2.9.8f.tgz
+tar -vzxf php-syslog-ng-2.9.8f.tgz
+mv php-syslog-ng psn
+chmod -R 755 psn
+cp psn /var/www/html/
+
+chmod -R 777 /var/www/html/psn/html/config
+chmod -R 666 /var/www/html/psn/html/jpcache
+
+http://172.16.140.131/psn/html/install/
+
+program("/usr/bin/mysql --user=syslogadmin --password=qwe123 syslog < /var/log/mysql.pipe");
+pipe("/var/log/mysql.pipe"
+template("INSERT INTO logs
+(host, facility, priority, level, tag, datetime, program, msg)
+VALUES ( '$HOST', '$FACILITY', '$PRIORITY', '$LEVEL', '$TAG', '$YEAR-$MONTH-$DAY $HOUR:$MIN:$SEC',
+'$PROGRAM', '$MSG' );\n") template-escape(yes));
+
+
+
+
+######################################## CLIENT         #################################
+#The files to which syslog writes each type of message received is set in the /etc/rsyslog.conf configuration file. In older versions of Fedora this file was named /etc/#syslog.conf. 
+#/etc/hosts
+ip_logserver		hostname_logserver
+
+
+####################################### windows #######################################
+download https://engineering.purdue.edu/ECN/Resources/Documents/UNIX/evtsys/evtsys_exe_32.zip
+giải nén copy 2 file vào C:\WINDOWS\system32\
+vào command line chạy
+evthost -i -h ip_server
+#change parameters
+    net stop evtsys
+    evtsys -u
+    evtsys -i -h newhostname
+    net start evtsys
+
+
+
+
+
+
+
+

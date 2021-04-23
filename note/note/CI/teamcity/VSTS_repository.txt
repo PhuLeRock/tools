@@ -1,0 +1,14 @@
+
+1. login vao https://sqa-consulting-global.visualstudio.com/Professions%20Insure/
+dung account cần login
+vao profile -> nhan vao security -> enable "Alternate authentication credentials"
+
+2. teamcity:
+VCS root name: dat ten gi do 
+URL: https://{account}.visualstudio.com/DefaultCollection/
+vd: https://sqa-consulting-global.visualstudio.com/DefaultCollection/
+ROOT: $/path.
+vd: $/Professions Insure
+
+dungtruong85@gmail.com
+Dct@12345

@@ -1,0 +1,18 @@
+# all about redirection stdout stderr
+1 = stdout
+2 = stderr
+>>file.txt: Open file.txt in append mode and redirect stdout there.
+2>&1: Redirect stderr to "where stdout is currently going". In this case, that is a file opened in append mode. In other words, the &1 reuses the file descriptor which stdout currently uses.
+
+## stderr
+This will cause the stderr ouput of a program to be written to a file.
+grep da * 2> grep-errors.txt
+
+This will cause the stderr ouput of a program to be written to the same filedescriptor than stdout. 
+grep da * 1>&2
+Here, the stdout portion of the command is sent to stderr, you may notice that in differen ways.
+## reff
+http://tldp.org/HOWTO/Bash-Prog-Intro-HOWTO-3.html
+            
+
+

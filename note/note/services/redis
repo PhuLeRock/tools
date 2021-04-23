@@ -1,0 +1,27 @@
+when install
+root@block ~]# grep overcom  /etc/sysctl.conf
+vm.overcommit_memory = 1
+
+
+tar -vzxf redis-2.4.2.tar.gz
+cd redis-2.4.2
+make
+
+
+[root@nginx01 redis-2.4.2]# make test
+cd src && make test
+make[1]: Entering directory `/root/src/redis-2.4.2/src'
+which: no tclsh8.5 in (/usr/kerberos/sbin:/usr/kerberos/bin:/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin:/root/bin)
+You need 'tclsh8.5' in order to run the Redis test
+make[1]: *** [test] Error 1
+make[1]: Leaving directory `/root/src/redis-2.4.2/src'
+make: *** [test] Error 2
+
+
+-> yum install tcl, if your linux so old, upgrade it to tcl8.5, in centos 5.5 tcl only 8.4
+
+
+then run it
+/build/redis-2.4.2/src/redis-server /build/redis-2.4.2/src/redis.conf &
+
+

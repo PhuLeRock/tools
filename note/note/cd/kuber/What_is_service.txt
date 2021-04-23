@@ -1,0 +1,23 @@
+## loại service có selector, dùng làm service cho các pod trong cluster
+## loại service không có selector, thì gọi là service - endpoint, là loại service tạo ra chỉ có target port, trỏ về 1 endpoint, định nghĩa endpoint là một IP bên ngoài cluster. Trường hợp này áp dụng cho các legacy system khi mà service bên trong cluster muốn gọi các service bên ngoài.
+## servicetypes: option này nằm trong [spec:], có các loại sau: ClusterIP, NodePort, Loadbalancer, ExternalName.  
+Servicetypes định nghĩa service này expose IP ra ngoài như thế nào, default thì nó tạo ra clusterIP có giá trị chỉ trong kube cluster mà thôi. Default service cũng tạo ra nodeport, tức là bất kì node nào cũng có staticIP:port cho service đó, gọi vào node nào cũng được.
+
+Loadbalancer: là dùng IP của cloud provider, như expose service ra ngoài LB của AWS chẳng hạn. NodePort và ClusterIP cũng được tự động tạo ra luôn. Default thì pods sẽ không thấy client IP bên ngoài, mà chỉ thấy IP của LB, nên phải thêm trong spec của service option này "externalTrafficPolicy: Local"
+
+ExternalName: map service name với 1 cái domain name khác, nghĩa là redirect domain, gọi trúng service này thì nó redirect domain đến nơi khác.
+
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: my-service
+spec:
+  selector:
+    app: MyApp
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 9376
+
+Giả sử có 1 nhóm pods mang label app: MyApp, các pods này chạy port 9376. Tạo ra 1 service với port 80, sau đó forward vào port 9376 của pods này.

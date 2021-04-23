@@ -1,0 +1,36 @@
+matchLabels: selector này định nghĩa làm sao deployment quản lí pods nào, chỉ mối quan hệ giữa deployment, statefulset ... đến các pod template mà thôi. matchLabels là loại selector chỉ dùng trong nội dung của các deployment, statefulset v.v. Ví dụ như bên dưới, là deployment sẽ quản lí các pods có template labels là [run: my-nginx]
+
+selector: trong phần service có mục selector: run: my-nginx, nghĩa là đây là loadbalaner của tất cả các pods có labels: run: my-nginx.
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-nginx
+spec:
+  selector:
+    matchLabels:
+      run: my-nginx   ## AA
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        run: my-nginx ## cái này phải giống cái AA
+    spec:
+      containers:
+      - name: my-nginx
+        image: nginx
+        ports:
+        - containerPort: 80
+###
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-nginx
+  labels:
+    run: my-nginx
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    run: my-nginx

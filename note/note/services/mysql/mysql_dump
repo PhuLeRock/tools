@@ -1,0 +1,3 @@
+/usr/bin/mysqldump --user=root --password=yourrootsqlpassword --lock-all-tables \
+      --all-databases > /home/sqlbackup/backup-${datum}.sql
+

@@ -1,0 +1,23 @@
+# basically 
+script hist.log
+"exit" if you want to exit.
+
+script -a hist.log # to append the existing logfile
+
+script -c 'hostname' script.log # log a result of "hostname" command and exit.
+script -c 'hostname' -q script.log # log a result of "hostname" command and exit with quiet mode
+
+# cool
+script --timing=time.txt hist.log
+scriptreply --timing=time.txt hist.log # to replay these things.
+
+
+# /etc/profile
+DATE=`date +%d-%m-%y.%H:%M:%S`
+USERL=root
+touch /report/shell_log/$USERL.$DATE
+FILE_LOGGING=/report/shell_log/$USERL.$DATE
+script -q -a -f $FILE_LOGGING
+
+
+

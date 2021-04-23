@@ -1,0 +1,6 @@
+alias dockerpsa="docker ps -a"
+alias dockerimgages="docker images"
+alias dockerrm="docker rm"
+alias dockerrmf="docker rm -f"
+alias dockerrmi="docker rmi"
+

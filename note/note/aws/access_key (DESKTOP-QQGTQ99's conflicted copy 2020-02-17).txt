@@ -1,0 +1,10 @@
+access key : IAM > User > choose User > User summany > chi xuat hien secret 1 lan duy nhat khi tao ID
+acc: phu.letravinh@nashtechglobal
+ID: AKIAIEQPIV5PZI5ROY6Q
+secret: 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
+
+register command: "aws configure" / "aws configure ls" 
+
+#note: 
+region code here: https://docs.aws.amazon.com/general/latest/gr/rande.html
+detail how to register aws cli: https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-getting-started.html

@@ -1,0 +1,26 @@
+./configure --with-apxs2=/usr/sbin/apxs --with-config-file-path=/usr/local/apache/conf --disable-cgi  --enable-memory-limit --enable-discard-path --disable-debug --disable-rpath  --disable-ipv6 --disable-safe-mode --with-libxml-dir=/usr --with-openssl --with-zlib --enable-calendar --with-mysql  --with-gd --with-jpeg-dir=/usr --with-png-dir=/usr --with-zlib-dir=/usr --with-freetype-dir=/usr --enable-shared --enable-ftp --enable-magic-quotes  --with-mysqli --without-sqlite --disable-bcmath --enable-mbstring --enable-pdo --with-pdo-mysql --enable-sockets --with-pear --enable-soap --with-freetype-dir=/usr --with-ttf --enable-gd-native-ttf --with-pdo-mssql --with-mssql --with-pdo-dblib --enable-shmop  --enable-sysvmsg --enable-sysvsem  --enable-sysvshm 
+
+
+cp php.ini-recommended /usr/local/apache/conf/php.ini (or cp the old php.ini of previous version)
+
+httpd.conf:
+    #
+    # This next section will call PHP for .php, .phtml, and .phps files
+    #
+    AddType application/x-httpd-php .php
+    AddType application/x-httpd-php .phtml
+    AddType application/x-httpd-php-source .phps
+
+    #
+    # This is the directory containing php.ini
+    #
+    PHPIniDir "/usr/local/apache/conf"
+
+    #If a LoadModule line was not already inserted by the PHP install, add it too:
+
+    LoadModule php5_module modules/libphp5.so
+
+TROUBLESHOTTING:
+configure: error: utf8_mime2text() has new signature, but U8T_CANONICAL is missing. This should not happen. Check config.log for additional information.
+yum install libc-client-devel 
+

@@ -1,0 +1,22 @@
+function mail_content {
+        echo "Subject: Mysql ERROR on BACKUP SLAVE Database (103.224.170.34)" > $MAIL_FILE
+        echo "From: slavedb_3325_170.34@BKreplicate.ssg" >> $MAIL_FILE
+        echo "Hi guys!" >> $MAIL_FILE
+        echo "I found problem with mysqld service (on slave site), base on mysql log file." >> $MAIL_FILE
+        echo "Error detail:" >> $MAIL_FILE
+        echo "-------- error --------" >> $MAIL_FILE
+        cat $MYSQL_ERROR_CONTENT >> $MAIL_FILE
+        echo "" >> $MAIL_FILE
+        echo "-------- error --------" >> $MAIL_FILE
+        echo "I recommend that you should check your service now!" >> $MAIL_FILE
+        echo "Thanks," >> $MAIL_FILE
+        echo "." >> $MAIL_FILE
+}
+
+#--< INTRO >--
+# This function sends email for list of users in $RECEIVERS above
+#
+function send_warning_mail {
+        /usr/sbin/sendmail "$RECEIVERS" < $MAIL_FILE
+}
+

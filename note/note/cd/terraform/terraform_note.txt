@@ -1,0 +1,12 @@
+terraform note:
+what is terraform:
+
+4 thành phần chính : provider, input variables, resources, output variables, thực tế nhiều hơn
+
+
+- A resource describes a single infrastructure object
+- A group of resources can be gathered into a module, which creates a larger unit of configuration. 
+- A module might describe a set of objects and the necessary relationships between them in order to create a higher-level system.
+
+A Terraform configuration consists of a root module, where evaluation begins, along with a tree of child modules created when one module calls another.
+

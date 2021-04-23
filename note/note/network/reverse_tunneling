@@ -1,0 +1,12 @@
+http://linux.byexamples.com/archives/238/ssh-reverse-tunneling/
+1) Computer A (can’t open ports)
+2) Computer B (can open ports)
+
+Computer A:
+- useradd: mickeymouse password: duck
+- ssh -R 14443:localhost:22 mickeymouse@remote_wan_ip_B
+
+Computer B:
+- useradd: mickeymouse password: duck
+- Router, I have public port and private port, I need to open 14443 (public) and 22 (private) ?
+- ssh remote_wan_ip_B@localhost -p 14443

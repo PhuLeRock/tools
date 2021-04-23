@@ -1,0 +1,27 @@
+﻿SET !TIMEOUT_PAGE 300
+SET !DATASOURCE D:\youtube\ano\3.csv
+SET !DATASOURCE_COLUMNS 2
+SET !DATASOURCE_LINE {{!LOOP}}
+TAB T=1
+URL GOTO=https://accounts.google.com/ServiceLogin?hl=vi_VN&passive=true&service=youtube&continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26feature%3Dsign_in_button%26hl%3Dvi_VN%26next%3D%252F%26nomobiletemp%3D1&uilel=3
+TAG POS=1 TYPE=INPUT:EMAIL FORM=ACTION:https://accounts.google.com/ServiceLoginAuth ATTR=ID:Email CONTENT={{!COL1}}
+SET !ENCRYPTION NO
+TAG POS=1 TYPE=INPUT:PASSWORD FORM=ACTION:https://accounts.google.com/ServiceLoginAuth ATTR=ID:Passwd CONTENT={{!COL2}}
+TAG POS=1 TYPE=INPUT:SUBMIT FORM=ID:gaia_loginform ATTR=ID:signIn
+TAB T=2
+REFRESH
+TAG POS=1 TYPE=BUTTON ATTR=TXT:Đăng<SP>ký<SP>Đã<SP>đăng<SP>ký<SP>Hủy<SP>đăng<SP>ký
+TAB T=3
+REFRESH
+TAG POS=1 TYPE=BUTTON ATTR=TXT:Đăng<SP>ký<SP>Đã<SP>đăng<SP>ký<SP>Hủy<SP>đăng<SP>ký
+TAB T=4
+REFRESH
+TAG POS=1 TYPE=BUTTON ATTR=TXT:Đăng<SP>ký<SP>Đã<SP>đăng<SP>ký<SP>Hủy<SP>đăng<SP>ký
+TAB T=5
+REFRESH
+TAG POS=1 TYPE=BUTTON ATTR=TXT:Đăng<SP>ký<SP>Đã<SP>đăng<SP>ký<SP>Hủy<SP>đăng<SP>ký
+TAB T=1
+TAG POS=1 TYPE=SPAN ATTR=ID:yt-masthead-user-displayname
+TAG POS=1 TYPE=A ATTR=TXT:Đăng<SP>xuất
+WAIT SECONDS=1
+CLEAR

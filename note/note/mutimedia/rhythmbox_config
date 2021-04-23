@@ -1,0 +1,4 @@
+
+
+audio/x-raw-int,rate=44100,channels=2 ! lame name=enc mode=0 vbr-quality=6 ! id3v2mux
+audio/x-raw-int,rate=44100,channels=2 ! lame name=enc mode=0 vbr=0 bitrate=320! id3v2mux

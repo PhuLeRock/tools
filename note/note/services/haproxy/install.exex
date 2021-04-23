@@ -1,0 +1,65 @@
+# for CentOS 6.x
+prefix=/ssg/haproxy
+initdir=/ssg/init.d
+configfile=$prefix/etc/haproxy.cfg
+pidfile=/var/run/haproxy.pid
+binaryfile=$prefix/sbin/haproxy
+initfile=$initdir/haproxyd
+urldownload=http://www.haproxy.org/download/1.5/src/haproxy-1.5.10.tar.gz
+
+download() {
+wget $urldownload
+tar -zxf $(basename $urldownload)
+cd $(basename $urldownload .tar.gz)
+hapath=$PWD
+echo $hapath
+echo download_done
+}
+
+install_depend() {
+yum -y install pcre	
+echo install_depend done
+}
+
+install() {
+cd $hapath
+mkdir -p {$prefix/etc,$prefix/errors,$initdir}
+make TARGET=custom CPU=native USE_PCRE=1 USE_LIBCRYPT=1 USE_LINUX_SPLICE=1 USE_LINUX_TPROXY=1
+make install DESTDIR=$prefix PREFIX=''
+useradd haproxy
+echo install_done
+}
+	
+config() {
+echo config step
+echo cd $hapath
+cd ../	
+echo cp errors/* $prefix/errors/
+cp errors/* $prefix/errors/
+
+echo cp haproxy.cfg $prefix/etc/
+cp haproxy.cfg $prefix/etc/
+
+echo cp haproxyd $initdir
+cp haproxyd $initdir
+
+touch $pidfile
+chmod 755 $initfile
+sed -i s,config=,config=$configfile,  $initfile
+sed -i s,pidfile=,pidfile=$pidfile, $initfile
+sed -i s,binary=,binary=$binaryfile, $initfile
+echo config_done
+}
+
+rm -rf /source/haproxy/haproxy-1.5.10.tar.gz
+rm -rf /source/haproxy/haproxy-1.5.10
+rm -rf /ssg/haproxy
+rm -rf /ssg/init.d/haproxyd
+
+download
+sleep 5
+install_depend
+sleep 5
+install
+sleep 5
+config

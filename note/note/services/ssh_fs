@@ -1,0 +1,30 @@
+yum install kernel-xen-devel 
+
+wget http://voxel.dl.sourceforge.net/sourceforge/fuse/fuse-2.7.3.tar.gz
+wget http://voxel.dl.sourceforge.net/sourceforge/fuse/sshfs-fuse-2.0.tar.gz
+tar -xzf fuse-2.7.3.tar.gz
+cd fuse-2.
+cd fuse-2.7.3
+
+./configure
+make  && make install
+modprobe fuse
+chkconfig fuse on
+chkconfig fuse on
+echo /usr/local/lib > /etc/ld.so.conf.d/fuse.conf
+ldconfig
+yum install glib2-devel
+tar -vzxf sshfs-fuse-2.0.tar.gz
+make && make install
+
+
+
+
+
+
+
+sshfs -o ro -o compression=yes -o reconnect root@210.245.120.152:/root/phulerock /mnt/152_test/
+
+fusermount -u /mnt/152_test/
+
+

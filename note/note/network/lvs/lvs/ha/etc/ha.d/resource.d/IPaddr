@@ -1,0 +1,135 @@
+#!/bin/sh
+#
+# $Id: IPaddr.in,v 1.19 2006/06/10 17:33:30 alan Exp $
+#
+# Description:	wrapper of OCF RA IPaddr, based on original heartbeat RA.
+#		See OCF RA IPaddr for more information.
+#
+# Author:	Xun Sun <xunsun@cn.ibm.com> 
+# License:      GNU General Public License (GPL)
+# Support:      linux-ha@lists.linux-ha.org
+# Copyright:	(C) 2005 International Business Machines
+#
+#	This script manages IP alias IP addresses
+#
+#	It can add an IP alias, or remove one.
+#
+#	usage: $0 <ip-address> {start|stop|status|monitor}
+#
+#	The "start" arg adds an IP alias.
+#
+#	Surprisingly, the "stop" arg removes one.	:-)
+#
+
+unset LC_ALL; export LC_ALL # Make ifconfig work in France for David Jules :-)
+unset LANGUAGE; export LANGUAGE # Make ifconfig work in France for Fabrice :-)
+#	make ifconfig work in Austria for Gregor Göstl
+#	I have no idea why the previous fix didn't fix it for him.
+LC_MESSAGES=C
+export LC_MESSAGES
+
+. /etc/ha.d/resource.d//hto-mapfuncs
+
+USAGE="usage: $0 <ip-address> {start|stop|status|monitor}";
+
+usage() {
+  echo $USAGE >&2
+  echo "$Id: IPaddr.in,v 1.19 2006/06/10 17:33:30 alan Exp $"
+}
+
+#
+#	Add or remove IP alias for the given IP address...
+#
+
+case $# in
+  1)
+    case $1 in
+      info)	cat <<-!INFO
+	Abstract=IP address takeover
+	Argument=IP address OR IP address/broadcast address OR IP address/broadcast address/netmaskbits
+	Description:
+	An IPaddr resource is an IP address which is to be taken over by \\
+	the owning node.  An argument is required, and is of this form:
+	    nnn.nnn.nnn.nnn/bbb.bbb.bbb.bbb
+	Where nnn.nnn.nnn.nnn is the IP address to be taken over, and\\
+	bbb.bbb.bbb.bbb is the broadcast address to be used with this address.
+
+	Since IPaddr is the "default" resource type, it is not necessary\\
+	to prefix the IP address by "IPaddr::".
+	This allows IPaddr::192.2.4.63 to be abbreviated as 192.2.4.63.
+	!INFO
+	exit 0;;
+    esac;;
+  2)	;;
+  *)	usage
+	exit 1;;
+esac
+
+# We need to split the argument into pieces that IPaddr OCF RA can
+# recognize, sed is prefered over Bash specific builtin functions 
+# for portability.
+
+BASEIP=`echo $1 | sed 's%/.*%%'`
+str=`echo $1 | sed 's%^'$BASEIP'/*%%'`
+
+if [ ! -z "$str" ]; then
+  NETMASK=`echo $str | sed 's%/.*%%'`
+  str=`echo $str | sed 's%^'$NETMASK'/*%%'`
+
+  NIC=`echo $str | sed 's%/.*%%'`
+  case $NIC in
+	[0-9]*)	BROADCAST=$NIC
+		NIC=
+		;;
+	"")	;;
+	*)	BROADCAST=`echo $str | sed -e 's%^'$NIC'/*%%' -e 's%/.*%%'`
+		;;
+  esac
+fi
+#
+# Determine if this IP address is really being served, or not.
+# Note that we don't distinguish if *we're* serving it locally...
+#
+ip_monitor() {
+  	TIMEOUT=1 # seconds
+	SYSTYPE="`uname -s`"
+  	case $SYSTYPE in
+ 	 	Linux)
+	  	# -c count -t timetolive -q(uiet) -n(umeric) -W timeout
+		PINGARGS="-c 1 -q -n $BASEIP"
+		;;
+		SunOS)
+		PINGARGS="$BASEIP $TIMEOUT"
+		;;
+		*)
+		PINGARGS="-c 1 -q $BASEIP"
+		;;
+	esac
+	for j in 1 2 3
+	do
+	  # for R1 style clusters, CTS runs this on the test monitor node
+	  # so we cannot check to see if the IP address is served locally
+	  # This means that the ARP spoofing is also tested
+	  # But we can't tell for sure which node is serving the IP
+	  if
+	    /bin/ping $PINGARGS >/dev/null 2>&1
+	  then
+	    exit 0
+	  fi
+	done
+	
+	exit 1
+}
+
+case $2 in
+  start|stop|status)
+	;;
+  monitor)	
+	ip_monitor
+	;;
+  *)	usage
+ 	exit 1
+	;;
+esac
+
+ra_execocf  "rsc_id=IPaddr_$BASEIP" "rsc_type=IPaddr" "provider=heartbeat" $2 "ip=$BASEIP" "broadcast=$BROADCAST" "nic=$NIC" "cidr_netmask=$NETMASK"

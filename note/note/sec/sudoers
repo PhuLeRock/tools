@@ -1,0 +1,4 @@
+root    ALL=(ALL)       ALL
+khoanhd ALL=(ALL)      NOPASSWD: ALL
+phultv ALL=(root) /bin/netstat -anpt, iptables -nL
+

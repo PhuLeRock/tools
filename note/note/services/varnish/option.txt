@@ -1,0 +1,13 @@
+#varnish options:
+
+Varnish has a feature called "grace mode" that, when enabled, instructs Varnish to serve a cached copy of requested pages if your web server backend goes down and becomes unavailable. Let's enable that now. Find the following sub vcl_backend_response block, and add the following highlighted lines to it:
+
+sub vcl_backend_response {
+    ...
+    set beresp.ttl = 10s;
+    set beresp.grace = 1h; # will continue serve cached for up to an hour if it can't reach the web server.
+    ...
+}
+
+
+

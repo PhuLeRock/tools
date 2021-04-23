@@ -1,0 +1,43 @@
+# Vagrant file for setting a k3s with k9s pre-installed
+#
+# PROVISIONED SCRIPTING
+# how to use: first of all, wrap k3s kubectl by: alias k="k3s kubectl"
+# then use command k equivalent kubectl, as normal hah.
+# 
+$installk3s = <<SCRIPT
+echo "Installing k3s"
+wget -qO /usr/local/bin/k3s https://github.com/rancher/k3s/releases/download/v0.2.0/k3s && chmod +x /usr/local/bin/k3s
+K3S_CLUSTER_SECRET=thisisverysecret k3s server >/dev/null 2>&1 &
+echo  "alias k=k3s kubectl" >> ~/.bashrc
+echo "Using k for kubectl (k is an alias of 'k3s kubectl')"
+echo "Token for connecting more node is thisisverysecret"
+SCRIPT
+
+$installk9s = <<SCRIPT
+echo "Installing k9s"
+wget -q https://github.com/derailed/k9s/releases/download/0.3.0/k9s_0.3.0_Linux_x86_64.tar.gz -O /tmp/k9s.tar.gz && tar -xvzf /tmp/k9s.tar.gz -C /usr/local/bin/ && chmod +x /usr/local/bin/k9s
+mkdir -p /home/vagrant/.kube
+cp /var/lib/rancher/k3s/agent/kubeconfig.yaml /home/vagrant/.kube/config
+chown -R vagrant:vagrant /home/vagrant/.kube/
+SCRIPT
+
+
+###
+##
+#
+# PROVISIONED VM CONFIGURATION
+
+Vagrant.configure("2") do |config|
+        config.vm.define "k3s" do |pc|
+			pc.vm.box = "ubuntu/bionic64"
+			pc.vm.network "private_network", ip: "1.1.1.110"
+			pc.vm.hostname = "k3s"
+			pc.vm.provider "virtualbox" do |vb|
+				vb.memory = "4000"
+				vb.cpus = "2"
+			end
+			pc.vm.provision "shell", inline: $installk3s
+			pc.vm.provision "shell", inline: $installk9s
+		end
+end
+

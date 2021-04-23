@@ -1,0 +1,15 @@
+ln -sf /usr/share/zoneinfo/Asia/Ho_Chi_Minh /etc/localtime
+
+#/etc/default/ntpdate
+NTPDATE_USE_NTP_CONF=yes
+
+vi /etc/ntp.conf
+server 118.102.5.136
+
+# /etc/cron.daily/ntpdate
+ntpdate 118.102.5.136
+
+chmod 777 /etc/cron.daily/ntpdate
+
+
+

@@ -1,0 +1,47 @@
+########################################################### Document  ###########################################################
+# choose less secure first
+http://www.google.com/settings/security/lesssecureapps
+
+#send from cli
+https://www.maketecheasier.com/send-email-from-command-line-linux/
+http://www.howtogeek.com/51819/how-to-setup-email-alerts-on-linux-using-gmail/
+
+# another mail relay
+https://linuxconfig.org/configuring-gmail-as-sendmail-email-relay
+# 3 way
+https://www.maketecheasier.com/send-email-from-command-line-linux/
+
+########################################################### Config  ###########################################################
+/etc/ssmtp/ssmtp.conf
+AuthUser=lephoto123@gmail.com
+AuthPass=qweasdzxc
+#FromLineOverride=YES # this will send the hostname instead of root[root@hostname.FQDN] from the cc, you will see
+mailhub=smtp.gmail.com:587
+UseTLS=Yes
+UseSTARTTLS=YES
+TLS_CA_File=/etc/pki/tls/certs/ca-bundle.crt
+
+In order to make the default (root) “from” field be the server name, edit the /etc/ssmtp/revaliases file:
+/etc/ssmtp/revaliases
+AppAlert:lephoto123@gmail.com:smtp.gmail.com:587
+
+
+#send mail cli
+ssmtp [receivers-email-address]
+Subject: [subject-line-here]
+[Body of email]
+send the email by pressing “Ctrl + D.”
+
+#send mail script style:
+echo "From: me@xyz.com
+To: himanshuz.chd@gmail.com
+Subject: Test HTML e-mail
+This is a test email."| sendmail -t
+
+# telnet
+telnet localhost smtp
+ehlo gmail.com
+mail from: [senders-email-address]
+rcpt to: [receivers-email-address]
+data
+>> send the email by newline with pressing “.”

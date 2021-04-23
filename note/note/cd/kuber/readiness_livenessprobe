@@ -1,0 +1,6 @@
+readiness: is it ready to serve connection, in case you don't restart it, but you also don't want it serve connections.
+livenessprobe: it is on.
+--- exec: command: command to check it 
+--- httpGet: path, port: url to check it
+--- failureThreshold: 30 periodSeconds: 10 = every 30s check each 10s = 300s
+--- startupProbe: check when startup  

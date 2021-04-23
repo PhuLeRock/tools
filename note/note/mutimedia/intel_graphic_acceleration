@@ -1,0 +1,15 @@
+sudo apt-get install i965-va-driver
+
+ 1423  sudo add-apt-repository ppa:nilarimogard/webupd8
+ 1424  sudo apt-get update
+ 1425  sudo apt-get install libvdpau-va-gl1
+ 1426  sudo mkdir -p /etc/adobe
+ 1427  echo "EnableLinuxHWVideoDecode=1" | sudo tee /etc/adobe/mms.cfg
+ 1428  echo "OverrideGPUValidation=1" | sudo tee -a /etc/adobe/mms.cfg
+
+init 6
+check 
+ sudo apt-get install vdpauinfo
+ 1465  VDPAU_DRIVER=va_gl vdpauinfo
+
+VDPAU_DRIVER=va_gl chromium-browser

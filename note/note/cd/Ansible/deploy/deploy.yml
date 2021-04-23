@@ -1,0 +1,32 @@
+---
+- hosts: webservers
+  vars:
+    datetime: "20160912_203302" # YYYMMDD_hhmmss, the "_" sign can't recognize without string quote
+    srcdir: /root/project/ansible_centos6/sourcecode/ # sourcecode location
+    releasedir: /root/project/ansible_centos6/code/releases
+    currentlink: /root/project/ansible_centos6/code/current
+    chown: www-data # in this case, www-data is permission of httpd
+    chmod: 0755
+  tasks:
+  - name: Create base dir if it doesn't exist
+    file: path={{ releasedir }} state=directory
+#  - name: copy source to releases folder # just in remote hosts locally
+#    shell: cp -r {{ srcdir }} {{ releasedir }}/{{ datetime }}
+#  - name: Deploy code files to remote hosts # just for small amount file
+#    copy: src={{ srcdir }} dest={{ releasedir }}/{{ datetime }}
+  - name: rsync source code # module synchronize doesn't work, so use this command
+    sudo: no
+    local_action: >
+      command
+      rsync
+      --delay-updates -FF --compress --timeout=10 --delete-after
+      --archive --no-owner --no-group
+      --rsh 'ssh -i /home/devops/sshkeys/10.128.240.133_id_rsa'
+      --rsync-path 'sudo rsync'
+      --out-format='<<CHANGED>>%i %n%L'
+      {{ srcdir }}/
+      root@webserver:{{ releasedir }}/{{ datetime }}
+  - name: Grant permission www-data
+    file: path={{ releasedir }}/{{ datetime }} owner={{ chown }} group={{ chown }} mode={{ chmod }} state=directory
+  - name: Create symlink 
+    file: src={{ releasedir }}/{{ datetime }} dest={{ currentlink }} state=link # can't not use ./code, need absolute path

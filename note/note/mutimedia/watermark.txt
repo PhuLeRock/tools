@@ -1,0 +1,9 @@
+
+
+
+composite -dissolve 50% -gravity center -quality 100 Watermark.png Tux.jpg Tuxwm.jpg
+#50% smaller watermark 
+composite -dissolve 50% -gravity center -quality 100 \( Watermark.png -resize 50% \) Tux.jpg Tuxwm.jpg
+
+# -dissolve: transparent level
+# -gravity: NorthWest, North, NorthEast, West, Center, East, SouthWest, South, SouthEast. (SouthEast: duoi phai, NorthWest: tren trai)

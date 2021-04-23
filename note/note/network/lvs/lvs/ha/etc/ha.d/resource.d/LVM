@@ -1,0 +1,78 @@
+#!/bin/sh
+#
+# $Id: LVM.in,v 1.7 2006/03/29 13:56:30 xunsun Exp $
+# 
+# Description:	wrapper of OCF RA LVM, based on original heartbeat RA.
+#		See OCF RA LVM for more information.
+#
+# Author:	Xun Sun <xunsun@cn.ibm.com>
+# Support:	linux-ha@lists.linux-ha.org
+# License:	GNU Lesser General Public License (LGPL)
+# Copyright:	(C) 2005 International Business Machines, Inc.
+#
+#
+# An example usage in /etc/ha.d/haresources: 
+#       node1  10.0.0.170 ServeRAID::1::1 LVM::myvolname
+#
+# See usage() function below for more details...
+#
+
+. /etc/ha.d/resource.d//hto-mapfuncs
+
+unset LC_ALL; export LC_ALL
+unset LANGUAGE; export LANGUAGE
+
+usage() {
+  methods=`LVM_methods | grep -v methods`
+  methods=`echo $methods | tr ' ' '|'`
+  cat <<-! >&1
+	usage: $0 <LVM-configuration file> {$methods}
+	usage: $0 methods
+
+	$0 manages an Linux Volume Manager (LVM) volume as an HA resource
+
+	The 'start' operation brings the given volume online
+	The 'stop' operation takes the given volume offline
+	The 'status' operation reports whether the volume is available
+	The 'monitor' operation reports whether the volume seems present
+	The 'methods' operation reports on the methods $0 supports
+
+	$Id: LVM.in,v 1.7 2006/03/29 13:56:30 xunsun Exp $
+	!
+  exit 1
+}
+
+#
+# methods: What methods/operations do we support?
+#
+LVM_methods() {
+  cat <<-!
+	start
+	stop
+	status
+	monitor
+	methods
+	!
+}
+
+#
+#	'main' starts here...
+#
+
+case $# in
+  1)	if [ "methods" = "$1" ]; then
+		LVM_methods
+		exit $?
+	fi;;
+  2)	;;
+  *)	usage;;
+esac
+# What kind of method was invoked?
+case "$2" in
+  start|stop|status|monitor)	;;
+  methods)	LVM_methods
+		exit $?;;
+  *)		usage
+esac
+
+ra_execocf  "rsc_id=LVM_$1" "rsc_type=LVM" "provider=heartbeat" $2 "volgrpname=$1"

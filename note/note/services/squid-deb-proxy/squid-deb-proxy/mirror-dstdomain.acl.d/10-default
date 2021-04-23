@@ -1,0 +1,15 @@
+# /etc/squid-deb-proxy/mirror-dstdomain.acl.d/10-default
+# 
+# network destinations that are allowed by this cache
+
+# launchpad personal package archives (disabled by default)
+#ppa.launchpad.net
+#private-ppa.launchpad.net
+
+# add additional mirror domains here (disabled by default)
+#linux.dropbox.com
+#download.virtualbox.org
+#archive.getdeb.net
+#packages.medibuntu.org
+#dl.google.com
+#repo.steampowered.com

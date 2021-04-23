@@ -1,0 +1,18 @@
+# install helm
+# https://docs.helm.sh/using_helm/#installing-helm
+sudo curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get | bash
+
+# then run
+helm init
+
+# test by issue command 'helm list', if the errro show 
+# Error: release my-hdfs-namenode failed: namespaces 
+# "default" is forbidden: User "system:serviceaccount:kube-system:default"  cannot 
+# get namespaces in the namespace "default"
+# fix this with: https://github.com/helm/helm/issues/3130
+
+kubectl create serviceaccount --namespace kube-system tiller
+
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+
+kubectl patch deploy --namespace kube-system tiller-deploy -p '{"spec":{"template":{"spec":{"serviceAccount":"tiller"}}}}' 

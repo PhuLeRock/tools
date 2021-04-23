@@ -1,0 +1,1 @@
+bin/httperf --num-conns=200 --uri=http://gearman-monitor.game6.vn/benchmark.php --server=gearman-monitor.game6.vn --rate=200

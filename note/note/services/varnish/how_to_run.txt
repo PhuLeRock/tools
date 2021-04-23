@@ -1,0 +1,6 @@
+#how_to
+varnishd -a :80 -P /tmp/varnish.pid -f /etc/varnish/varnish_default_vcl.vcl -S /etc/varnish/secret
+
+kill `cat /tmp/varnish.pid`
+
+

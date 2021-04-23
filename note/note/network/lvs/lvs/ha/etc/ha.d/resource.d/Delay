@@ -1,0 +1,43 @@
+#!/bin/sh
+#
+#	$Id: Delay.in,v 1.5 2006/04/02 14:35:29 xunsun Exp $
+#
+# License:      GNU General Public License (GPL)
+# Support:      linux-ha@lists.linux-ha.org
+#
+#	This script is a test resource for introducing delay.
+#
+#	usage: $0  {start|stop|status|monitor}
+#	usage: $0  delay {start|stop|status|monitor}
+#	usage: $0  startdelay stopdelay {start|stop|status|monitor}
+#
+#	This is really a test resource script.
+#
+
+usage() {
+  cat <<-!
+	usage: $0 [delay [stopdelay]] {start|stop|status|monitor}";
+  	$Id: Delay.in,v 1.5 2006/04/02 14:35:29 xunsun Exp $
+	!
+  exit 1
+}
+
+. /etc/ha.d/resource.d//hto-mapfuncs
+
+startdelay=
+stopdelay=
+
+case $# in
+  1)	op=$1;;
+  2)	startdelay=$1; op=$2;;
+  3)	startdelay=$1; stopdelay=$2; op=$3;;
+  *)	usage;;
+esac
+
+case $op in
+  start|stop|status|monitor)
+  	;;
+  *)	
+  	usage;;
+esac
+ra_execocf  "rsc_id=Delay" "rsc_type=Delay" "provider=heartbeat" $op "startdelay=$startdelay" "stopdelay=$stopdelay"

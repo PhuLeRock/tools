@@ -1,0 +1,264 @@
+# Mo ta
+ssh: root@10.199.6.10
+ssh: root@10.199.6.11
+IP: 10.199.6.10     LVS1
+IP: 10.199.6.11     LVS2
+
+cd /root/LVS_Centos5/i386/
+
+modprobe ip_vs_dh ;\
+modprobe ip_vs_ftp ;\
+modprobe ip_vs ;\
+modprobe ip_vs_lblc ;\
+modprobe ip_vs_lblcr ;\
+modprobe ip_vs_lc ;\
+modprobe ip_vs_nq ;\
+modprobe ip_vs_rr ;\
+modprobe ip_vs_sed ;\
+modprobe ip_vs_sh ;\
+modprobe ip_vs_wlc ;\
+modprobe ip_vs_wrr ;\
+
+echo 'ip_vs_dh
+ip_vs_ftp
+ip_vs
+ip_vs_lblc
+ip_vs_lblcr
+ip_vs_lc
+ip_vs_nq
+ip_vs_rr
+ip_vs_sed
+ip_vs_sh
+ip_vs_wlc
+ip_vs_wrr' > /etc/modules
+
+rpm -Uvh heartbeat-pils-2.1.2-2.el5.centos.i386.rpm ;\
+rpm -Uvh OpenIPMI-libs-2.0.6-5.el5.3.i386.rpm ;\
+rpm -Uvh net-snmp-libs-5.3.1-14.el5.i386.rpm
+rpm -Uvh libtool-ltdl-1.5.22-6.1.i386.rpm ;\
+rpm -Uvh openhpi-2.4.1-6.el5.1.i386.rpm ;\
+rpm -Uvh heartbeat-stonith-2.1.2-2.el5.centos.i386.rpm ;\
+rpm -Uvh lm_sensors-2.10.0-3.1.i386.rpm ;\
+rpm -Uvh heartbeat-2.1.2-2.el5.centos.i386.rpm ;\
+rpm -Uvh ipvsadm-1.24-8.1.i386.rpm ;\
+rpm -Uvh perl-Compress-Zlib-1.42-1.fc6.i386.rpm ;\
+rpm -Uvh perl-HTML-Tagset-3.10-2.1.1.noarch.rpm ;\
+rpm -Uvh perl-HTML-Parser-3.55-1.fc6.i386.rpm ;\
+rpm -Uvh perl-libwww-perl-5.805-1.1.1.noarch.rpm ;\
+rpm -Uvh perl-TimeDate-1.16-1.el5.centos.noarch.rpm ;\
+rpm -Uvh perl-MailTools-1.77-1.el5.centos.noarch.rpm ;\
+rpm -Uvh perl-Data-HexDump-0.02-1.el5.centos.noarch.rpm ;\
+rpm -Uvh perl-Authen-Radius-0.13-1.el5.centos.noarch.rpm ;\
+rpm -Uvh perl-Crypt-SSLeay-0.51-11.el5.i386.rpm ;\
+rpm -Uvh perl-Convert-ASN1-0.20-1.1.noarch.rpm ;\
+rpm -Uvh perl-Net-SSLeay-1.30-4.fc6.i386.rpm ;\
+rpm -Uvh perl-IO-Socket-SSL-1.01-1.fc6.noarch.rpm ;\
+rpm -Uvh perl-XML-NamespaceSupport-1.09-1.2.1.noarch.rpm ;\
+rpm -Uvh perl-XML-SAX-0.14-5.noarch.rpm ;\
+rpm -Uvh perl-LDAP-0.33-3.fc6.noarch.rpm ;\
+rpm -Uvh perl-Digest-SHA1-2.11-1.2.1.i386.rpm ;\
+rpm -Uvh perl-Digest-HMAC-1.01-15.noarch.rpm ;\
+rpm -Uvh perl-Net-IP-1.25-2.fc6.noarch.rpm ;\
+rpm -Uvh perl-Net-DNS-0.59-1.fc6.i386.rpm ;\
+rpm -Uvh perl-Net-IMAP-Simple-1.17-1.el5.centos.noarch.rpm ;\
+rpm -Uvh perl-Net-IMAP-Simple-SSL-1.3-1.el5.centos.noarch.rpm ;\
+rpm -Uvh perl-Mail-POP3Client-2.17-1.el5.centos.noarch.rpm ;\
+rpm -Uvh heartbeat-ldirectord-2.1.2-2.el5.centos.i386.rpm
+
+cd /usr/lib/heartbeat
+
+#Check Packages :D
+rpm -q heartbeat -d
+
+[root@Centos5 ha.d]# cat README.config
+You need three configuration files to make heartbeat happy,
+and they all go in this directory.
+
+They are:
+        ha.cf           Main configuration file
+        haresources     Resource configuration file
+        authkeys        Authentication information
+		
+
+##LVS1##
+
+# vi /etc/sysctl.conf
+
+# Enables packet forwarding
+net.ipv4.ip_forward = 1
+
+$ sysctl -p
+
+# vi /etc/hosts
+10.199.6.10     LVS1
+10.199.6.11     LVS2
+
+#Configure heartbeat
+
+$ vi /etc/ha.d/ha.cf
+
+echo 'logfacility        local0
+bcast        eth0
+mcast eth0 225.0.0.1 694 1 0
+auto_failback off
+node        LVS1
+node        LVS2
+respawn hacluster /usr/lib/heartbeat/ipfail
+apiauth ipfail gid=haclient uid=hacluster' > /etc/ha.d/ha.cf
+
+
+$ vi /etc/ha.d/haresources
+
+echo 'LVS1 \
+        ldirectord::ldirectord.cf \
+        LVSSyncDaemonSwap::master \
+        IPaddr2::10.199.6.14/24/eth0/10.199.6.255' > /etc/ha.d/haresources
+
+$ vi /etc/ha.d/authkeys
+
+echo 'auth 3
+3 md5 chinhlaroot' > /etc/ha.d/authkeys
+
+$ chmod 600 /etc/ha.d/authkeys
+
+Configure ldirectord
+
+$ vi /etc/ha.d/ldirectord.cf
+
+echo '# Global Directives
+checktimeout=10
+checkinterval=2
+autoreload=no
+logfile="local0"
+quiescent=yes
+
+virtual = 10.199.6.14:80
+        service = http
+        real = 10.199.6.12:80 gate
+#        real = 10.199.6.13:80 gate
+        service = http
+        request = "ldirector.html"
+        receive = "ToanBQB"
+        scheduler = rr
+        protocol = tcp
+        checktype = negotiate' > /etc/ha.d/ldirectord.cf
+
+chkconfig heartbeat on ;\
+chkconfig ldirectord off ;\
+chmod 755 /etc/init.d/heartbeat
+		
+##LVS2##
+
+#Configure heartbeat
+
+$ vi /etc/ha.d/ha.cf
+
+echo 'logfacility        local0
+bcast        eth0
+mcast eth0 225.0.0.1 694 1 0
+auto_failback off
+node        LVS1
+node        LVS2
+respawn hacluster /usr/lib/heartbeat/ipfail
+apiauth ipfail gid=haclient uid=hacluster' > /etc/ha.d/ha.cf
+
+$ vi /etc/ha.d/haresources
+
+echo 'LVS2 \
+        ldirectord::ldirectord.cf \
+        LVSSyncDaemonSwap::master \
+        IPaddr2::10.199.6.14/24/eth0/10.199.6.255' > /etc/ha.d/haresources
+
+$ vi /etc/ha.d/authkeys
+
+echo 'auth 3
+3 md5 chinhlaroot' > /etc/ha.d/authkeys
+
+$ chmod 600 /etc/ha.d/authkeys
+
+Configure ldirectord
+
+$ vi /etc/ha.d/ldirectord.cf
+
+echo '# Global Directives
+checktimeout=10
+checkinterval=2
+autoreload=no
+logfile="local0"
+quiescent=yes
+
+virtual = 10.199.6.14:80
+        service = http
+        real = 10.199.6.12:80 gate
+#        real = 10.199.6.13:80 gate
+        service = http
+        request = "ldirector.html"
+        receive = "ToanBQB"
+        scheduler = rr
+        protocol = tcp
+        checktype = negotiate' > /etc/ha.d/ldirectord.cf
+
+chkconfig heartbeat on ;\
+chkconfig ldirectord off ;\
+chmod 755 /etc/init.d/heartbeat
+
+
+#Create file ldirector.html tren server.
+
+echo 'ToanBQB' > ldirector.html
+
+### Config tren nhung con node ###
+
+$ vi /etc/sysctl.conf
+# When an arp request is received on eth0, only respond if that address is
+# configured on eth0. In particular, do not respond if the address is
+# configured on lo
+net.ipv4.conf.eth0.arp_ignore = 1
+
+# Ditto for eth1, add for all ARPing interfaces
+#net.ipv4.conf.eth1.arp_ignore = 1
+
+
+# Enable configuration of arp_announce option
+net.ipv4.conf.all.arp_announce = 2
+
+# When making an ARP request sent through eth0 Always use an address that
+# is configured on eth0 as the source address of the ARP request.  If this
+# is not set, and packets are being sent out eth0 for an address that is on
+# lo, and an arp request is required, then the address on lo will be used.
+# As the source IP address of arp requests is entered into the ARP cache on
+# the destination, it has the effect of announcing this address.  This is
+# not desirable in this case as adresses on lo on the real-servers should
+# be announced only by the linux-director.
+net.ipv4.conf.eth0.arp_announce = 2
+
+# Ditto for eth1, add for all ARPing interfaces
+#net.ipv4.conf.eth1.arp_announce = 2
+
+$ sysctl -p
+
+Cài trên 2 web server nh?ng gói sau:
+
+rpm -Uvh arptables_jf-0.0.8-2.i386.rpm ;\
+rpm -Uvh arptables-noarp-addr-0.99.2-1.rh.el.um.1.noarch.rpm
+
+$ arptables-noarp-addr 10.199.6.14 start
+
+/etc/init.d/arptables_jf save ;\
+chkconfig --level 2345 arptables_jf on ;\
+/etc/init.d/arptables_jf start 
+
+T?o file /etc/sysconfig/network-scripts/ifcfg-lo:0
+
+$ vi /etc/sysconfig/network-scripts/ifcfg-lo:0
+
+echo 'DEVICE=lo:0
+IPADDR=10.199.6.22
+NETMASK=255.255.255.255
+NETWORK=10.199.6.0
+BROADCAST=10.199.6.255
+ONBOOT=yes
+NAME=loopback' > /etc/sysconfig/network-scripts/ifcfg-lo:0 ;\
+ifup lo:0
+
+

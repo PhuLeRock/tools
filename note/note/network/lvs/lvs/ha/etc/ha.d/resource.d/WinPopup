@@ -1,0 +1,61 @@
+#!/bin/sh
+#
+# Resource script for sending WinPopups using smbclient
+# derived from Alan Robertson's MailTo script
+#
+# Author: Sandro Poppi <spoppi@gmx.de>
+#
+# License:      GNU General Public License (GPL)
+# Support:      linux-ha@lists.linux-ha.org
+#
+# Description: sends WinPopups to a sysadmin's workstation
+#	       whenever a takeover occurs.
+#
+#	Note: This command requires an argument, unlike normal init scripts.
+#
+#	This can be given in the haresources file as:
+#
+#		WinPopup::hosts
+#
+#	where "hosts" is a file containing the IPs/Workstation names
+#	one by line to be sent WinPopups
+#
+
+# Source function library.
+. /etc/ha.d/resource.d//hto-mapfuncs
+
+usage() {
+  echo "Usage: $0 [workstationfile] {start|stop|status}"
+  echo "$Id: WinPopup.in,v 1.3 2006/03/29 15:48:55 xunsun Exp $"
+  exit 1
+}
+
+# max. 2 parameters allowed
+if [ $# -gt 2 ] ; then
+  echo "Additional parameters found: $# but only 2 are allowed!"
+  usage
+fi
+
+# See how we were called.
+if [ $# -eq 2 ] ; then
+  # optional parameter found
+  cmd=$2
+  hostfile=$1
+else
+  cmd=$1
+  hostfile="hosts"
+fi
+
+case "$cmd" in
+  start|stop)
+	;;
+	#	Not quite sure what to do with this one...
+  status)
+	echo "status not implemented yet"
+	exit 0
+	;;
+  *)
+        usage
+esac
+
+ra_execocf  "rsc_id=WinPopup" "rsc_type=WinPopup" "provider=heartbeat" $cmd "hostfile=$hostfile"

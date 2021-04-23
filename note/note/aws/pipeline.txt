@@ -1,0 +1,13 @@
+ECR -> ECS
+  - khi dùng pipeline chạy source là ecr, deploy stage là ecs thì gặp 2 lỗi:
+    - thiếu role, role phải có AmazonEC2ContainerRegistryFullAccess (có thể để trongcf  ManagedPolicyArns:)
+    - codedeploy ko đọc đúng format của imagedetail.json, lí do là ecr output ra file đó nhưng mà 
+      file json đó ko đúng format của kiểu ecs deploy. cách làm là thêm codebuild printf ra
+      https://medium.com/@pvinchon/aws-continuous-deployment-4e236eefcaae
+Pipeline architecture:
+  - source thì định nghĩa được nhiều loại, output artifact thật ra là 1 folder trong s3 bucket,
+    cái bucket này mình định nghĩa khi tao pipeline source.
+  - cái stage build của nó có định nghĩa input và output artifact thật ra cũng là fodler trên bucket đó
+  - cái stage deploy cũng đi tìm các folder output artifact đề lấy thông tin deploy tiếp, tóm lại 
+    thì cái s3 chính là nơi để input output các stage nói chuyện với nhau
+  - role là ghê nhất, thiếu tùm lùm, hay nhất là tạo role lúc tạo pipie, sau đó export nó ra rồi add thêm role vào cho đủ  

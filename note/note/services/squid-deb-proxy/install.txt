@@ -1,0 +1,16 @@
+
+######server
+apt-get install -y squid-deb-proxy vim
+
+
+
+
+##### clients
+clients.sh
+echo '
+Acquire { 
+Retries "0"; 
+HTTP { Proxy "http://0.0.0.0:8000"; };
+ }; 
+'>> /etc/apt/apt.conf
+ 

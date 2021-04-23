@@ -1,0 +1,11 @@
+mkdir /sda3/svn
+svn checkout http://10.199.6.203/svn/Security --username=phultv
+
+ svn add bug_of_pipefile.jpg
+
+svn commit
+svn delete bug_of_pipefile.jpg
+svn commit
+svn log -v | less
+
+

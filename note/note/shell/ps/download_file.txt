@@ -1,0 +1,4 @@
+http://superuser.com/questions/25538/how-to-download-files-from-command-line-in-windows-like-wget-is-doing
+Invoke-WebRequest -OutFile index.html http://superuser.com
+
+bitsadmin

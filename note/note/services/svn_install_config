@@ -1,0 +1,41 @@
+Ta có thư mục gốc là 
+/var/www/svn
+và các thư mục con được tạo bằng lệnh svnadmin là:
+
+[root@localhost svn]# tree -d -L 1 /var/www/svn
+
+/var/www/svn
+|-- hien
+|-- phu
+`-- repos
+
+Bước 1:
+Các thư mục hien
+
+# add AuthzSVNAccessFile /etc/svn-acl-conf      
+[hien:/]
+phultv =  r
+hiencv = rw
+[phu:/]
+phultv =  rw
+hiencv = r
+[repos:/]
+phultv = rw
+
+
+Việc thay đổi permission trong access control list hoàn toàn không cần restart httpd.
+Bước 2
+#add AuthzSVNAccessFile /etc/svn-acl-conf
+
+
+<Location /123>
+  DAV svn
+   SVNParentPath /var/www/svn
+      AuthType Basic
+      AuthName "Authorization Realm"
+      AuthUserFile /etc/subversion/svn-auth-conf
+	AuthzSVNAccessFile /etc/svn-acl-conf      
+	Require valid-user
+</Location>
+
+

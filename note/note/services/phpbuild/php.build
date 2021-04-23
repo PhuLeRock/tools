@@ -1,0 +1,58 @@
+source php.option
+install_script() {
+	echo "install_php info: php_source_file  - $php_source_dir - $version" >> install.log
+	cd $php_source_dir
+	#./configure --prefix=$php_prefix/$version $configure_options
+	#make clean
+	make install
+	cd ../
+}
+
+install_versions() {
+	for version in `ls $currentdir/version`; do
+		php_source_file=`cat $currentdir/version/$version`
+		php_source_dir=`tar -tf $php_source_file | head -n1`
+		#tar vzxf $php_source_file
+		echo $( date +%Y-%m-%d-%H:%M:%S ) BEGIN: source file is $php_source_file, version is $version, source dir is $php_source_dir  >> install.log
+		install_script
+		copyfile
+		echo $( date +%Y-%m-%d-%H:%M:%S )  "~~~~~~~~~~~~~~>> php" "$version" "is installed" >> install.log
+	done
+}
+
+copyfile(){
+echo $( date +%Y-%m-%d-%H:%M:%S ) COPY FILES  >> install.log
+echo "mkdir $php_prefix/$version/init.d" >> install.log
+mkdir $php_prefix/$version/init.d
+echo cp $currentdir/php_conf_files/php-fpm.init $php_prefix/$version/init.d/ >> install.log
+cp $currentdir/php_conf_files/php-fpm.init $php_prefix/$version/init.d/
+chmod 755 $php_prefix/$version/init.d/php-fpm.init
+echo cp $currentdir/php_conf_files/php.ini $currentdir/php_conf_files/php-fpm.conf $php_prefix/$version/etc/ >> install.log
+cp $currentdir/php_conf_files/php.ini $currentdir/php_conf_files/php-fpm.conf $php_prefix/$version/etc/
+echo $( date +%Y-%m-%d-%H:%M:%S ) ADD USER WWW  >> install.log
+useradd www
+}
+
+depend_packages() {
+case "$1" in
+	centos)
+	$currentdir/centos/installdepend
+	;;
+	ubuntu)
+	$currentdir/ubuntu/installdepend
+	;;
+	*)
+		echo "Choose your distro you want to install php"
+		echo "Usage: $0 {centos|ubuntu}"
+		exit 1
+	;;
+
+esac
+
+}
+depend_packages $1
+install_versions
+#create symlink
+#change version
+
+

@@ -1,0 +1,9 @@
+CLONE ON THE SAME HOST:
+VBoxManage clonehd          <uuid>|<filename> <outputfile>
+                            [--format VDI|VMDK|VHD|RAW|<other>]
+                            [--variant Standard,Fixed,Split2G,Stream,ESX]
+                            [--type normal|writethrough|immutable|shareable]
+                            [--remember] [--existing]
+
+VBoxManage list vms
+

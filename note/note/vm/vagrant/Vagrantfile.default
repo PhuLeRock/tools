@@ -1,0 +1,22 @@
+$script = <<SCRIPT
+echo Hello World >> /root/hello.txt
+echo ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAzPKGrRox7DgQwDyZr/PGnWeXD8ymbGOIJTebO9QBgEUSq9BORv8a3Mbxnb7ctli3nVz7/NEOd3qI730gXAhfEltdzJiiDa1bH5g2t9Rig/MLPAX587u7zqmSjrZc1mj9b0u3r+dIaIVWenuIsVbv6oWVe+UuN3hWLu6HXVOVetzTfSwt27EKYTTu3QH9WQTlq3uZjlk2ffLSgnnf5er0JyywHXeyIuZo4RjrLgfcjkZVqPQVmGY/MPstuTrSlloqGJLtwB/i1FgJ4lkIJcNGmz74u3rj2UFlCBPjJQtfSCsBqxH0177zr+ucCZRShFc8iqK8vEqtHSuOAB+vB1/UQw== phulerock@mocxi-lappy >> /home/vagrant/.ssh/authorized_keys
+mkdir -p "/root/.ssh"
+echo ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAzPKGrRox7DgQwDyZr/PGnWeXD8ymbGOIJTebO9QBgEUSq9BORv8a3Mbxnb7ctli3nVz7/NEOd3qI730gXAhfEltdzJiiDa1bH5g2t9Rig/MLPAX587u7zqmSjrZc1mj9b0u3r+dIaIVWenuIsVbv6oWVe+UuN3hWLu6HXVOVetzTfSwt27EKYTTu3QH9WQTlq3uZjlk2ffLSgnnf5er0JyywHXeyIuZo4RjrLgfcjkZVqPQVmGY/MPstuTrSlloqGJLtwB/i1FgJ4lkIJcNGmz74u3rj2UFlCBPjJQtfSCsBqxH0177zr+ucCZRShFc8iqK8vEqtHSuOAB+vB1/UQw== phulerock@mocxi-lappy >> /root/.ssh/authorized_keys
+SCRIPT
+#Vagrant.configure("1") do |config|
+#  config.vm.boot_mode = :gui
+#end
+Vagrant.configure(2) do |config|	
+		config.vm.box = "ubuntu/trusty64"
+		config.vm.network "private_network", type: "dhcp"
+		#config.vm.network "private_network", ip: "1.1.1.100"
+		config.vm.define :portus do |t|
+		end
+		config.vm.provider "virtualbox" do |v|
+			v.memory = "3000"
+			v.cpus = "2"
+		end
+		config.vm.provision "shell", inline: $script
+		#config.vm.provision "shell", path: "script.sh" # in case you want run shell.sh
+end	

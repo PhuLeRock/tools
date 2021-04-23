@@ -1,0 +1,78 @@
+## proxy
+upstream  mysite  {
+   server   www1.mysite.com;
+   server   www2.mysite.com;
+}
+
+...
+location /images/ {
+      proxy_pass  http://mysite;
+}
+
+
+##or split client http://wiki.nginx.org/HttpSplitClientsModule
+
+
+http {
+
+  # Split clients (approximately) equally based on
+  # client ip address
+  split_clients $remote_addr $cdn_host {
+    33% cdn1;
+    33% cdn2;
+    - cdn3;
+  }
+
+  server {
+    server_name example.com;
+
+    # Use the variable defined by the split_clients block to determine
+    # the rewritten hostname for requests beginning with /images/
+    location /images/ {
+      rewrite ^ http://$cdn_host.example.com$request_uri? permanent;
+    }
+  }
+}
+
+example:
+####### split
+
+  # Split clients (approximately) equally based on
+  # client ip address
+  split_clients 192.168.56.1 $cdn_host {
+    100% sub2;
+      }
+
+  server {
+	listen 192.168.56.5:80;
+    server_name global.com;
+
+    # Use the variable defined by the split_clients block to determine
+    # the rewritten hostname for requests beginning with /images/
+    location / {
+      rewrite ^ http://$cdn_host.com$request_uri? permanent;
+    }
+  }
+
+server {
+        listen       192.168.56.100:80;
+        server_name  sub1.com;
+        access_log  /data/www/sub1/logs/access.log  main;
+		root /data/www/sub1/;
+        location / {
+          
+            index  index.php index.html index.htm;
+        }
+}
+server {
+        listen       192.168.56.101:80;
+        server_name  sub2.com;
+        access_log  /data/www/sub2/logs/access.log  main;
+		root /data/www/sub2/;
+        location / {
+            
+            index  index.php index.html index.htm;
+        }
+}
+
+

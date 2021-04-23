@@ -1,0 +1,77 @@
+[client]
+#password       = your_password
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+
+# Here follows entries for some specific programs
+
+# The MySQL server
+[mysqld]
+init-connect='SET NAMES utf8'
+port            = 3306
+socket          = /var/lib/mysql/mysql.sock
+datadir = /data
+
+log_slow_queries=/data/PortalDB_slow.log
+long_query_time = 10
+
+skip-name-resolve
+connect_timeout=15
+interactive_timeout=15
+wait_timeout=15
+skip-locking
+skip-innodb
+key_buffer = 64M
+#key_buffer = 512
+max_allowed_packet = 1M
+max_connections=1200
+max_user_connections=750
+max_connect_errors=1024
+table_cache = 5120
+#table_cache = 1024
+sort_buffer_size = 2M
+net_buffer_length = 8K
+myisam_sort_buffer_size = 16M
+read_buffer_size=2M
+thread_cache_size=128
+thread_concurrency=4
+query_cache_size=32M
+query_cache_limit=4M
+query_cache_type=1
+# search for site content
+ft_min_word_len = 2
+#ft_max_word_len
+ft_stopword_file = /etc/filterword.txt
+# Don't listen on a TCP/IP port at all. This can be a security enhancement,
+# if all processes that need to connect to mysqld run on the same host.
+# All interaction with mysqld must be made via Unix sockets or named pipes.
+# Note that using this option without enabling named pipes on Windows
+# (via the "enable-named-pipe" option) will render mysqld useless!
+#
+#skip-networking
+
+[mysqldump]
+quick
+max_allowed_packet = 16M
+
+[mysql]
+no-auto-rehash
+default-character-set = utf8
+# Remove the next comment character if you are not familiar with SQL
+#safe-updates
+
+[isamchk]
+key_buffer = 20M
+sort_buffer_size = 20M
+read_buffer = 2M
+write_buffer = 2M
+
+[myisamchk]
+key_buffer = 20M
+sort_buffer_size = 20M
+read_buffer = 2M
+write_buffer = 2M
+
+[mysqlhotcopy]
+interactive-timeout
+

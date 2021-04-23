@@ -1,0 +1,6 @@
+https://www.digitalocean.com/community/tutorials/understanding-nginx-server-and-location-block-selection-algorithms
+https://www.thegeekstuff.com/2017/05/nginx-location-examples/
+test location matching bang tool nay:
+https://nginx.viraptor.info/
+
+

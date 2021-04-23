@@ -1,0 +1,6 @@
+No, not network shares. Through Nautilus, when I'm in the office, I connect to various servers via SSH (sftp). They're not mounts. Being outside the office, I'd like that same capability. I think I actually figured out how to do this. For anyone else who'd like to know.... This assumes you're trying to get through two servers. The FIRST server being visible to the Internet, the SECOND being an internal server on that network. 
+
+ ssh -L2222:secondhost:22 firsthost
+ 
+Leave this connection open. Then go to Nautilus, and in the address bar type: 
+ssh://user@localhost:2222

@@ -1,0 +1,2 @@
+# enable winrm win7 
+winrm quickconfig -q

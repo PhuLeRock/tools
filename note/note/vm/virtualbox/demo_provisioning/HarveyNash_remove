@@ -1,0 +1,26 @@
+
+echo '
+  _   _    _    ____  _   _ _____ _____ ____ _   _ 
+ | \ | |  / \  / ___|| | | |_   _| ____/ ___| | | |
+ |  \| | / _ \ \___ \| |_| | | | |  _|| |   | |_| |
+ | |\  |/ ___ \ ___) |  _  | | | | |__| |___|  _  |
+ |_|_\_/_/___\_\____/|_|_|_|_|_|_|_____\____|_|_|_|
+ |_____|_____|_____|_____|_____|_____|_____|_____| 
+       / ___| |   / _ \| __ )  / \  | |            
+      | |  _| |  | | | |  _ \ / _ \ | |            
+      | |_| | |__| |_| | |_) / ___ \| |___         
+       \____|_____\___/|____/_/   \_\_____|        
+'
+sleep 2
+servername=$1
+#VBoxManage clonevm "Win2012r2_winapp_tc_octopus02" --snapshot "winapp_tc_octopus_net452" --name $servername --mode machine --register  --options link 
+#VBoxManage startvm $servername --type headless
+#sleep 60
+#varIP=$(VBoxManage guestproperty enumerate $servername | grep "V4/IP" | awk '{print$4}')
+#$varIP
+#echo $servername IP is $varIP
+#echo "$servername already to remote desktop with default credential by issue command:"
+#echo "mstsc /admin /v $varIP"
+VBoxManage controlvm $servername poweroff
+sleep 4
+VBoxManage unregistervm $servername --delete

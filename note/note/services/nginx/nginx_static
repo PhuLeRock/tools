@@ -1,0 +1,13 @@
+## serve static directly
+location ~* \.(jpg|jpeg|gif|png|css|js|ico|xml)$ {
+    access_log        off;
+    log_not_found     off;
+    expires           360d;
+}
+
+## deny access .file 
+location ~ /\. {
+    access_log off;
+    log_not_found off; 
+    deny all;
+}

@@ -1,0 +1,80 @@
+# WHAT IS CAPISTRANO
+linux deploy tool written by fucking ruby, deply over ssh
+# WHY CAPISTRANO
+- create env faster than shellscript.
+- have deploy log, no need to write it by shellscript
+- create symlink with release dir, naming release with timestamp without shellscript.
+- agentless
+# diff with ansible:
+Capis deploy code
+ansible deploy system env
+
+# WHY IT IS SHIT
+- Document lake of detail
+- Difficult when we have multiple repo for multiple roles.
+- Support deploy static files is not good
+
+
+#INSTALL
+# http://ama.phanbook.com/blog/68/gioi-thieu-va-cach-su-dung-capistrano
+# https://viblo.asia/LeThiNgoc/posts/ZWApGxqdv06y
+# https://bugzilla.harveynash.vn/repos/Harveynash/RnD/CICD/Install Windows Features
+#
+apt-get install -y openssh-server vim ruby2.0
+gem install net-ssh -v 2.9.2
+gem install capistrano
+
+#cd to to project
+cap install STAGES=test,production
+.
+|-- Capfile
+|-- config
+|   |-- deploy
+|   |   |-- production.rb
+|   |   `-- test.rb
+|   `-- deploy.rb
+`-- lib
+    `-- capistrano
+        `-- tasks
+########## SVN #########
+If your svn repo have blank space, you need to add "%20" to the blank
+ex:
+https://bugzilla.harveynash.vn/repos/Harveynash/RnD/CICD/Install Windows Features
+to
+https://bugzilla.harveynash.vn/repos/Harveynash/RnD/CICD/Install%20Windows%20Features
+
+######## deploy specific rolr #############
+model:
+stage.rb have many server
+server have many role
+
+################## ################## ################## ################## 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

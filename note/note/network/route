@@ -1,0 +1,23 @@
+server pdc:
+10.0.0.100
+
+router: 
+eth0 10.0.0.1
+eth1 11.0.0.1
+eth2 12.0.0.1
+eth3 13.0.0.1
+gw: 10.0.0.2
+
+
+client:
+vlan1: 11.0.0.0/24
+vlan2: 12.0.0.0/24
+vlan3: 13.0.0.0/24
+
+on router: 
+enable ip_forward=1
+
+on pdc:
+route add -net 11.0.0.0 netmask 255.255.255.0 gw 10.0.0.1
+route add -net 12.0.0.0 netmask 255.255.255.0 gw 10.0.0.1
+route add -net 13.0.0.0 netmask 255.255.255.0 gw 10.0.0.1

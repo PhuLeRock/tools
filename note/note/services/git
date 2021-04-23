@@ -1,0 +1,59 @@
+# same like clone / download from repo, cap nhat thi dung pull
+git clone file:///opt/git/project.git
+git clone git://github.com/sitaramc/gitolite 
+git clone ssh://git@103.224.170.74:3322/data/progit progit (need ssh-add)
+
+# tao central repo, --bare flag doesnt have working dir
+git init --bare <dir>
+
+#tao repo
+git init <dir>
+
+#tao local repo va add remote repo
+git init && git remote add origin git@103.224.170.74:my-project.git
+
+#show repo
+git remote -v
+
+# add file
+git add file.txt >> git commit file.txt >> git push origin master (origin is reponame, master is branch name)
+
+#update from repo
+git pull
+
+git:
+neu nhieu project tu nhieu gitserver khac nhau thi set origin bang cach nao ?
+- git remote -v se thay toan bo cac reponame va url repo
+- git remote add origin git@103.224.170.74:my-project.git (ten repo la origin)
+
+# http and ssh
+git clone git@github.com:aspnet/Home.git aspnet-Home
+git clone https://github.com/aspnet/Home.git
+#git list config:
+git config --list
+
+# git multiple key multiple repo, we need to fake hostname by using .ssh/config like this
+Host github.com
+  HostName github.com
+  User git
+  #Preferredauthentications publickey
+  IdentityFile ~/.ssh/id_rsa
+Host github.com-phulerock
+  HostName github.com
+  User git
+  #Preferredauthentications publickey
+  IdentityFile ~/.ssh/phultv.rsa
+
+Host bittbucket.org
+  Preferredauthentications publickey
+  IdentityFile ~/gdrivekamatek/kamatek/bigdata/phultv.rsa
+
+then in the repo of github phulerock .git/config:
+[remote "origin"]
+	url = git@github.com-phulerock:PhuLeRock/tools.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+and in the repo of github gameanalytic .git/config:
+[remote "origin"]
+	url = git@github.com:ballkama/gameanalytic.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+

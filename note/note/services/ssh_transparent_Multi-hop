@@ -1,0 +1,5 @@
+
+
+http://sshmenu.sourceforge.net/articles/transparent-mulithop.html
+
+ssh -A -t ruapehu.example.com ssh -A -t aoraki ssh -A tongariro

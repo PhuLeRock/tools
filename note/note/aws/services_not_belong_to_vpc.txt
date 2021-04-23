@@ -1,0 +1,7 @@
+##not belong vpc
+s3 global
+SNS
+SQS
+
+##belong to VPC
+redis cluster

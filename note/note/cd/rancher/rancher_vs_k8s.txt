@@ -1,0 +1,8 @@
+https://rancher.com/rancher-glossary-1-6-to-2-0-terms-concepts/
+stack nhieu component nhu wordpress
+catalog deploy thanh 1 stack 
+loadbalancer la ingress trong k8s
+loadbalancer chi hoat dong trong 1 environment
+loadbalancer la core nginx routing ve cac stack trong environment
+secret va certificate la 2 phan khac nhau, ben k8s la secret
+registry http

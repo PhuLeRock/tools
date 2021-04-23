@@ -1,0 +1,40 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: phunginx
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: phunginx # need to match with template:metadata:labels:app: phunginx
+                    # "deployment" use "selector" to find the pod that match have this label
+  template:
+    metadata:
+      labels:
+        app: phunginx
+    spec:
+      containers:
+      - name: nginx
+        image: phulerock/nginx
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            #host: 127.0.0.1 # remove this so kubelet will use clusterIP:80
+            path: /
+            port: 80
+          initialDelaySeconds: 15
+          timeoutSeconds: 15
+        readinessProbe:
+          exec:
+            command:
+            - cat
+            - /var/www/html/index.nginx-debian.html
+          initialDelaySeconds: 10
+          periodSeconds: 10
+
+# kubectl rollout apply -f phunginx_deployment.yaml < update after edited
+# kubectl rollout history -f phunginx_deployment.yaml < see the 
+# kubectl rollout undo -f phunginx_deployment.yaml --to-revision=1 << undo !
+# kubectl rollout status -f phunginx_deployment.yaml
+

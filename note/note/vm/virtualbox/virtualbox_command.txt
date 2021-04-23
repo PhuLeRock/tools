@@ -1,0 +1,22 @@
+#windows location
+"c:\Program Files\Oracle\VirtualBox\VBoxManage.exe""
+& 'c:\Program Files\Oracle\VirtualBox\VBoxManage.exe'
+# list vms
+VBoxManage.exe list vms
+VBoxManage.exe list runningvms
+#get ip
+VBoxManage showvminfo centos6
+& 'c:\Program Files\Oracle\VirtualBox\VBoxManage.exe' guestproperty enumerate Win2012r2 | findstr IP
+
+########################
+http://10.128.240.146/phpvirtualbox/ admin / devops@dmin321
+10.128.240.146 3389 administrator devops@dmin321
+
+vboxmanage registervm /home/phuletv/VirtualBox\ VMs/slave/slave.vbox
+vboxmanage registervm /home/phuletv/VirtualBox\ VMs/Win2012r2/Win2012r2.vbox
+
+vboxmanage list vms
+vboxmanage clonevm Win2012r2 --name slave  --register 
+vboxmanage guestproperty enumerate slave | grep "IP,"
+vboxmanage showhdinfo
+##############

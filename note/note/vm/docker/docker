@@ -1,0 +1,42 @@
+#install
+yum install docker-io -y
+/etc/init.d/docker start / sudo systemctl start docker
+chkconfig docker on /  systemctl enable docker
+
+#config docker port, put these option to init file when start :
+-H tcp://192.168.137.101:2375 -H unix:///var/run/docker.sock
+
+# search available images of centos, or you can search ubuntu:
+docker search centos
+# list images
+docker images
+#	 ps -a       List containers 
+#    pause     Pause all processes within a container
+#    ps        List containers
+#    top       Lookup the running processes of a container
+#    unpause   Unpause a paused container
+
+
+##docker run -d --name servename -p 8080:8080 -m 256m --cpuset=0,1 -t 510cf09a7986 /bin/bash
+##docker run -d -p 127.0.0.1:8080:8080/udp -m 256m --cpuset=0,1 -t 510cf09a7986 /bin/bash
+
+docker stop/start/restart/pause/unpause [id container]
+# save container to image 
+
+## sudo docker run -d -P training/webapp python app.py
+## -P auto map port vmhost to high port real host
+dockerfile practice
+https://docs.docker.com/articles/dockerfile_best-practices/
+https://docs.docker.com/reference/builder/
+
+#connect to remote docker:
+docker -H=tcp://103.224.170.74:2375 pull centos:centos6.6
+
+#to attach shell:
+docker attach containerid
+# to quit attach: ctrl-p then ctrl-q
+
+TIPS:
+1. if  has no internet, /etc/init.d/docker restart, but any container will be stoped
+2. should build images with -t name/name, run with --name="asd"
+ 

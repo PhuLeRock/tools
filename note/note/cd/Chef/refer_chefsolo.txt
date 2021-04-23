@@ -1,0 +1,2 @@
+http://gettingstartedwithchef.com/first-steps-with-chef.html << refer chef solo for cookbook community
+http://www.opinionatedprogrammer.com/2011/06/chef-solo-tutorial-managing-a-single-server-with-chef/

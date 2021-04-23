@@ -1,0 +1,40 @@
+Ubuntu: 16.04
+Memory (RAM): must more than 4GB
+
+#echo node01 > /etc/hostname
+
+rm -rf /etc/apt/sources.list.d/docker.list
+apt-get remove docker-engine; apt autoremove
+apt-get update; apt-get install -y apt-transport-https
+apt-get install -qy docker.io
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+echo "deb http://apt.kubernetes.io/ kubernetes-xenial main" > /etc/apt/sources.list.d/kubernetes.list
+apt-get update; apt-get install -y kubelet kubeadm kubernetes-cni
+
+masterip=192.168.195.101
+echo master > /etc/hostname
+echo $masterip master >> /etc/hosts
+kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=$masterip --kubernetes-version stable-1.8
+
+rm -rf $HOME/.kube 
+mkdir $HOME/.kube
+cp /etc/kubernetes/admin.conf $HOME/.kube/config
+chown $(id -u):$(id -g) $HOME/.kube/config
+export KUBECONFIG=$HOME/.kube/config
+echo "export KUBECONFIG=$HOME/.kube/config" | tee -a ~/.bashrc
+source <(kubectl completion bash)
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+source <(kubectl completion bash)
+#Apply your pod network (flannel)
+#quan trọng là cái flannel/calico sẽ làm kube-dns hoạt động, nên dùng đúng version 0.9.1
+kubectl apply -f https://docs.projectcalico.org/v2.6/getting-started/kubernetes/installation/hosted/kubeadm/1.6/calico.yaml
+kubectl taint nodes --all node-role.kubernetes.io/master-
+
+
+kubectl get pods -n kube-system
+kubectl get all --namespace=kube-system
+
+
+
+
+

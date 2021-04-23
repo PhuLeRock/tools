@@ -1,0 +1,30 @@
+class A: 0 - 127 (8bit)
+class B: 128 - 191 (16bit)
+class C: 192 - 223 (24bit)
+
+N: networkbit
+n: hostbit
+N+n= 32
+2^n: number of host
+2^Y = number of subnet 
+class A = N - 8 = Y
+class B = N - 16 = Y
+class C = N - 24 = Y
+
+
+vd:
+
+classA : 192.168.0.0/27
+N=27
+n=32-27=5
+number of hosts = 2^5 = 32
+number of subnet :
+Y = N - 24 = 3
+>> 2^3 subnet
+
+sub1= 0-31
+sub2 =32-64
+v.v
+sub8
+
+

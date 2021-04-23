@@ -1,0 +1,41 @@
+### konradkleine/docker-registry-frontend
+docker run --name ui \
+  -d \
+  -e ENV_DOCKER_REGISTRY_HOST=registry \
+  -e ENV_DOCKER_REGISTRY_PORT=5000 \
+  -p 8080:80 \
+  konradkleine/docker-registry-frontend:v1-deprecated
+access http://192.168.137.2:8080/repositories/library
+  #### DOCKER REGISTRY ##
+~ naming:
+docker.io:80/library/ubuntu:latest
+[docker.io:80/library/ubuntu]: is repository name
+[lastest]: is tag name
+
+docker.io:80/library/konradkleine/docker-registry-frontend:v2
+[docker.io:80/library/konradkleine/docker-registry-frontend]: repository name
+[v2]: tag name
+
+~ deploy and push images
+docker run -d -p 5000:5000 --name registry registry:0.9.1
+docker tag ubuntu localhost:5000/ubuntu
+docker push localhost:5000/ubuntu
+
+list v2: curl http://localhost:5000/v2/_catalog?
+list v1: curl -X GET http://localhost:5000/v1/search?
+
+#################### ALL IN ONE #######################
+docker run -d -p 5000:5000 --name registry registry:0.9.1; sleep 5; 
+docker run --name ui \
+  -d \
+  -e ENV_DOCKER_REGISTRY_HOST=registry \
+  -e ENV_DOCKER_REGISTRY_PORT=5000 \
+  -p 8080:80 \
+  --link="registry" \
+  konradkleine/docker-registry-frontend:v1-deprecated
+sleep 5
+docker tag ubuntu localhost:5000/ubuntu; docker push localhost:5000/ubuntu
+# browse it: curl -X GET http://hostname:5000/v1/repositories/ubuntu/tags
+############ kinh nghiem #
+1. nếu xóa repo trên registry thì không pull được, push cũng không vì báo lỗi skiping.
+2. vì registry và UI là 2 container nên ko được dùng localhost:5000 mà dùng IP ngoài.

@@ -1,0 +1,4 @@
+#dump with store procedure
+mysqldump -uroot -p --routines --default-character-set=utf8 db_name > dbname.sql
+#dump only store procedure
+mysqldump -uroot -p --routines --no-create-info --no-data --no-create-db --skip-opt --default-character-set=utf8 db_name > /root/dbname_func.sql

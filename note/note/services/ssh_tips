@@ -1,0 +1,4 @@
+when add key to normal user, need set permission:
+700 /home/user
+700 /home/user/.ssh
+700 /home/user/.ssh/au..

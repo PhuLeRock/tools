@@ -1,0 +1,17 @@
+
+2016-01-06-16:53:44 BEGIN: source file is /source/php-5.5.30.tar.gz, version is 5.5.30, source dir is php-5.5.30/
+install_php info: php_source_file  - php-5.5.30/ - 5.5.30
+2016-01-06-17:06:36 COPY FILES
+mkdir /opt/php/5.5.30/init.d
+cp /source/script/php_conf_files/php-fpm.init /opt/php/5.5.30/init.d/
+cp /source/script/php_conf_files/php.ini /source/script/php_conf_files/php-fpm.conf /opt/php/5.5.30/etc/
+2016-01-06-17:06:36 ADD USER WWW
+2016-01-06-17:06:36 ~~~~~~~~~~~~~~>> php 5.5.30 is installed
+2016-01-06-17:06:36 BEGIN: source file is /source/php-5.6.16.tar.gz, version is 5.6.16, source dir is php-5.6.16/
+install_php info: php_source_file  - php-5.6.16/ - 5.6.16
+2016-01-06-17:19:23 COPY FILES
+mkdir /opt/php/5.6.16/init.d
+cp /source/script/php_conf_files/php-fpm.init /opt/php/5.6.16/init.d/
+cp /source/script/php_conf_files/php.ini /source/script/php_conf_files/php-fpm.conf /opt/php/5.6.16/etc/
+2016-01-06-17:19:23 ADD USER WWW
+2016-01-06-17:19:23 ~~~~~~~~~~~~~~>> php 5.6.16 is installed

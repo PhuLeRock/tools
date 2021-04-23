@@ -1,0 +1,4 @@
+cmd with administrator:
+choco install kubernetes-helm
+
+helm init --kubeconfig c:\Users\PhuLe\.kube\config --kube-context aussie

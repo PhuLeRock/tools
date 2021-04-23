@@ -1,0 +1,61 @@
+Người viết: Hiển
+=========== cloudformation ============
+
+
+- Document cho template template1.json
+- Ở đây sẽ giải thích chi tiết từng dòng có tác dụng gì
+[2]: mô tả phiên bản template, nên đê mặc định là 2010-09-09
+* Parameter
+[4] Phần này mô tả các tham số truyền vào khi chạy template
+ --parameters ParameterKey=KeyPair,ParameterValue=keytest1 ParameterKey=EC2Type,ParameterValue=t2.micro
+ + mỗi parameters sẽ có key và một số thuộc tính cơ bản
+ + type là kiểu dữ liệu của tham số
+ + link chi tiết: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/parameters-section-structure.html
+* Mapping
+[17]: nói đơn giản, cơ chế mapping giống kiểu switch case bên code,
+ví dụ : a tương ứng a1, b tương ứng b1. Ta có cặp (x, y) chọn x = a => y = a1
+lấy giá trị bằng cách Fn::FindInMap
+thường dùng trong trường hợp muốn set giá trị dựa trên từng region, sẽ chọn ami id khác nhau, vì cùng 1 image linux nhưng khác region sẽ có id khác nhau.
++link cụ thể: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/mappings-section-structure.html
+* Condition
++ Cơ chế điều kiện xác định có tạo các item hay không
++ ví dụ ở dây tạo điều kiện để tạo EC2: EC2 chỉ được tạo khi mà tham số type ban đầu truyền vào là t2.micro
++ dòng [24] tạo điều kiện, biến "CreateEC2" sẽ mang giá trị true/false
++ dòng [106] sẽ xác nhận điều kiện, nếu true thì tạo item này(ở đây là EC2), không thì thôi
++ link cụ thể: http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/conditions-section-structure.html
+* Output
++ Sau khi khởi tạo xong stack, mình cần lấy những thông tin phát sinh sau khi khởi tạo
++ ví dụ: tạo EC2 xong thì cần biết IP nó nhiêu để sau này SSH vào nó
++ dòng [151-155] ở đây là lấy cái EIP cố định được gắn vào EC2, có thêm cái diều kiện, tại vì EC2 mà ko được tạo thì làm gì có IP
+* Resources
++ Cái thằng quan trọng nhất là ở đây, mấy thằng kia là râu ria thôi
++ Thằng này chứa toàn bộ item kiến trúc mình sẽ tạo
++ theo như kinh nghiệm, để xây dựng một kiến trúc mình nên vẽ ra giấy các cái item cần có, rồi làm tay chạy được, khi đó mới nên viết AWSCloudFormation
++ Sơ đồ mô tả từ trên xuống dưới bao gồm:
+-- [28] tạo VPC
+-- [37] Tạo router table
+-- [45] Tạo subnet
+-- [54] Gắn subnet vào cục router
+-- [61] Tạo dây internet getwate kết nối internet ra ngoài
+-- [67] Gắn cái IGW vào cục VPC
+-- [75] Gắn cái IGW vào cục router
+-- [83] Tạo cái security group(ở đây chơi hết PORT luôn)
+-- [104] Tạo EC2, nói chung tạo thằng này phức tạp hơn vì nó có nhiều properties
+cụ thể các properties thì chắc là nên đọc tại đây http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-ec2-instance.html
++ chú ý có cái "Userdata" để chạy máy lệnh shell khi khởi tạo EC2
+-- [141] Tạo EIP gắn vào EC2
+* Một số hàm thông dụng
++ Ref: thằng này khá phổ biến: chủ yếu là trả về IP của mấy thằng lúc khởi Tạo
++ ví dụ: dòng [40]: nó sẻ trả về IP của của cái VPC mới tạo ở trên
++ ví dụ: dòng [24]: nó sẽ lấy kết quả nhập vào từ parameter so sánh có phải là "t2.micro" không.
++ ví dụ: dòng [109]: có cái hàm findinmap: nó sẽ tìm trên cái mapping ở trên có cái key "Region", rồi tìm region hiện tại của máy mình, xong nó xem giá trị của thằng "16" là bao nhiêu
+
+Giới thiệu sơ qua tới đây. Mọi chi tiết search trên trang chủ là có hết :
+http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-reference.html
++ muốn nhanh nữa thì hỏi em nhé! good luck :))
+
+aws cli command
+aws cloudformation create-stack --stack-name mytest1 --template-body file://template1.json --parameters ParameterKey=KeyPair,ParameterValue=keytest1 ParameterKey=EC2Type,ParameterValue=t2.micro
+
+learn
+https://www.pluralsight.com/courses/aws-automating-cloudformation

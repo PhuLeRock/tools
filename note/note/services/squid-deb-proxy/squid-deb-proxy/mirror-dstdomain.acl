@@ -1,0 +1,15 @@
+# mirror-dstdomain.conf
+# 
+# network destinations that are allowed by this cache
+
+# default ubuntu and ubuntu country archive mirrors
+
+#official third party repositories
+
+# default changelogs location, this includes changelogs and the meta-release
+# file that has information about new ubuntu versions
+.vn
+.com
+.org
+# additional destinations can be added to the directory:
+#  /etc/squid-deb-proxy/mirror-dstdomain.acl.d

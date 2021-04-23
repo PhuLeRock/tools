@@ -1,0 +1,23 @@
+in redhat / Centos:
+edit file cdrom://isolinux/isolinux.cfg
+
+
+##edit
+default a
+prompt 1
+timeout 1
+display boot.msg
+F1 boot.msg
+F2 options.msg
+F3 general.msg
+F4 param.msg
+F5 rescue.msg
+F7 snake.msg
+
+###add
+label a
+  kernel vmlinuz
+  append initrd=initrd.img lowres ramdisk_size=8192 text ks=cdrom:/isolinux/a.cfg
+  kernel vmlinuz
+  append initrd=initrd.img ramdisk_size=8192
+

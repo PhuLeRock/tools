@@ -1,0 +1,3 @@
+clm câu hỏi đặt ra là khi request đến apigateway, thì gw sẽ đưa hết url về api luôn hay chỉ tính từ / sau domain
+- https://dzone.com/articles/how-api-gateway-constructs-urls-and-translates-the
+apigateway sẽ gỡ domain, context, version sau đó gắn domain của api vào, ghép với resource, parame và value truyền về api.

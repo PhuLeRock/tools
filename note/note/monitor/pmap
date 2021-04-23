@@ -1,0 +1,6 @@
+pmap - Process Memory Usage
+pmap -p pid
+
+mapped: total amount of memory mapped to files
+writeable/private:  the amount of private address space
+shared:  the amount of address space this process is sharing with others

@@ -1,0 +1,20 @@
+Written by PhuLeTV phu.letratinh@harveynash.vn
+HOW TO INSTALL:
+1. DOWNLOAD PHP VERSIONS YOU WANT TO INSTALL, AT http://php.net/downloads.php FILES MUST BE .tar.gz compression type.
+2. PLACE THESE FILES ANY WHERE ON THE SERVER.
+3. 
+ - chmod 755 php.build php.option
+ - if you want change the prefix directory, edit file php.option
+4. In the directory named "version"
+- Create the text file with the name is the version, content in this file is the source files that you download at the step 1
+example:
+~#ls version
+5.5.30  5.6.16
+~#cat version/5.5.30
+/source/php-5.5.30.tar.gz
+5. run ./php.build
+
+
+
+
+

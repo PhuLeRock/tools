@@ -1,0 +1,35 @@
+#install
+ yum install mod_dav_svn subversion
+
+#/etc/httpd/conf.d/subversion.conf
+#
+<Location /123>
+  DAV svn
+   SVNParentPath /var/www/svn
+      AuthType Basic
+      AuthName "Authorization Realm"
+      AuthUserFile /etc/subversion/svn-auth-conf
+       Require valid-user    
+       AuthzSVNAccessFile /build/svn/conf/authz
+        <LimitExcept GET PROPFIND OPTIONS REPORT>
+                Require valid-user
+        </LimitExcept>
+</Location>
+
+#set up password command
+htpasswd -cm  /etc/subversion/svn-auth-conf phultv
+htpasswd -m  /etc/subversion/svn-auth-conf hiencv
+#create directory
+mkdir /var/www/svn
+cd /var/www/svn
+svnadmin create repos
+chown -R apache.apache /var/www/svn/repos
+
+
+
+# to create new project, go to
+mkdir /tmp/newprj
+svn import /tmp/newproj/ file:///var/www/svn/repos/newproj -m "Initial repository layout for mytestproj"
+
+test by http://hostname/123/newproj and type username / pass
+

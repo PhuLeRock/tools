@@ -1,0 +1,13 @@
+1 account may have many Subscription
+1 Subscription belong to 1 AD (can switch)
+
+to change subscription:
+az account list --output table
+output:
+Name                                CloudName    SubscriptionId                        State    IsDefault
+----------------------------------  -----------  ------------------------------------  -------  -----------
+Visual Studio Enterprise – MPN      AzureCloud   6db52263-565c-496b-be91-6cc8d4e544d4  Enabled  True
+Visual Studio Enterprise with MSDN  AzureCloud   26d0ac78-feaf-453a-aa08-019485d18ff3  Enabled  False
+ 
+az account set --subscription "Visual Studio Enterprise with MSDN"
+ 

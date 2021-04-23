@@ -1,0 +1,35 @@
+link
+
+Another useful squid feature is delay pools. Conceptually, delay pools are bandwidth limitations - ``pools'' of bandwidth that drain out as people browse the Web, and fill up at a rate you specify - this can be thought of as a leaky bucket that is continually being filled. This is useful when bandwidth charges are in place, as in Australia where volume charges are typical, or if you want to reduce bandwidth usage for web traffic.
+
+To enable this, configure squid with the --enable-delay-pools option. There are 3 classes of delay pools - class 1 is a single aggregate bucket, class 2 is an aggregate bucket with an individual bucket for each host in the class C, and class 3 is an aggregate bucket, with a network bucket (for each class B) and an individual bucket for each host.
+
+To configure the amount of delay pools, and specify which pool is which class, use the following format.
+
+	delay_pools 2      # 2 delay pools
+	delay_class 1 2    # pool 1 is a class 2 pool
+	delay_class 2 3    # pool 2 is a class 3 pool
+
+To specify which pool a client falls into, create ACLs which specifies the ip ranges for each pool, and use the following:
+
+	delay_access 1 allow pool_1_acl
+	delay_access 1 deny all
+	delay_access 2 allow pool_2_acl
+	delay_access 2 deny all
+
+Setting the parameters for each pool is done by:
+
+	delay_parameters pool aggregate network individual
+
+where ``aggregate'' is the parameter for the aggregate bucket, ``network'' for the network bucket, and ``individual'' for the individual bucket. Aggregate is only useful for classes 1, 2 and 3, network for classes 2 and 3, and individual for class 3.
+
+Each of these parameters is specified as restore / maximum - restore being the bytes per second restored to the bucket, and maximum being the amount of bytes that can be in the bucket at any time. It is important to remember that they are in bytes per second, not bits. To specify that a parameter is unlimited, use a -1.
+
+If you wish to limit any parameter in bits per second, divide this amount by 8, and use the value for both the restore and the maximum. For example, to restrict the entire proxy to 64kbps, use:
+
+	delay_parameters 1 8000/8000
+
+It is also possible to specify how full the bucket starts:
+
+	delay_initial_bucket_level 50
+

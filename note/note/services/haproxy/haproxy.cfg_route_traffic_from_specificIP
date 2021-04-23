@@ -1,0 +1,14 @@
+#create acl named hvn_ip for HarveyNash's public IP
+acl hvn_ip src 38.122.227.91 125.212.211.105
+
+#Route hvn_ip to specific backend server
+use_backend create_hvn if hvn_ip
+
+# this is backend of our new instances, named create_hvn
+backend create_hvn
+  mode http
+  rspadd Access-Control-Allow-Origin:\ *
+  option httpchk GET /httpchk
+  balance leastconn
+  option httpclose
+  server awesm-shares-api  52.4.181.4:8080 cookie awesm-shares-api check

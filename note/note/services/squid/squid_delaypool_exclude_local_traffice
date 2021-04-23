@@ -1,0 +1,29 @@
+Excluding Local Traffic
+
+Không giới hạn bandwidth đối với acl locaUsers, ở đây dùng cho trường hợp nhiều ACL, nhưng ta chỉ limit 1 số ACL còn lại là full đường truyền.
+It's unlikely that you'll want to place restrictions on LAN traffic, so let's exclude it. It needs its own pool, so define two pools:
+vd1:
+
+delay_parameters 1 5000/10000  5000/7500
+
+delay_pools 2
+#pool 2, don't restrict LAN traffic
+delay_class 1 2
+#no bandwidth restrictions
+delay_parameters 1 -1/-1 -1/-1 # Đối số -1/-1 -1/-1 là lúc đầu unlimited, lúc sau cũng unlimited
+acl localUsers url_regex -i 192.168
+delay_access 1 allow localUsers
+
+
+vd2:
+
+########Delay Pools#########
+delay_class 1 1
+delay_class 2 1
+delay_parameters 1 64000/128000
+delay_parameters 2 2048/64000
+acl myFriends src 192.168.8.25-192.168.8.35/32
+acl All src 0/0
+delay_access 1 allow myFriends
+delay_access 2 allow All
+

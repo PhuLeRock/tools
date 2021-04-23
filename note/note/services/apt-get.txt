@@ -1,0 +1,29 @@
+﻿dpkg -S binaryfile # check which package the file belongs to.
+apt --installed list  # list installed packages
+
+apt-cache policy apache2 # show version and remote version
+
+apt-cache pkgnames   # list all the available package
+
+apt-cache pkgnames vsftpd   #To find and list down all the packages starting with ‘vsftpd‘
+
+apt-cache show netcat        #Check Package Information
+apt-cache showpkg vsftpd     #Check Dependencies for Specific Packages
+
+apt-cache stats        #Check statistics of Cache
+
+apt-get install packageName --only-upgrade         #Upgrade Only Specific Packages
+
+apt-get install vsftpd=2.3.5-3ubuntu1          #Install Specific Package Version
+
+apt-get remove vsftpd      #Remove Packages Without Configuration
+
+apt-get purge vsftpd      #Remove Packages With Configuration
+
+apt-get source vsftpd      #download source
+
+apt-get --compile source goaccess      #Download, Unpack and Compile a Package
+
+apt-get download nethogs      #Download onlys
+
+apt-get changelog vsftpd      #check changelog

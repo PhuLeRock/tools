@@ -1,0 +1,14 @@
+Step 1
+install Centos with option packages installation is:
+Base
+Development lib
+Development tool
+Editor
+
+Step2
+yum install createrepo
+mkdir -pv /var/www/html/centos/5.2/{os,updates}/{i386,x86_64}
+
+
+url="http://mirrors.kernel.org"
+rsync -avrt rsync://$url/centos/5.2/    --exclude=debug/ --exclude=isos/ --exclude=alpha/ --exclude=ia64/ --exclude=s390/ --exclude=s390x/  /var/www/html/centos/5.2/

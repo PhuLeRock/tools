@@ -1,0 +1,48 @@
+1. Edit /etc/default/rsync to start rsync as daemon using xinetd. 
+sudo vim /etc/default/rsync
+  RSYNC_ENABLE=inetd
+
+
+2. Create /etc/xinetd.d/rsync to launch rsync via xinetd.
+
+
+sudo vim /etc/xinetd.d/rsync
+  service rsync
+    {
+        disable         = no
+        socket_type     = stream
+        wait            = no
+        user            = root
+        server          = /usr/bin/rsync
+        server_args     = --daemon
+        log_on_failure  += USERID
+    }
+
+
+3. Create /etc/rsyncd.conf configuration for rsync in daemon mode. 
+
+sudo vim /etc/rsyncd.conf
+  max connections = 2
+  log file = /var/log/rsync.log
+  timeout = 300
+
+  [share]
+  comment = Public Share
+  path = /home/share
+  read only = no
+  list = yes
+  uid = nobody
+  gid = nogroup
+  auth users = user
+  secrets file = /etc/rsyncd.secrets
+
+
+ sudo vim /etc/rsyncd.secrets 
+  user:password
+
+
+test
+sudo rsync user@192.168.0.1::share
+  Password: 
+  drwxr-xr-x        4096 2006/12/13 09:41:59 .
+  drwxr-xr-x        4096 2006/11/23 18:00:03 folders

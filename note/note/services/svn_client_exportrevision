@@ -1,0 +1,27 @@
+linux
+./svn-export     revision-from     revision-to     repository     target-directory
+./svn-export     20     25     svn://localhost/myrepository     .
+
+windows:
+install rubyinstaller-1.9.2-p0.exe Setup-Subversion-1.6.13.msi
+This file is designed to export the files that were modified or added between two svn revisions.
+It will create a corresponding zip file with the directory structure intact. 
+Useful for when the server you are pushing to doesn't have access to your repository.
+
+-- Recommendations
+	It is reccomended that you set this to executable and add it to your path in your .profile 
+	(otherwise you will have to copy it to each repo)
+
+-- Requirements
+	OSX is not required but, it is a requirement that svn and zip are installed in the OS.
+
+	Example:
+		cd [/repo_root]
+		export_changes.rb 1550:1560
+
+	Produces:
+		1550_1560.zip
+
+
+
+

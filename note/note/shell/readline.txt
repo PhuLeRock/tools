@@ -1,0 +1,7 @@
+# print line 20 to 30 in file
+sed -n '8,10p' file
+awk 'NR >= 8 && NR <= 10' top.sh
+
+#print line 10 in file
+sed '10q;d' top.sh
+awk 'NR==10{print;exit}' top.sh

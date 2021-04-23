@@ -1,0 +1,9 @@
+# for annual subscrition, have 3 type:
+- basic (250 node)
+-  enterprise
+- Premium
+# free
+tower basic but 10nodes
+
+####### ANSIBLE TOWER
+dung port 80, 443, ko doi port duocs

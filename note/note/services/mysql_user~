@@ -1,0 +1,24 @@
+
+## CHANGE PASSWORD
+SET PASSWORD FOR 'pmfsbtbdtt_pt'@'10.30.6.99' = PASSWORD('rDcq2PcSG3Ah9rfG');
+
+##CHANGE PASS ROOT:
+mysqladmin -uroot -p oldpass newpass
+or
+mysql
+use mysql;
+update user set password=PASSWORD("qwe123") where User='root';
+flush privileges;
+or
+mysqladmin --user=root password somepassword
+mysqladmin --user=root --password reload
+
+########## Migrate User
+## list all user:
+mysql -u root -B -N -p -e "SELECT user, host FROM user" mysql
+
+## after see the user we want to migrate
+mysql -u root -p -B -N -e"SHOW GRANTS FOR 'userName'@hostName"
+mysql -u root -p -B -N -e"SHOW GRANTS FOR 'vivek'@192.168.1.5"
+
+

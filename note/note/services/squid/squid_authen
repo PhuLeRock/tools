@@ -1,0 +1,38 @@
+
+NCSA authenication link
+Squid also has support for proxy authentication. This is a simple idea that reads in a username and password, runs the specified authentication program, and either returns OK, if the username / password combination is correct, or ERR if it is not, in an endless loop. This can be used in many ways - simple system password lookups, database lookups or even a LDAP query.
+
+By default, Squid comes with traditional proxy authentication in the SQUID_SRC_ROOT/auth_modules/NCSA directory. To compile it, cd into this directory and type:
+
+	$ make
+	# make install
+
+Then add a line similar to the following to actually enable it:
+
+	authenticate_program /usr/bin/ncsa_auth /usr/etc/passwd
+
+Then add an ACL line similar to the following:
+
+	acl authacl proxy_auth username .. # Use REQUIRED as a username for any
+
+This can then be used in a http_access line, as follows:
+
+	http_access allow authacl
+
+Any requests to the proxy then have to be authenticated. You can also specify the text string which is given to the user when they are asked for a username / password by:
+
+	proxy_auth_realm Squid proxy-caching web server
+
+One issue with proxy authentication is, by default, it doesn't force authentication of FTP connections. This can be fixed by modifying the previous example to:
+
+	acl ftp proto FTP
+	...
+	http_access deny FTP
+	http_access allow authacl
+
+Another issue is that you can't use proxy authentication with transparent proxing. A better approach would be to set up a auto proxy. 
+
+
+Another: http://www.linuxhomenetworking.com/wiki/index.php/Quick_HOWTO_:_Ch32_:_Controlling_Web_Access_with_Squid
+
+

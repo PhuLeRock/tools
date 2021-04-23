@@ -1,0 +1,87 @@
+#!/bin/sh
+#
+# $Id: db2.in,v 1.5 2005/11/03 07:45:51 xunsun Exp $
+# 
+# Description:	wrapper of OCF RA db2, based on original heartbeat RA.
+#		See OCF RA db2 for more information. 
+#
+# Author:	Xun Sun <xunsun@cn.ibm.com>
+# Support:	linux-ha@lists.linux-ha.org
+# License:	GNU General Public License (GPL)
+# Copyright:	(C) 2005 International Business Machines, Inc.
+#
+# An example usage in /etc/ha.d/haresources: 
+#       node1  10.0.0.170 db2::db2inst1
+#
+# See usage() function below for more details...
+#
+
+. /etc/ha.d/resource.d//hto-mapfuncs
+
+unset LC_ALL; export LC_ALL
+unset LANGUAGE; export LANGUAGE
+
+usage() {
+  methods=`db2_methods`
+  methods=`echo $methods | tr ' ' '|'`
+  cat <<-! >&1
+	usage: $0 db2-database-owner-id {$methods}
+	usage: $0 methods
+
+	$0 manages a DB2 Universal Database instance as an HA resource.
+
+	The 'start' operation starts the database.
+	The 'stop' operation stops the database.
+	The 'status' operation reports whether the database is running
+	The 'monitor' operation reports whether the database seems to be working
+	The 'methods' operation reports on the methods $0 supports
+
+	$Id: db2.in,v 1.5 2005/11/03 07:45:51 xunsun Exp $
+	!
+  exit 1
+}
+
+#
+# methods: What methods/operations do we support?
+#
+db2_methods() {
+  cat <<-!
+	start
+	stop
+	status
+	monitor
+	methods
+	!
+}
+
+#
+#	'main' starts here...
+#
+
+case $# in
+  1)	if [ "methods" = "$1" ]; then
+		db2_methods
+		exit $?
+	fi;;
+  2)	;;
+  *)	usage;;
+esac
+
+if [ "$2" = "methods" ]; then
+	db2_methods
+	exit $?
+fi
+
+US=`id -u -n`
+US=`echo $US`
+if [ $US != root -a $US != $1 ]; then
+	echo "ERROR: $0 must be run as root or $1"
+	exit 1
+fi
+
+# What kind of method was invoked?
+case "$2" in
+	start|stop|status|monitor);;
+	*)	usage;;
+esac
+ra_execocf  "rsc_id=db2_$1" "rsc_type=db2" "provider=heartbeat" $2 "instance=$1"

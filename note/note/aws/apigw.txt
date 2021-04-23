@@ -1,0 +1,4 @@
+apigw dung vpc rieng cua aws, nen muon goi qua svc trong vpc thi phai dung ontactpoint/intergrate point, goi lai vpclink de goi qua private svc trong vpc
+tao vpclink co nghia la tao theo 1 nlb
+tao vpclink truoc, sau do moi tao apigw, 
+chu y cai depends on trong deployment, phai co de no update tat ca cac method va resource phia tren

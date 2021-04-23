@@ -1,0 +1,12 @@
+apt-get install -y zabbix-agent; 
+mv /etc/zabbix/zabbix_agentd.conf /etc/zabbix/zabbix_agentd.conf.ori
+grep -v "#" /etc/zabbix/zabbix_agentd.conf.ori | grep -v ^$ > /etc/zabbix/zabbix_agentd.conf
+
+zhostname=varnish-nfs
+zserver=192.168.1.14
+sed -i s,"Zabbix server","$zhostname",g /etc/zabbix/zabbix_agentd.conf
+sed -i s,"127.0.0.1","$zserver",g /etc/zabbix/zabbix_agentd.conf
+cat /etc/zabbix/zabbix_agentd.conf
+service zabbix-agent restart
+
+

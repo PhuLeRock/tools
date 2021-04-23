@@ -1,0 +1,11 @@
+redirect only homepage from http://cst1.nashtechglobal.com to http://cst1.nashtechglobal.com/CST_ADMIN
+        
+        
+        
+        location / {
+        #rewrite ^(.*)$ $scheme://www.domain.com$1 permanent;
+        rewrite ^(/)$ http://cst1.nashtechglobal.com/CST_ADMIN;
+	proxy_pass http://192.168.235.17:8080;
+ 	root /var/lib/tomcat/webapps/CST_ADMIN;
+        index index.jsp index.html index.htm;
+        }

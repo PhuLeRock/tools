@@ -1,0 +1,10 @@
+run background process
+1. creat script start.sh
+"
+service apache2 start
+tail -f /dev/null
+"
+in Dockfile
+COPY start.sh /
+RUN chmod 755 /start.sh
+CMD ["sh","/start.sh"]

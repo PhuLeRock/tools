@@ -1,0 +1,12 @@
+
+yum update mysql
+yum groupupdate 'DNS Name Server'
+yum groupremove 'DNS Name Server'
+yum shell
+yum list openssh (exact name)
+yum search openssh 
+yum info firefox
+yum list installed | less
+yum provides /etc/httpd/conf/httpd.conf
+yum repolist all
+yum history

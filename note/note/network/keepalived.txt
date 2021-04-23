@@ -1,0 +1,1 @@
+yum install -y popt.x86_64 popt-devel.x86_64

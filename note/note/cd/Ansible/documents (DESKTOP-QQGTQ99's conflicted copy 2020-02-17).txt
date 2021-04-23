@@ -1,0 +1,70 @@
+################################### design ###
+https://www.whaletech.co/2015/03/29/deploying-to-aws-using-ansible-docker-and-teamcity.html
+
+http://blog.vccloud.vn/ansible-cai-dat-va-cau-hinh/
+
+https://github.com/d0m0reg00dthing/ansible
+
+cau truc thu muc playbook
+http://docs.ansible.com/ansible/playbooks_best_practices.html
+
+playbook allinone file
+https://www.digitalocean.com/community/tutorials/how-to-configure-apache-using-ansible-on-ubuntu-14-04
+http://code-complete.com/code/?p=40
+cach chay :
+ansible-playbook -i hostfile file.yml
+
+ansible tai nylas
+https://nylas.com/blog/graduating-past-playbooks/
+
+############################### Using
+http://techmaster.vn/posts/33717/su-dung-ansible-vo-postgresql
+
+take care sshconfig and the key
+Host *
+   StrictHostKeyChecking no
+   UserKnownHostsFile=/dev/null
+
+
+############################### transfer file
+http://docs.ansible.com/ansible/copy_module.html
+
+http://stackoverflow.com/questions/25505146/how-to-copy-files-between-two-nodes-using-ansible
+
+http://docs.ansible.com/ansible/synchronize_module.html
+
+ansible windows:
+
+http://docs.ansible.com/ansible/intro_windows.html
+
+http://docs.ansible.com/ansible/list_of_windows_modules.html
+
+###############################galaxy 
+http://docs.ansible.com/ansible/galaxy.html
+
+https://www.whaletech.co/2015/03/29/deploying-to-aws-using-ansible-docker-and-teamcity.html
+
+http://blog.vccloud.vn/ansible-cai-dat-va-cau-hinh/
+
+https://github.com/d0m0reg00dthing/ansible
+
+################# WHAT IS HANDLERS
+có thể là thư mục hoặc viết trực tiếp trong file, là 1 task, có thể được gọi từ tasks khác bằng cách notify tên handles, mục đích là reuse repeatable tasks,vd:
+---
+- hosts: all
+
+  tasks: 
+    - name: Install Nginx
+      apt: pkg=nginx state=installed update_cache=true
+      notify:
+        - Start Nginx
+  handlers:
+    - name: Start Nginx
+      service: name=nginx state=started
+
+################################ config specific OS distribution
+https://raymii.org/s/tutorials/Ansible_-_Only_if_on_specific_distribution_or_distribution_version.html
+# install ubuntu 14.04
+apt-add-repository ppa:ansible/ansible
+apt-get install ansible
+ansible --version

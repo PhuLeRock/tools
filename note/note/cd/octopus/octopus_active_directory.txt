@@ -1,0 +1,5 @@
+# Octopus can use Active Directory for authentication, using 2 way:
+1. Integrated authentication
+2. Forms-based
+# to manage:
+team name (spec roles) --> add user to team.

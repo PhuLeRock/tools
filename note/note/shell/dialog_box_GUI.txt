@@ -1,0 +1,7 @@
+whiptail:
+https://en.wikibooks.org/wiki/Bash_Shell_Scripting/Whiptail
+http://xmodulo.com/create-dialog-boxes-interactive-shell-script.html
+
+dialog
+
+https://bash.cyberciti.biz/guide/Bash_display_dialog_boxes

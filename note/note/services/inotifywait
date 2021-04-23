@@ -1,0 +1,64 @@
+Giới thiệu
+
+Inotifywait là một công cụ theo dõi sự thay đổi trong một thư mục. Các thay đổi này sẽ được ghi nhận lại với format mà ta mong muốn.
+
+Các thay đổi như một file hoặc thư mục con nào đó nằm trong thư mục được theo dõi được tạo mới, cập nhật, đổi tên, hoặc xóa... sẽ được Inotifywait ghi nhận lại.
+
+Khi những thông tin này được ghi nhận, ta sẽ có hành động tương ứng tùy theo mục đích của mình.
+
+Inotifywait tools:
+
+Cài đặt:
+
+    yum install -y inotify-tools.x86_64 inotify-tools-devel.x86_64
+
+Ví dụ đơn giản dùng inotifywait để monitor thư mục /source
+
+    inotifywait -e modify,create,delete -o /tmp/inotify.log --exclude ".swp|.~" -mrq /source
+
+Trong đó:
+
+_ Option -e <event> - Qui định các loại event nào sẽ được monitor. Ví dụ: các sự kiện như access modify attrib close_write close_nowrite close open moved_to moved_from move move_self create delete delete_self unmount. Nếu không định nghĩa option này, mặc định mọi event sẽ được monitor.
+
+_ Option -o <outfile> file - Qui định các kết xuất của inotifywait sẽ được ghi vào file nào. Mặc định, kết xuất được in ra màn hình (stdout).
+
+_ Option -m, --monitor - Mặc định, inotifywait sẽ exit ngay sau khi ghi nhận 1 event, tùy chọn -m này sẽ cho phép inotifywait chạy mãi và chờ các sự kiện xảy ra và ghi nhận lại. Option này tương tự với option -d ( --daemon), chỉ khác là option -m không cần chạy với option -o ; còn option -d thì ta buộc phải có option -o
+
+_ Option -r, --recursive - Theo dõi luôn cả các subfolder của folder mà ta quy định
+
+_ Option -q, --quiet - Inotifywait chạy ở chế độ im lặng. Nếu được dùng 2 lần, innotifywait sẽ chỉ xuất ra các lỗi nghiêm trọng trong quá trình thực thi
+
+_Option --exclude <pattern> -  Bỏ qua các event xảy ra với các file được định nghĩa trong pattern, có phân biệt chữ hoa-thường. Nếu dùng option --excludei thì không phân biệt hoa-thường
+
+ 
+
+Mô hình ứng dụng như sau: Ta có 1 server chứa DocRoot gốc, các server khác sẽđồng bộ hóa dữ liệu thư mục DocRoot cùa mình với server gốc này. Trên server gốc, ta dùng Inotifywait để theo dõi thư mục DocRoot, nếu có thay đổi như CREATE - DELETE - MODIFY ta sẽ tiến hành đồng bộ hóa dùng lệnh rsync. Mọi liên kết đều thông qua SSH dùng key.
+
+Script chạy inotifywait và rsync:
+
+ rsyncex='--exclude public/cached --exclude data/cache --exclude *.php'
+SRC=/data/web/
+DES=/data/web/
+
+inotifywait -mrq --exclude ".swx|index.html|.php|.swp|.~|.phtml" --timefmt '%d/%m/%y %H:%M' --format '%T %w %f' \
+-e modify,delete,create ${SRC} | while read date time dir file; do
+    FILECHANGE=${dir}${file}
+        DIRCHANGE=${dir}
+        /usr/bin/rsync -e 'ssh -i /root/.ssh/tunnel_keys/tunnel_key.dsa -p3322' -avr --delete \
+                --exclude '*.php' \
+                ${DIRCHANGE} root@10.14.6.38:${DIRCHANGE} && \
+    echo "On $(date), file $FILECHANGE was sync via rsync to download server 103.224.170.38" >> /var/log/inotify-rsync-static.log 2>&1
+done
+
+
+ 
+
+Ghi chú code:
+
+Trong đoạn mã trên, ta theo dõi sự thay đổi trong folder /source. Trong quá trình theo dõi, khi người dùng vim 1 file, sẽ tạo ra các file tạm có đuôi .swp hay ~ , vì vậy để tránh ghi vết những file này, ta dùng option --exclude.
+
+
+#limit watch:
+fs.inotify.max_user_watches=100000
+or 
+/proc/sys/fs/inotify/max_user_watches

@@ -1,0 +1,35 @@
+#  Release Managerment Client version 2013
+problem: User must login to windows with domain user account, Release Managerment use current windows permission to login to Release Managerment server. Aint no option to login with different method.
+Solution: create local acc on RLM server, and the same acc/pass on PC. Or use VPN to login with account domain.
+
+# INSTALL TFS AND RELEASE MANAGEMENT SERVER
+-- install TFS + TFS build server
+-- install TFS build agent
+-- install RLM server 
+-- install RLM agent
+
+# RELEASE MANAGEMENT SERVER
+## ADMINISTRATION
+### SETTING
+---- config SMTP
+---- MANAGE GROUP >> add group >> add user in group
+---- MANAGE TFS >> add tfs server
+---- MANAGE PICK LISTS >> add stage type: test, UAT, Production (Stage type used to defining release paths, the stage type is used to define the stages the release will transition through )
+
+-- Add Enviroment : test - UAT - Prod
+-- Release path:
+## CONFIGURE PATHS
+### SERVERS
+---- add servers (deployment agent is already installed)
+### ENVIRONMENT 
+---- Add environment: dev env, UAT env, Prod env and add the related servers to them.
+### AGENT BASED RELEASE PATHS
+---- Create new release path name >> add the stage (create before at Adminsitration > Setting > Manage Pick Lists), the release transition from left to the right.
+
+## CONFIGURE APPS: configre detail what will be executed on each stage of release paths.
+### COMPOMENT
+---- Define the action that specific for Project' release paths such as copy file vhost.
+### AGENT BASED RELEASE PATHS
+---- Create Release Template >> choose Release Paths + Build definition (TFS branch)
+---- Design what is going to do at each step.
+

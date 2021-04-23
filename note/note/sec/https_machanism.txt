@@ -1,0 +1,48 @@
+selfsign:
+# Generate private key 
+openssl genrsa -out ca.key 2048 
+# Generate CSR 
+openssl req -new -key ca.key -out ca.csr
+# Generate Self Signed Key << publickey for browser
+openssl x509 -req -days 365 -in ca.csr -signkey ca.key -out ca.crt
+#OR create both private and CSR in one step
+openssl req -new -newkey rsa:2048 -nodes -keyout ca.key -out ca.csr
+
+
+
+
+
+
+
+<VirtualHost 192.168.0.1:443>
+DocumentRoot /var/www/html2
+ServerName www.yourdomain.com
+SSLEngine on
+SSLCertificateFile /path/to/your_domain_name.crt  #publickey for browser (for selfsign: openssl x509 -req -days 365 -in ca.csr -signkey ca.key -out ca.crt)
+SSLCertificateKeyFile /path/to/your_private.key   #privatekey (for selfsign: openssl genrsa -out ca.key 2048 )
+SSLCertificateChainFile /path/to/DigiCertCA.crt
+</VirtualHost> 
+
+server {
+listen   443;
+ssl    on;
+ssl_certificate    /etc/ssl/your_domain_name.pem; #(or bundle.crt) primary certificate combined with the intermediate certificate
+ssl_certificate_key    /etc/ssl/your_domain_name.key; #privatekey
+server_name your.domain.com;
+...
+}
+
+selfsign:
+1. gen ra privatekey
+2. dung privatekey tao csr
+3. dung privatekey + csr tao publickey
+
+buy:
+1. gen ra privatekey
+2. dung privatekey tao csr
+3. dung csr đi add vao goddady, godday se cung cap SSL certificate (example.crt) va CA intermediate certificate (intermediate.crt), dùng bundle key nghia la combine 2 key nay vao 1 file
+
+ssl_certificate: la cua provider cung cap, co the la bundle
+ssl_certificate_key: privatekey do minh tu generate ra, keep secure
+
+https://www.websecurity.symantec.com/security-topics/how-does-ssl-handshake-work

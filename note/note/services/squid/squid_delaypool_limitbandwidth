@@ -1,0 +1,19 @@
+Notice:
+delay_class 1 1
+1 : mean class 1 ip address (class A)
+########Delay Pools#########
+# a simple global throttle, users sharing 256 Kbit/s
+delay_pools 1
+delay_class 1 1
+# 256 Kbit/s fill rate, 1024 Kbit/s reserve
+delay_parameters 1 32000/128000
+acl All src 0/0
+delay_access 1 allow All
+
+The delay_parameters values are bytes, so if you're used to measuring bandwidth speed in bits per second, remember to divide bits by 8.
+
+acl All src 0/0 creates an access rule named All, and it includes the entire IP range.
+
+delay_access 1 allow All tells which requests go through which pools.
+
+This configuration places no limitations on individual users; all users share the same bucket. During idle times, Squid will "refill" the bucket, allowing greater-than-256 Kbit/s speed, until the 1024 Kbit/s "reserve" is consumed. Then users are limited to sharing the 256 Kbit/s "fill" rate. You might use this to reserve bandwidth for other applications on an overburdened link. For example, if you have an important application, mail, or Web server that needs a little elbow room, route all your Web surfin' slackers through Squid, and let your servers roam free. 

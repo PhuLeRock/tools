@@ -1,0 +1,17 @@
+To restrict access to the Squid proxy via the time, use the format:
+
+       acl aclname time     [day-abbrevs]  [h1:m1-h2:m2]
+           day-abbrevs:
+               S - Sunday
+               M - Monday
+               T - Tuesday
+               W - Wednesday
+               H - Thursday
+               F - Friday
+               A - Saturday
+
+This can be used, for instance, to restrict access to work hours (9am - 5pm, Monday to Friday).
+
+	acl workdays time M T W H F 9:00-17:00
+	http_access allow workdays
+

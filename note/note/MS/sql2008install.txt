@@ -1,0 +1,3 @@
+http://mssqltrek.com/2011/08/23/installing-sql-server-from-command-linecmd/
+
+setup.exe /QUIETSIMPLE /ACTION=install /FEATURES=SQL /INSTANCENAME=SQL2008 /SQLSVCACCOUNT=”NT Authority\System” /SQLSYSADMINACCOUNTS=”sreekanthpc\sreekanth” /AGTSVCACCOUNT=”NT Authority\System” /SECURITYMODE=SQL /SAPWD=”Pa$$w0rd” /SQLTEMPDBDIR=”D:\SQL2008\TempDB\\” /SQLUSERDBDIR=”D:\SQL2008\SQLData\\” /SQLUSERDBLOGDIR=”D:\SQL2008\SQLLog\\

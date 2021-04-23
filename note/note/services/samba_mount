@@ -1,0 +1,8 @@
+mount //192.168.0.1/linux /media/sharename/ -o username=myusername,workgroup=jdvn.com
+
+
+domain so.vinagame.com.vn
+smbclient -L 1.1.1.2 -U phultv -W so
+smbmount //1.1.1.2/d /media/phultv_d/ -o username=phultv,workgroup=so
+
+

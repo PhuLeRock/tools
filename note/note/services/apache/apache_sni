@@ -1,0 +1,19 @@
+http://www.debianadmin.com/install-and-configure-apache2-with-php5-and-ssl-support-in-debian-etch.html
+http://www.securityfocus.com/infocus/1818
+
+wget http://www.openssl.org/source/openssl-1.0.0g.tar.gz
+./config  --prefix=/ssgserver/openssl enable-tlsext shared
+make;make install
+
+
+Apache
+LDFLAGS=-L/usr/local2/lib CPPFLAGS=-I/usr/local2/include/ ./configure...  --enable-mods-shared=”isapi file_cache cache disk_cache mem_cache ext_filter expires headers usertrack unique_id status info cgi cgid speling ssl”
+always run http with LD_LIBRARY_PATH=/ssgserver/openssl/lib:$LD_LIBRARY_PATH /ssgserver/httpd/bin/httpd 
+
+PHP
+Compile php, but don't use --with-openssl
+install the openssl extension later with 
+./configure --with-php-config=/ssgserver/php/bin/php-config --with-openssl=/ssgserver/openssl
+
+
+

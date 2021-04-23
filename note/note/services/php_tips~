@@ -1,0 +1,2 @@
+session.cookie_secure = On (only for openssl)
+session.cookie_httponly = On

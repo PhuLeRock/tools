@@ -1,0 +1,4 @@
+muốn tạo trigger phải tạo item trước,nếu item chưa có, vd như check listen port thì ko có sẵn item.
+
+1. vào host tạo item net.tcp.listen[80]
+2. tạo trigger, trong phần expression có thể nhấn [ADD] để chọn item,  {chatlive-addserver:net.tcp.listen[80].last()}=0

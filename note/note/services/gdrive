@@ -1,0 +1,15 @@
+
+Step 2: Add the following package
+
+    sudo add-apt-repository ppa:invernizzi/google-docs-fs
+    sudo apt-get update && sudo apt-get install google-docs-fs
+
+Step 3: Once the installation completed, logout and login again to your Ubuntu Desktop.
+
+Step 4: Now open “Nautilus” and Create a New Folder in your “Home” folder as “Drive”.
+
+Step 5: Access “Terminal” and type the following command
+
+    gmount Drive username@gmail.com
+
+(replace the username with your google account detail to access your Google Drive)

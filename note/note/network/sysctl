@@ -1,0 +1,64 @@
+kernel.msgmnb = 65536
+kernel.msgmax = 65536
+kernel.shmmax = 68719476736
+kernel.shmall = 4294967296
+
+
+
+# Increase the read/write TCP buffers (tcp_rmem and tcp_wmem) 
+# to allow for larger window sizes. 
+# This enables more data to be transferred without ACKs, increasing throughput. 
+# We won’t tune the total TCP memory (tcp_mem), 
+# since this is automatically tuned based on available memory by Linux.
+# 16777216 /1024 /1024 = 16MB
+# Increase Linux autotuning TCP buffer limits
+# Set max to 16MB for 1GE and 32M (33554432) or 54M (56623104) for 10GE
+# Don't set tcp_mem itself! Let the kernel scale it based on RAM.
+net.core.rmem_max = 16777216
+net.core.wmem_max = 16777216
+net.core.rmem_default = 16777216
+net.core.wmem_default = 16777216
+net.core.optmem_max = 40960
+net.ipv4.tcp_rmem = 4096 87380 16777216
+net.ipv4.tcp_wmem = 4096 65536 16777216
+
+
+sysctl -w net.ipv4.route.flush=1 ???
+# Decrease the time that sockets stay in the TIME_WAIT 
+# state by lowering tcp_fin_timeout from its default of 60 seconds to 10. 
+# You can lower this even further, but too low, and you can run into 
+# socket close errors in networks with lots of jitter. 
+# We will also set tcp_tw_reuse to tell the kernel it 
+# can reuse sockets in the TIME_WAIT state.
+# Make room for more TIME_WAIT sockets due to more clients,
+# and allow them to be reused if we run out of sockets
+# Also increase the max packet backlog
+net.core.netdev_max_backlog = 50000
+net.ipv4.tcp_max_syn_backlog = 30000
+net.ipv4.tcp_max_tw_buckets = 2000000
+net.ipv4.tcp_tw_reuse = 1
+net.ipv4.tcp_fin_timeout = 10
+
+# Disable TCP slow start on idle connections
+net.ipv4.tcp_slow_start_after_idle = 0
+
+# prevent sync attack
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_max_syn_backlog = 2048
+net.ipv4.tcp_synack_retries = 2
+
+
+fs.file-max=100000
+
+net.ipv4.ip_local_port_range = 32768	61000 (default)
+net.ipv4.tcp_fin_timeout = 60 (default)
+net.ipv4.tcp_low_latency = 0 (default)
+net.ipv4.tcp_rmem = 4096	87380	6291456
+net.ipv4.tcp_keepalive_intvl = 75
+net.ipv4.tcp_keepalive_probes = 9
+net.ipv4.tcp_mem = 186384	248515	372768 auto tune by kernel
+net.ipv4.tcp_rmem = 4096	87380	6291456
+net.ipv4.tcp_tw_recycle = 0
+net.ipv4.tcp_tw_reuse = 0
+net.ipv4.tcp_window_scaling = 1
+net.ipv4.tcp_wmem = 4096	16384	4194304

@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<!-- Xmodulo uses HeatMap AdAptive v1.4.8 by heatmaptheme.com -->
+<!-- render.php -->
+<html prefix="og: http://ogp.me/ns#" lang="en-US"><!-- Beginning of <head> --><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<!-- heatmapthemead_pre_wp_head hook -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+<title>What are useful command-line network monitors on Linux - Xmodulo</title>
+<link rel="profile" href="http://gmpg.org/xfn/11"><link rel="pingback" href="http://xmodulo.com/xmlrpc.php">
+<link href="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/css.css" rel="stylesheet" type="text/css"><!-- end of heatmapthemead_pre_wp_head hook -->
+<!-- wp_head()-->
+<!-- This site is optimized with the Yoast SEO plugin v3.2.5 - https://yoast.com/wordpress/plugins/seo/ -->
+<link rel="canonical" href="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/useful-command-line-network-monitors-linux_004.htm">
+<meta property="og:locale" content="en_US">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What are useful command-line network monitors on Linux - Xmodulo">
+<meta property="og:description" content="Network monitoring is a critical IT function for businesses of all sizes. The goal of network monitoring can vary. For example, the monitoring activity can be part of long-term network provisioning, security protection, performance troubleshooting, network usage accounting, and so on. Depending on its goal, network monitoring is done in many different ways, such as …Continue reading...">
+<meta property="og:url" content="http://xmodulo.com/useful-command-line-network-monitors-linux.html">
+<meta property="og:site_name" content="Xmodulo">
+<meta property="article:author" content="https://www.facebook.com/xmodulo">
+<meta property="article:tag" content="cli">
+<meta property="article:tag" content="network monitoring">
+<meta property="article:section" content="Networking">
+<meta property="article:published_time" content="2015-01-09T03:54:59+00:00">
+<meta property="article:modified_time" content="2016-01-19T04:45:26+00:00">
+<meta property="og:updated_time" content="2016-01-19T04:45:26+00:00">
+<meta property="og:image" content="https://farm8.staticflickr.com/7519/16055246118_8ea182b413_c.jpg">
+<meta property="og:image" content="https://farm8.staticflickr.com/7477/16048970999_be60f74952_b.jpg">
+<meta property="og:image" content="https://farm9.staticflickr.com/8580/16234265932_87f20c5d17_b.jpg">
+<meta property="og:image" content="https://farm8.staticflickr.com/7485/16048971069_31dd573a4f_c.jpg">
+<meta property="og:image" content="https://farm8.staticflickr.com/7507/16047703080_5fdda2e811_b.jpg">
+<meta property="og:image" content="https://farm8.staticflickr.com/7466/15612665344_a4bb665a5b_c.jpg">
+<meta property="og:image" content="https://farm8.staticflickr.com/7558/16047703100_413843b946_b.jpg">
+<meta property="og:image" content="https://farm8.staticflickr.com/7518/16209185266_da6c5c56eb_c.jpg">
+<meta property="og:image" content="https://farm8.staticflickr.com/7472/16047570248_bc996795f2_c.jpg">
+<!-- / Yoast SEO plugin. -->
+
+<link rel="alternate" type="application/rss+xml" title="Xmodulo » Feed" href="http://xmodulo.com/feed">
+<link rel="alternate" type="application/rss+xml" title="Xmodulo » Comments Feed" href="http://xmodulo.com/comments/feed">
+<link rel="alternate" type="application/rss+xml" title="Xmodulo » What are useful command-line network monitors on Linux Comments Feed" href="http://xmodulo.com/useful-command-line-network-monitors-linux.html/feed">
+<link rel="stylesheet" href="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/output.css" type="text/css">
+		<script async="" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/cbgapi.loaded_2"></script><script async="" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/cbgapi.loaded_1"></script><script src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/sdk.js" id="facebook-jssdk"></script><script src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/widgets.js" id="twitter-wjs"></script><script gapi_processed="true" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/plusone.js" async="" type="text/javascript">{"parsetags": "explicit"}</script><script src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/dc.js" async="" type="text/javascript"></script><script src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/ca-pub-7245163904660683.js"></script><script async="" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/cbgapi.loaded_0"></script><script type="text/javascript">
+			window._wpemojiSettings = {"baseUrl":"https:\/\/s.w.org\/images\/core\/emoji\/72x72\/","ext":".png","source":{"concatemoji":"http:\/\/xmodulo.com\/wp-includes\/js\/wp-emoji-release.min.js?ver=4.5.2"}};
+			!function(a,b,c){function d(a){var c,d,e,f=b.createElement("canvas"),g=f.getContext&&f.getContext("2d"),h=String.fromCharCode;if(!g||!g.fillText)return!1;switch(g.textBaseline="top",g.font="600 32px Arial",a){case"flag":return g.fillText(h(55356,56806,55356,56826),0,0),f.toDataURL().length>3e3;case"diversity":return g.fillText(h(55356,57221),0,0),c=g.getImageData(16,16,1,1).data,d=c[0]+","+c[1]+","+c[2]+","+c[3],g.fillText(h(55356,57221,55356,57343),0,0),c=g.getImageData(16,16,1,1).data,e=c[0]+","+c[1]+","+c[2]+","+c[3],d!==e;case"simple":return g.fillText(h(55357,56835),0,0),0!==g.getImageData(16,16,1,1).data[0];case"unicode8":return g.fillText(h(55356,57135),0,0),0!==g.getImageData(16,16,1,1).data[0]}return!1}function e(a){var c=b.createElement("script");c.src=a,c.type="text/javascript",b.getElementsByTagName("head")[0].appendChild(c)}var f,g,h,i;for(i=Array("simple","flag","unicode8","diversity"),c.supports={everything:!0,everythingExceptFlag:!0},h=0;h<i.length;h++)c.supports[i[h]]=d(i[h]),c.supports.everything=c.supports.everything&&c.supports[i[h]],"flag"!==i[h]&&(c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&c.supports[i[h]]);c.supports.everythingExceptFlag=c.supports.everythingExceptFlag&&!c.supports.flag,c.DOMReady=!1,c.readyCallback=function(){c.DOMReady=!0},c.supports.everything||(g=function(){c.readyCallback()},b.addEventListener?(b.addEventListener("DOMContentLoaded",g,!1),a.addEventListener("load",g,!1)):(a.attachEvent("onload",g),b.attachEvent("onreadystatechange",function(){"complete"===b.readyState&&c.readyCallback()})),f=c.source||{},f.concatemoji?e(f.concatemoji):f.wpemoji&&f.twemoji&&(e(f.twemoji),e(f.wpemoji)))}(window,document,window._wpemojiSettings);
+		</script><script type="text/javascript" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/wp-emoji-release.js"></script>
+		<style type="text/css">
+img.wp-smiley,
+img.emoji {
+	display: inline !important;
+	border: none !important;
+	box-shadow: none !important;
+	height: 1em !important;
+	width: 1em !important;
+	margin: 0 .07em !important;
+	vertical-align: -0.1em !important;
+	background: none !important;
+	padding: 0 !important;
+}
+</style>
+<link rel="stylesheet" id="yarppWidgetCss-css" href="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/widget.css" type="text/css" media="all">
+<link rel="stylesheet" id="ts_fab_css-css" href="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/ts-fab.css" type="text/css" media="all">
+<link rel="stylesheet" id="style-css" href="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/style.css" type="text/css" media="all">
+<link rel="stylesheet" id="yarppRelatedCss-css" href="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/related.css" type="text/css" media="all">
+<link rel="stylesheet" id="genericons-css" href="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/genericons.css" type="text/css" media="all">
+<link rel="stylesheet" id="jetpack_css-css" href="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/jetpack.css" type="text/css" media="all">
+<script gapi_processed="true" type="text/javascript" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/plusone.js"></script>
+<script type="text/javascript" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/jquery.js"></script>
+<script type="text/javascript" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/jquery-migrate.js"></script>
+<script type="text/javascript" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/ts-fab.js"></script>
+<script type="text/javascript" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/small-menu.js"></script>
+<link rel="https://api.w.org/" href="http://xmodulo.com/wp-json/">
+<link rel="EditURI" type="application/rsd+xml" title="RSD" href="http://xmodulo.com/xmlrpc.php?rsd">
+<link rel="wlwmanifest" type="application/wlwmanifest+xml" href="http://d2j4ekq3nza4ef.cloudfront.net/wp-includes/wlwmanifest.xml"> 
+<meta name="generator" content="WordPress 4.5.2">
+<link rel="shortlink" href="http://xmodulo.com/?p=21662">
+<link rel="alternate" type="application/json+oembed" href="http://xmodulo.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fxmodulo.com%2Fuseful-command-line-network-monitors-linux.html">
+<link rel="alternate" type="text/xml+oembed" href="http://xmodulo.com/wp-json/oembed/1.0/embed?url=http%3A%2F%2Fxmodulo.com%2Fuseful-command-line-network-monitors-linux.html&amp;format=xml">
+<!-- 981B20F2-B00E-49C1-8FB6-C88C38B82C69 -->
+<script async="" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/adsbygoogle.js"></script>
+<script>
+  (adsbygoogle = window.adsbygoogle || []).push({
+    google_ad_client: "ca-pub-7245163904660683",
+    enable_page_level_ads: true
+  });
+</script>		<style>
+			/* Link color */
+			a {
+				color: #1b8be0;
+			}
+		</style>
+			<style>
+			/* Max Width */
+			#heatmapthemead-leaderboard,
+			nav.main-navigation,
+			nav.secondary-navigation,
+			#heatmapthemead-branding-container,
+			.heatmapthemead-layout-both-sidebars #heatmapthemead-main,
+			.heatmapthemead-layout-primary-sidebar-content #heatmapthemead-main,
+			.heatmapthemead-layout-content-secondary-sidebar #heatmapthemead-main,
+			.heatmapthemead-layout-content #heatmapthemead-main
+			{
+				max-width: 1320px;
+			}
+		</style>
+		
+				<style>
+				#heatmapthemead-header, #heatmapthemead-footer { 
+					max-width: 1320px; 
+				} 
+			</style>
+					
+					<style>
+					/* Font Style */
+					h1,h2,h3,h4,h5,h6,
+					#heatmapthemead-header-text p#site-title,
+					#heatmapthemead-header-text p#site-description { font-family: 'Open Sans', Arial, Helvetica, sans-serif; }
+					.heatmapthemead-menu { font-family: 'Open Sans', Arial, Helvetica, sans-serif; }
+					body { font-size: 1.7em; }
+					body, button, input, select, textarea { font-family:  Arial, Helvetica, sans-serif; }
+				</style> 
+				<style type="text/css">
+			#site-title a,
+		#site-description {
+			color: #000000 !important;
+		}
+		</style>
+	<style type="text/css" id="syntaxhighlighteranchor"></style>
+<!-- End of wp_head() -->
+<!-- heatmapthemead_post_wp_head hook -->
+<!-- HEAD CSS -->
+<style> 
+</style>
+<!-- end of heatmapthemead_post_wp_head hook -->
+<script src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/button.js" async="" charset="utf-8" type="text/javascript"></script><style type="text/css">.fb_hidden{position:absolute;top:-10000px;z-index:10001}.fb_reposition{overflow:hidden;position:relative}.fb_invisible{display:none}.fb_reset{background:none;border:0;border-spacing:0;color:#000;cursor:auto;direction:ltr;font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;font-style:normal;font-variant:normal;font-weight:normal;letter-spacing:normal;line-height:1;margin:0;overflow:visible;padding:0;text-align:left;text-decoration:none;text-indent:0;text-shadow:none;text-transform:none;visibility:visible;white-space:normal;word-spacing:normal}.fb_reset>div{overflow:hidden}.fb_link img{border:none}@keyframes fb_transform{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}.fb_animate{animation:fb_transform .3s forwards}
+.fb_dialog{background:rgba(82, 82, 82, .7);position:absolute;top:-10000px;z-index:10001}.fb_reset .fb_dialog_legacy{overflow:visible}.fb_dialog_advanced{padding:10px;-moz-border-radius:8px;-webkit-border-radius:8px;border-radius:8px}.fb_dialog_content{background:#fff;color:#333}.fb_dialog_close_icon{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 0 transparent;_background-image:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif);cursor:pointer;display:block;height:15px;position:absolute;right:18px;top:17px;width:15px}.fb_dialog_mobile .fb_dialog_close_icon{top:5px;left:5px;right:auto}.fb_dialog_padding{background-color:transparent;position:absolute;width:1px;z-index:-1}.fb_dialog_close_icon:hover{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -15px transparent;_background-image:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}.fb_dialog_close_icon:active{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yq/r/IE9JII6Z1Ys.png) no-repeat scroll 0 -30px transparent;_background-image:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yL/r/s816eWC-2sl.gif)}.fb_dialog_loader{background-color:#f6f7f9;border:1px solid #606060;font-size:24px;padding:20px}.fb_dialog_top_left,.fb_dialog_top_right,.fb_dialog_bottom_left,.fb_dialog_bottom_right{height:10px;width:10px;overflow:hidden;position:absolute}.fb_dialog_top_left{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 0;left:-10px;top:-10px}.fb_dialog_top_right{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -10px;right:-10px;top:-10px}.fb_dialog_bottom_left{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -20px;bottom:-10px;left:-10px}.fb_dialog_bottom_right{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/ye/r/8YeTNIlTZjm.png) no-repeat 0 -30px;right:-10px;bottom:-10px}.fb_dialog_vert_left,.fb_dialog_vert_right,.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{position:absolute;background:#525252;filter:alpha(opacity=70);opacity:.7}.fb_dialog_vert_left,.fb_dialog_vert_right{width:10px;height:100%}.fb_dialog_vert_left{margin-left:-10px}.fb_dialog_vert_right{right:0;margin-right:-10px}.fb_dialog_horiz_top,.fb_dialog_horiz_bottom{width:100%;height:10px}.fb_dialog_horiz_top{margin-top:-10px}.fb_dialog_horiz_bottom{bottom:0;margin-bottom:-10px}.fb_dialog_iframe{line-height:0}.fb_dialog_content .dialog_title{background:#6d84b4;border:1px solid #365899;color:#fff;font-size:14px;font-weight:bold;margin:0}.fb_dialog_content .dialog_title>span{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yd/r/Cou7n-nqK52.gif) no-repeat 5px 50%;float:left;padding:5px 0 7px 26px}body.fb_hidden{-webkit-transform:none;height:100%;margin:0;overflow:visible;position:absolute;top:-10000px;left:0;width:100%}.fb_dialog.fb_dialog_mobile.loading{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/ya/r/3rhSv5V8j3o.gif) white no-repeat 50% 50%;min-height:100%;min-width:100%;overflow:hidden;position:absolute;top:0;z-index:10001}.fb_dialog.fb_dialog_mobile.loading.centered{width:auto;height:auto;min-height:initial;min-width:initial;background:none}.fb_dialog.fb_dialog_mobile.loading.centered #fb_dialog_loader_spinner{width:100%}.fb_dialog.fb_dialog_mobile.loading.centered .fb_dialog_content{background:none}.loading.centered #fb_dialog_loader_close{color:#fff;display:block;padding-top:20px;clear:both;font-size:18px}#fb-root #fb_dialog_ipad_overlay{background:rgba(0, 0, 0, .45);position:absolute;bottom:0;left:0;right:0;top:0;width:100%;min-height:100%;z-index:10000}#fb-root #fb_dialog_ipad_overlay.hidden{display:none}.fb_dialog.fb_dialog_mobile.loading iframe{visibility:hidden}.fb_dialog_content .dialog_header{-webkit-box-shadow:white 0 1px 1px -1px inset;background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#738ABA), to(#2C4987));border-bottom:1px solid;border-color:#1d4088;color:#fff;font:14px Helvetica, sans-serif;font-weight:bold;text-overflow:ellipsis;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0;vertical-align:middle;white-space:nowrap}.fb_dialog_content .dialog_header table{-webkit-font-smoothing:subpixel-antialiased;height:43px;width:100%}.fb_dialog_content .dialog_header td.header_left{font-size:12px;padding-left:5px;vertical-align:middle;width:60px}.fb_dialog_content .dialog_header td.header_right{font-size:12px;padding-right:5px;vertical-align:middle;width:60px}.fb_dialog_content .touchable_button{background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#4966A6), color-stop(.5, #355492), to(#2A4887));border:1px solid #29487d;-webkit-background-clip:padding-box;-webkit-border-radius:3px;-webkit-box-shadow:rgba(0, 0, 0, .117188) 0 1px 1px inset, rgba(255, 255, 255, .167969) 0 1px 0;display:inline-block;margin-top:3px;max-width:85px;line-height:18px;padding:4px 12px;position:relative}.fb_dialog_content .dialog_header .touchable_button input{border:none;background:none;color:#fff;font:12px Helvetica, sans-serif;font-weight:bold;margin:2px -12px;padding:2px 6px 3px 6px;text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog_content .dialog_header .header_center{color:#fff;font-size:16px;font-weight:bold;line-height:18px;text-align:center;vertical-align:middle}.fb_dialog_content .dialog_content{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat 50% 50%;border:1px solid #555;border-bottom:0;border-top:0;height:150px}.fb_dialog_content .dialog_footer{background:#f6f7f9;border:1px solid #555;border-top-color:#ccc;height:40px}#fb_dialog_loader_close{float:left}.fb_dialog.fb_dialog_mobile .fb_dialog_close_button{text-shadow:rgba(0, 30, 84, .296875) 0 -1px 0}.fb_dialog.fb_dialog_mobile .fb_dialog_close_icon{visibility:hidden}#fb_dialog_loader_spinner{animation:rotateSpinner 1.2s linear infinite;background-color:transparent;background-image:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/yD/r/t-wz8gw1xG1.png);background-repeat:no-repeat;background-position:50% 50%;height:24px;width:24px}@keyframes rotateSpinner{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.fb_iframe_widget{display:inline-block;position:relative}.fb_iframe_widget span{display:inline-block;position:relative;text-align:justify}.fb_iframe_widget iframe{position:absolute}.fb_iframe_widget_fluid_desktop,.fb_iframe_widget_fluid_desktop span,.fb_iframe_widget_fluid_desktop iframe{max-width:100%}.fb_iframe_widget_fluid_desktop iframe{min-width:220px;position:relative}.fb_iframe_widget_lift{z-index:1}.fb_hide_iframes iframe{position:relative;left:-10000px}.fb_iframe_widget_loader{position:relative;display:inline-block}.fb_iframe_widget_fluid{display:inline}.fb_iframe_widget_fluid span{width:100%}.fb_iframe_widget_loader iframe{min-height:32px;z-index:2;zoom:1}.fb_iframe_widget_loader .FB_Loader{background:url(https://fbstatic-a.akamaihd.net/rsrc.php/v2/y9/r/jKEcVPZFk-2.gif) no-repeat;height:32px;width:32px;margin-left:-16px;position:absolute;left:50%;z-index:4}</style><script>try {  for(var lastpass_iter=0; lastpass_iter < document.forms.length; lastpass_iter++){    var lastpass_f = document.forms[lastpass_iter];    if(typeof(lastpass_f.lpsubmitorig)=="undefined"){      if (typeof(lastpass_f.submit) == "function") {        lastpass_f.lpsubmitorig = lastpass_f.submit;        lastpass_f.submit = function(){          var form = this;          try {            if (document.documentElement && 'createEvent' in document)            {              var forms = document.getElementsByTagName('form');              for (var i=0 ; i<forms.length ; ++i)                if (forms[i]==form)                {                  var element = document.createElement('lpformsubmitdataelement');                  element.setAttribute('formnum',i);                  element.setAttribute('from','submithook');                  document.documentElement.appendChild(element);                  var evt = document.createEvent('Events');                  evt.initEvent('lpformsubmit',true,false);                  element.dispatchEvent(evt);                  break;                }            }          } catch (e) {}          try {            form.lpsubmitorig();          } catch (e) {}        }      }    }  }} catch (e) {}</script></head>
+<!-- End of <head> -->
+<body class="single single-post postid-21662 single-format-standard heatmapthemead-layout-both-sidebars  heatmapthemead-max-width-1320 heatmapthemead-long-content">
+<!-- heatmapthemead_start_body hook -->
+<!-- end of heatmapthemead_start_body hook -->
+<!-- The Header Bars -->
+<div id="heatmapthemead-header-wipe">
+<div id="heatmapthemead-header">
+<div id="heatmapthemead-header-container">
+  
+		<div id="heatmapthemead-primary-menu" class="heatmapthemead-menu">
+			<nav role="navigation" class="site-navigation main-navigation">
+				<p class="primary-small-nav-text">	
+					Menu				</p>
+				<div class="menu-menu-container"><ul id="menu-menu" class="menu"><li id="menu-item-5809" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-home menu-item-5809"><a href="http://xmodulo.com/">Home</a></li>
+<li id="menu-item-5811" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5811"><a href="http://xmodulo.com/about">About</a></li>
+<li id="menu-item-5814" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-5814"><a href="http://ask.xmodulo.com/">Linux Q &amp; A</a></li>
+<li id="menu-item-6965" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-6965"><a href="http://list.xmodulo.com/">List</a></li>
+<li id="menu-item-5810" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5810"><a href="http://xmodulo.com/write-us">Write for Us</a></li>
+<li id="menu-item-5812" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5812"><a href="http://xmodulo.com/advertise">Advertise</a></li>
+<li id="menu-item-5813" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-5813"><a href="http://xmodulo.com/contact">Contact</a></li>
+</ul></div>			</nav>
+		</div>
+			<div id="heatmapthemead-header-branding">
+		<div id="heatmapthemead-branding-container">
+							<header id="branding" role="banner">
+							<div id="heatmapthemead-header-text">
+			<aside>
+				<p id="site-title"><a href="http://xmodulo.com/" title="Xmodulo" rel="home">Xmodulo</a></p>
+				<p id="site-description">Linux FAQs, tips and tutorials</p>
+			</aside>
+		</div>
+					</header><!-- #branding -->
+			<div id="heatmapthemead-widget-position-header" class="heatmapthemead-widget-position heatmapthemead-homeheader widget-area heatmapthemead-static-header-widget" role="complementary"><aside class="widget"><div class="heatmapthemead-social-icons"><a id="heatmapthemead-fb-social-icon" class="heatmapthemead-social-icon" href="https://www.facebook.com/xmodulo" target="_blank"><img src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/facebook.png" alt=""></a><a id="heatmapthemead-twitter-social-icon" class="heatmapthemead-social-icon" href="https://twitter.com/xmodulo" target="_blank"><img src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/twitter.png" alt=""></a><a id="heatmapthemead-googleplus-social-icon" class="heatmapthemead-social-icon" href="http://plus.google.com/+Xmodulo" target="_blank"><img src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/googleplus.png" alt=""></a><a id="heatmapthemead-linkedin-social-icon" class="heatmapthemead-social-icon" href="http://www.linkedin.com/in/xmodulo" target="_blank"><img src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/linkedin.png" alt=""></a><a id="heatmapthemead-rss-social-icon" class="heatmapthemead-social-icon" href="http://xmodulo.com/feed" target="_blank"><img src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/rss-feed.png" alt=""></a></div> <!--.heatmapthemead-social-icons --></aside></div> <!-- id="heatmapthemead-widget-position-header" -->
+		</div><!-- #heatmapthemead-branding-container -->
+	</div><!-- #heatmapthemead-header-branding -->		
+</div> <!-- id="heatmapthemead-header-container" -->
+</div> <!-- id="heatmapthemead-header" -->
+</div> <!-- id="heatmapthemead-header-wipe" -->
+<!-- The main part of the page (with content and sidebars) -->
+<div id="heatmapthemead-main-wipe">
+<div id="heatmapthemead-main">
+<div id="heatmapthemead-content">
+<div id="heatmapthemead-the-content" class="site-content">
+<div id="heatmapthemead-the-content-container" role="main">
+	
+	
+		<article id="post-21662" class="post-21662 post type-post status-publish format-standard hentry category-networking category-sysadmin tag-cli tag-network-monitoring">
+		
+			<div id="heatmapthemead-widget-position-blogabove" class="heatmapthemead-widget-position heatmapthemead-blogabove widget-area" role="complementary"><aside id="text-20" class="widget widget_text">			<div class="textwidget"><div id="heatmapthemead-featured-page" class="heatmapthemead-article"><h2><a target="_blank" rel="nofollow" href="http://xmodulo.com/go/noction">Boost BGP Network Performance by 42% - [Free Demo]</a></h2></div>
+</div>
+		</aside></div> <!-- id="heatmapthemead-widget-position-blogabove" -->
+		<header class="entry-header">
+			<h1 class="entry-title"><a href="http://xmodulo.com/useful-command-line-network-monitors-linux.html" title="Permalink to What are useful command-line network monitors on Linux" rel="bookmark">What are useful command-line network monitors on Linux</a></h1>
+		</header> <!-- heatmapthemead-entry-header -->
+	<div class="heatmapthemead-header-entry-meta entry-meta"><span class="heatmapthemead-post-details">Last updated on <a href="http://xmodulo.com/useful-command-line-network-monitors-linux.html" title="3:54 am" rel="bookmark"><time class="entry-date" datetime="2015-01-09T03:54:59+00:00">January 9, 2015</time></a><span class="byline"> Authored by <span class="author vcard"><a class="url fn n" href="http://xmodulo.com/author/nanni" title="View all posts by Dan Nanni" rel="author">Dan Nanni</a></span></span></span>					<span class="comments-link"><a href="http://xmodulo.com/useful-command-line-network-monitors-linux.html#comments">8 Comments</a></span>
+								</div><!-- .heatmapthemead-entry-meta -->
+			<div class="entry-content">
+<!--Ad Injection mfunc mode ad include code--><!--mfunc include_once('/home/kimchido/public_html/wp-content/plugins/ad-injection/adshow.php') --><!--/mfunc-->
+<p>Network monitoring is a critical IT function for businesses of all 
+sizes.  The goal of network monitoring can vary. For example, the 
+monitoring activity can be part of long-term network provisioning, 
+security protection, performance troubleshooting, network usage 
+accounting, and so on.  Depending on its goal, network monitoring is 
+done in many different ways, such as performing packet-level sniffing, 
+collecting flow-level statistics, actively injecting probes into the 
+network, parsing server logs, etc.</p>
+<p>While there are many dedicated network monitoring systems capable of 
+24/7/365 monitoring, you can also leverage command-line network monitors
+ in certain situations, where a dedicated monitor is an overkill.  If 
+you are a system admin, you are expected to have hands-on experience 
+with some of well known CLI network monitors.  Here is a list of <strong>popular and useful command-line network monitors on Linux</strong>.</p>
+<h2>Packet-Level Sniffing</h2>
+<p>In this category, monitoring tools capture individual packets on the 
+wire, dissect their content, and display decoded packet content or 
+packet-level statistics.  These tools conduct network monitoring from 
+the lowest level, and as such, can possibly do the most fine-grained 
+monitoring at the cost of network I/O and analysis efforts.</p>
+<p>1. <b>dhcpdump:</b> a comman-line DHCP traffic sniffer capturing DHCP
+ request/response traffic, and displays dissected DHCP protocol messages
+ in a human-friendly format. It is useful when you are troubleshooting 
+DHCP related issues.</p>
+<p>2. <b><a target="_blank" href="http://www.monkey.org/%7Edugsong/dsniff/">dsniff</a>:</b>
+ a collection of command-line based sniffing, spoofing and hijacking 
+tools designed for network auditing and penetration testing.  They can 
+sniff various information such as passwords, NSF traffic, email 
+messages, website URLs, and so on.</p>
+<p>3. <b><a target="_blank" href="http://xmodulo.com/monitor-http-traffic-command-line-linux.html">httpry</a>:</b>
+ an HTTP packet sniffer which captures and decode HTTP requests and 
+response packets, and display them in a human-readable format.</p>
+<p>4. <b>IPTraf:</b> a console-based network statistics viewer. It 
+displays packet-level, connection-level, interface-level, protocol-level
+ packet/byte counters in real-time.  Packet capturing can be controlled 
+by protocol filters, and its operation is full menu-driven.</p>
+<p><a target="_blank" rel="nofollow" href="https://www.flickr.com/photos/xmodulo/16055246118/"><img class="lazy" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/16055246118_8ea182b413_c.jpg" data-lazy-type="image" data-lazy-src="https://farm8.staticflickr.com/7519/16055246118_8ea182b413_c.jpg"><noscript><img src="https://farm8.staticflickr.com/7519/16055246118_8ea182b413_c.jpg"></noscript></a></p>
+<p>5. <b><a target="_blank" href="https://github.com/zorkian/mysql-sniffer">mysql-sniffer</a>:</b>
+ a packet sniffer which captures and decodes packets associated with 
+MySQL queries.  It displays the most frequent or all queries in a 
+human-readable format.</p>
+<p>6. <b><a target="_blank" href="http://ngrep.sourceforge.net/">ngrep</a>:</b> <tt>grep</tt>
+ over network packets. It can capture live packets, and match (filtered)
+ packets against regular expressions or hexadecimal expressions.  It is 
+useful for detecting and storing any anomalous traffic, or for sniffing 
+particular patterns of information from live traffic.</p>
+<p>7. <b><a target="_blank" href="http://lcamtuf.coredump.cx/p0f3/">p0f</a>:</b>
+ a passive fingerprinting tool which, based on packet sniffing, reliably
+ identifies operating systems, NAT or proxy settings, network link types
+ and various other properites associated with an active TCP connection.</p>
+<p>8. <b>pktstat:</b> a command-line tool which analyzes live packets to
+ display connection-level bandwidth usages as well as descriptive 
+information of protocols involved (e.g., HTTP GET/POST, FTP, X11).</p>
+<p><a target="_blank" rel="nofollow" href="https://www.flickr.com/photos/xmodulo/16048970999/"><img class="lazy" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/16048970999_be60f74952_b.jpg" data-lazy-type="image" data-lazy-src="https://farm8.staticflickr.com/7477/16048970999_be60f74952_b.jpg"><noscript><img src="https://farm8.staticflickr.com/7477/16048970999_be60f74952_b.jpg"></noscript></a></p>
+<p>9. <b><a href="http://list.xmodulo.com/snort.html" target="_blank">Snort</a>:</b>
+ an intrusion detection and prevention tool which can detect/prevent a 
+variety of backdoor, botnets, phishing, spyware attacks from live 
+traffic based on rule-driven protocol analysis and content matching.</p>
+<p>10. <b><a href="http://list.xmodulo.com/tcpdump.html" target="_blank">tcpdump</a>:</b>
+ a command-line packet sniffer which is capable of capturing nework 
+packets on the wire based on filter expressions, dissect the packets, 
+and dump the packet content for packet-level analysis.  It is widely 
+used for any kinds of networking related troubleshooting, network 
+application debugging, or security monitoring.</p>
+<p>11. <b>tshark:</b> a command-line packet sniffing tool that comes with <a href="http://list.xmodulo.com/wireshark.html" target="_blank">Wireshark</a> GUI program.  It can capture and decode live packets on the wire, and show decoded packet content in a human-friendly fashion.</p>
+<h2>Flow-/Process-/Interface-Level Monitoring</h2>
+<p>In this category, network monitoring is done by classifying network 
+traffic into flows, associated processes or interfaces, and collecting 
+per-flow, per-process or per-interface statistics.  Source of 
+information can be <tt>libpcap</tt> packet capture library or <tt>sysfs</tt> kernel virtual filesystem.  Monitoring overhead of these tools is low, but  packet-level inspection capabilities are missing.</p>
+<p>12. <b>bmon:</b> a console-based bandwidth monitoring tool which 
+shows various per-interface information, including not-only 
+aggregate/average RX/TX statistics, but also a historical view of 
+bandwidth usage.</p>
+<p><a target="_blank" rel="nofollow" href="https://www.flickr.com/photos/xmodulo/16234265932/"><img class="lazy" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/16234265932_87f20c5d17_b.jpg" data-lazy-type="image" data-lazy-src="https://farm9.staticflickr.com/8580/16234265932_87f20c5d17_b.jpg"><noscript><img src="https://farm9.staticflickr.com/8580/16234265932_87f20c5d17_b.jpg"></noscript></a></p>
+<p>13. <b><a target="_blank" href="http://xmodulo.com/how-to-install-iftop-on-linux.html">iftop</a>:</b>
+ a bandwidth usage monitoring tool that can shows bandwidth usage for 
+individual network connections in real time.  It comes with <tt>ncurses</tt>-based
+ interface to visualize bandwidth usage of all connections in a sorted 
+order.  It is useful for monitoring which connections are consuming the 
+most bandwidth.</p>
+<p>14. <b>nethogs:</b> a process monitoring tool which offers a 
+real-time view of upload/download bandwidth usage of individual 
+processes or programs in an <tt>ncurses</tt>-based interface.  This is useful for detecting bandwidth hogging processes.</p>
+<p>15. <b>netstat:</b> a command-line tool that shows various statistics
+ and properties of the networking stack, such as open TCP/UDP 
+connections, network interface RX/TX statistics, routing tables, 
+protocol/socket statistics.  It is useful when you diagnose performance 
+and resource usage related problems of the networking stack.</p>
+<!--Ad Injection mfunc mode ad code--><!--mfunc adshow_display_ad_file_v2(array('ad_random_1.txt'), array(100), array('align' => '', 'clear' => '', 'margin_top' => '10', 'margin_bottom' => '10', 'padding_top' => '', 'padding_bottom' => ''), array(), array()) -->
+
+<div style="margin-top:10px;margin-bottom:10px;"><script async="" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/adsbygoogle.js"></script>
+<!-- xmodulolist-post-large-text -->
+<ins data-adsbygoogle-status="done" class="adsbygoogle" style="display:inline-block;width:336px;height:280px" data-ad-client="ca-pub-7245163904660683" data-ad-slot="5795021983"><ins id="aswift_1_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><ins id="aswift_1_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_1" name="aswift_1" style="left:0;position:absolute;top:0;" frameborder="0" height="280" width="336"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div><!--/mfunc-->
+
+<p>16. <b><a target="_blank" href="https://excess.org/speedometer/">speedometer</a>:</b> a console-based traffic monitor which visualizes the historical trend of an interface's RX/TX bandwidth usage with <tt>ncurses</tt>-drawn bar charts.  </p>
+<p><a target="_blank" rel="nofollow" href="https://www.flickr.com/photos/xmodulo/16048971069/"><img class="lazy" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/16048971069_31dd573a4f_c.jpg" data-lazy-type="image" data-lazy-src="https://farm8.staticflickr.com/7485/16048971069_31dd573a4f_c.jpg"><noscript><img src="https://farm8.staticflickr.com/7485/16048971069_31dd573a4f_c.jpg"></noscript></a></p>
+<p>17. <b><a target="_blank" href="http://xmodulo.com/monitor-troubleshoot-linux-server-sysdig.html">sysdig</a>:</b>
+ a comprehensive system-level debugging tool with a unified interface 
+for investigating different Linux subsystems.  Its network monitoring 
+module is capable of monitoring, either online or offline, various 
+per-process/per-host networking statistics such as bandwidth usage, 
+number of connections/requests, etc.</p>
+<p>18. <b>tcptrack:</b> a TCP connection monitoring tool which displays 
+information of active TCP connections, including source/destination IP 
+addresses/ports, TCP state, and bandwidth usage. </p>
+<p><a target="_blank" rel="nofollow" href="https://www.flickr.com/photos/xmodulo/16047703080/"><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="https://farm8.staticflickr.com/7507/16047703080_5fdda2e811_b.jpg"><noscript><img src="https://farm8.staticflickr.com/7507/16047703080_5fdda2e811_b.jpg"></noscript></a></p>
+<p>19. <b>vnStat:</b> a command-line traffic monitor which maintains a 
+historical view of RX/TX bandwidh usage (e.g., current, daily, monthly) 
+on a per-interface basis.  Running as a background daemon, it collects 
+and stores interface statistics on bandwidth rate and total bytes 
+transferred.</p>
+<h2>Active Network Monitoring</h2>
+<p>Unlike passive monitoring tools presented so far, tools in this 
+category perform network monitoring by actively "injecting" probes into 
+the network and collecting corresponding responses.  Monitoring targets 
+include routing path, available bandwidth, loss rates, delay, jitter, 
+system settings or vulnerabilities, and so on.</p>
+<p>20. <b><a target="_blank" href="http://xmodulo.com/check-dns-propagation-linux.html">dnsyo</a>:</b>
+ a DNS monitoring tool which can conduct DNS lookup from open resolvers 
+scattered across more than 1,500 different networks.  It is useful when 
+you check DNS propagation or troubleshoot DNS configuration.</p>
+<p>21. <b><a target="_blank" href="https://iperf.fr/">iperf</a>:</b> a 
+TCP/UDP bandwidth measurement utility which can measure maximum 
+available bandwidth between two end points.  It measures available 
+bandwidth by having two hosts pump out TCP/UDP probe traffic between 
+them either unidirectionally or bi-directionally.  It is useful when you
+ test the network capacity, or tune the parameters of network stack.  A 
+variant called <a target="_blank" href="http://www.netperf.org/netperf/"><tt>netperf</tt></a> exists with more features and better statistics.</p>
+<p>22. <b><a target="_blank" href="http://xmodulo.com/useful-netcat-examples-linux.html">netcat</a>/socat:</b>
+ versatile network debugging tools capable of reading from, writing to, 
+or listen on TCP/UDP sockets.  They are often used alongside with other 
+programs or scripts for backend network transfer or port listening.</p>
+<p>23. <b>nmap:</b> a command-line port scanning and network discovery 
+utility. It relies on a number of TCP/UDP based scanning techniques to 
+detect open ports, live hosts, or existing operating systems on the 
+local network.  It is useful when you audit local hosts for 
+vulnerabilities or build a host map for maintenance purpose. <a target="_blank" href="https://zmap.io/"><tt>zmap</tt></a> is an alernative scanning tool with Internet-wide scanning capability.</p>
+<p>24. <b>ping:</b> a network testing tool which works by exchaning ICMP
+ echo and reply packets with a remote host.  It is useful when you 
+measure round-trip-time (RTT) delay and loss rate of a routing path, as 
+well as test the status or firewall rules of a remote system. Variations
+ of <tt>ping</tt> exist with fancier interface (e.g., <a target="_blank" href="http://noping.cc/"><tt>noping</tt></a>), multi-protocol support (e.g., <a target="_blank" href="http://www.hping.org/"><tt>hping</tt></a>) or parallel probing capability (e.g., <a target="_blank" href="http://fping.org/"><tt>fping</tt></a>).</p>
+<p><a target="_blank" rel="nofollow" href="https://www.flickr.com/photos/xmodulo/15612665344/"><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="https://farm8.staticflickr.com/7466/15612665344_a4bb665a5b_c.jpg"><noscript><img src="https://farm8.staticflickr.com/7466/15612665344_a4bb665a5b_c.jpg"></noscript></a></p>
+<p>25. <b><a target="_blank" href="http://sprobe.cs.washington.edu/">sprobe</a>:</b>
+ a command-line tool that heuristically infers the bottleneck bandwidth 
+between a local host and any arbitrary remote IP address.  It uses TCP 
+three-way handshake tricks to estimate the bottleneck bandwidth.  It is 
+useful when troubleshooting wide-area network performance and routing 
+related problems.</p>
+<p>26. <b>traceroute:</b> a network discovery tool which reveals a 
+layer-3 routing/forwarding path from a local host to a remote host.  It 
+works by sending TTL-limited probe packets and collecting ICMP responses
+ from intermediate routers. It is useful when troubleshooting slow 
+network connections or routing related problems. Variations of <tt>traceroute</tt> exist with better RTT statistics (e.g., <a target="_blank" href="http://xmodulo.com/better-alternatives-basic-command-line-utilities.html#mtr_link"><tt>mtr</tt></a>).</p>
+<p><a target="_blank" rel="nofollow" href="https://www.flickr.com/photos/xmodulo/16047703100/"><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="https://farm8.staticflickr.com/7558/16047703100_413843b946_b.jpg"><noscript><img src="https://farm8.staticflickr.com/7558/16047703100_413843b946_b.jpg"></noscript></a></p>
+<h2>Application Log Parsing</h2>
+<p>In this category, network monitoring is targeted at a specific server
+ application (e.g., web server or database server).  Network traffic 
+generated or consumed by a server application is monitored by analyzing 
+its log file.  Unlike network-level monitors presented in earlier 
+categories, tools in this category can analyze and monitor network 
+traffic from application-level.</p>
+<p>27. <b><a target="_blank" href="http://list.xmodulo.com/goaccess.html">GoAccess</a>:</b>
+ a console-based interactive viewer for Apache and Nginx web server 
+traffic.  Based on access log analysis, it presents a real-time 
+statistics of a number of metrics including daily visits, top requests, 
+client operating systems, client locations, client browsers, in a 
+scrollable view.</p>
+<p><a target="_blank" rel="nofollow" href="https://www.flickr.com/photos/xmodulo/16209185266/"><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="https://farm8.staticflickr.com/7518/16209185266_da6c5c56eb_c.jpg"><noscript><img src="https://farm8.staticflickr.com/7518/16209185266_da6c5c56eb_c.jpg"></noscript></a></p>
+<p>28. <b><a target="_blank" href="http://mtop.sourceforge.net/">mtop</a>:</b>
+ a command-line MySQL/MariaDB server moniter which visualizes the most 
+expensive queries and current database server load. It is useful when 
+you optimize MySQL server performance and tune server configurations. </p>
+<p><a target="_blank" rel="nofollow" href="https://www.flickr.com/photos/xmodulo/16047570248/"><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="https://farm8.staticflickr.com/7472/16047570248_bc996795f2_c.jpg"><noscript><img src="https://farm8.staticflickr.com/7472/16047570248_bc996795f2_c.jpg"></noscript></a></p>
+<p>29. <b><a target="_blank" href="http://xmodulo.com/monitor-nginx-web-server-command-line-real-time.html">ngxtop</a>:</b> a traffic monitoring tool for Nginx and Apache web server, which visualizes web server traffic in a <tt>top</tt>-like
+ interface. It works by parsing a web server's access log file and 
+collecting traffic statistics for individual destinations or requests.</p>
+<h2>Conclusion</h2>
+<p>In this article, I presented a wide variety of command-line network 
+monitoring tools, ranging from the lowest packet-level monitors to the 
+highest application-level network monitors. Knowing which tool does what
+ is one thing, and choosing which tool to use is another, as any single 
+tool cannot be a universal solution for your every need. A good system 
+admin should be able to decide which tool is right for the circumstance 
+at hand.  Hopefully the list helps with that.</p>
+<p>You are always welcome to improve the list with your comment!
+</p><div><span style="float:left;font-size:16px;font-weight:bold;">Download this article as ad-free PDF (made possible by <a target="_blank" rel="nofollow" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&amp;hosted_button_id=PBHS9R4MB9RX4">your kind donation</a>):&nbsp;</span>
+<div style="height:30px;vertical-align:middle;float:left;"><a class="wpptopdfenh" target="_blank" rel="noindex,nofollow" href="http://xmodulo.com/useful-command-line-network-monitors-linux.html?format=pdf" title="Download PDF"><img class="lazy lazy-hidden" alt="Download PDF" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/wp-post-to-pdf-enhanced/asset/images/pdf.png"><noscript><img alt="Download PDF" src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/wp-post-to-pdf-enhanced/asset/images/pdf.png"></noscript></a></div>
+</div>
+<div style="clear:both"></div>
+<div style="padding: 10px 10px 10px 0px;"><div style="float:left; width:336px; margin-left:0px; margin-right:10px; margin-bottom:10px;">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-7245163904660683";
+google_ad_slot = "5804090714";
+google_ad_width = 336;
+google_ad_height = 280;
+//-->
+</script>
+<script type="text/javascript" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/show_ads.js">
+</script><ins id="aswift_2_expand" style="display:inline-table;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><ins id="aswift_2_anchor" style="display:block;border:none;height:280px;margin:0;padding:0;position:relative;visibility:visible;width:336px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_2" name="aswift_2" style="left:0;position:absolute;top:0;" frameborder="0" height="280" width="336"></iframe></ins></ins>
+</div><h3><img class="lazy lazy-hidden" style="vertical-align:middle;height:20px;" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="/images/rss_small.png"><noscript><img style="vertical-align:middle;height:20px;" src="/images/rss_small.png"></noscript> Subscribe to Xmodulo</h3>
+<p>Do you want to receive <strong>Linux FAQs, detailed tutorials and tips</strong>
+ published at Xmodulo?   Enter your email address below, and we will 
+deliver our Linux posts straight to your email box, for free.  Delivery 
+powered by Google Feedburner.</p>
+<form id="feedburner_email_widget_sbef" action="http://feedburner.google.com/fb/a/mailverify" method="post" onsubmit="window.open(\" http:="" feedburner.google.com="" fb="" a="" mailverify?uri="linuxfaq\&quot;," \"popupwindow\",="" \"scrollbars="yes,width=550,height=520\&quot;);return" true;"="" target="popupwindow"><input style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAALZJREFUOBFjYKAANDQ0rGWiQD9IqzgL0BQ3IKMXiB8AcSKQ/waIrYDsKUD8Fir2pKmpSf/fv3+zgPxfzMzMSbW1tbeBbAaQC+b+//9fB4h9gOwikCAQTAPyDYHYBciuBQkANfcB+WZAbPP37992kBgIUOoFBiZGRsYkIL4ExJvZ2NhAXmFgYmLKBPLPAfFuFhaWJpAYEBQC+SeA+BDQC5UQIQpJYFgdodQLLyh0w6j20RCgUggAAEREPpKMfaEsAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" id="feedburner_email_widget_bottom_email" name="email" value="Your email address" onclick="javascript:if(this.value==\" your="" email="" address\"){this.value="\&quot;\&quot;;}&quot;" type="text"><input value="linuxfaq" name="uri" type="hidden"><input value="en_US" name="loc" type="hidden"><input id="feedburner_submit" value="Subscribe" type="submit"></form><br>
+<h3><img class="lazy lazy-hidden" style="vertical-align:middle;height:20px;" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="/images/heart_small.jpg"><noscript><img style="vertical-align:middle;height:20px;" src="/images/heart_small.jpg"></noscript> Support Xmodulo</h3>
+<p>Did you find this tutorial helpful?  Then please be generous and <a target="_blank" href="http://xmodulo.com/about">support Xmodulo!</a></p></div><div id="ts-fab-below" class="ts-fab-wrapper"><span class="screen-reader-text">The following two tabs change content below.</span><ul class="ts-fab-list"><li class="ts-fab-bio-link active"><a href="#ts-fab-bio-below">Bio</a></li><li class="ts-fab-latest-posts-link"><a href="#ts-fab-latest-posts-below">Latest Posts</a></li></ul><div class="ts-fab-tabs">
+	<div style="display: block;" class="ts-fab-tab" id="ts-fab-bio-below">
+		<div class="ts-fab-avatar"><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="/images/author/1.jpg" height="80" width="80"><noscript><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="/images/author/1.jpg" height=80 width=80><noscript><img src="/images/author/1.jpg" height=80 width=80></noscript><div class="ts-fab-social-links"><a href="http://twitter.com/xmodulo" title="Twitter" rel="nofollow"><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/twitter.png" alt="My Twitter profile" height="24" width="24"><noscript><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/twitter.png" width="24" height="24" alt="My Twitter profile" /><noscript><img src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/twitter.png" width="24" height="24" alt="My Twitter profile" /></noscript></a><a href="http://facebook.com/xmodulo" title="Facebook" rel="nofollow"><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/facebook.png" alt="My Facebook profile" height="24" width="24"><noscript><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/facebook.png" width="24" height="24" alt="My Facebook profile" /><noscript><img src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/facebook.png" width="24" height="24" alt="My Facebook profile" /></noscript></a><a href="http://plus.google.com/+DanNanni?rel=author" title="Google+"><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/googleplus.png" alt="My Google+ profile" height="24" width="24"><noscript><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/googleplus.png" width="24" height="24" alt="My Google+ profile" /><noscript><img src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/googleplus.png" width="24" height="24" alt="My Google+ profile" /></noscript></a><a href="https://www.linkedin.com/in/xmodulo" title="LinkedIn" rel="nofollow"><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/linkedin.png" alt="My LinkedIn profile" height="24" width="24"><noscript><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/linkedin.png" width="24" height="24" alt="My LinkedIn profile" /><noscript><img src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/linkedin.png" width="24" height="24" alt="My LinkedIn profile" /></noscript></a></div>
+		</div>
+		
+		<div class="ts-fab-text">
+			<div class="ts-fab-header"><h4><a href="http://xmodulo.com/">Dan Nanni</a></h4></div><!-- /.ts-fab-header -->
+			<div class="ts-fab-content">Dan Nanni is the founder and also a 
+regular contributor of Xmodulo.com. He is a Linux/FOSS enthusiast who 
+loves to get his hands dirty with his Linux box.  He likes to 
+procrastinate when he is supposed to be busy and productive.   When he 
+is otherwise free, he likes to watch movies and shop for the coolest 
+gadgets.</div>
+		</div>
+	</div>
+	<div style="display: none;" class="ts-fab-tab" id="ts-fab-latest-posts-below">
+		<div class="ts-fab-avatar"><img class="lazy" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/1.jpg" data-lazy-type="image" data-lazy-src="/images/author/1.jpg" height="80" width="80"><noscript><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="/images/author/1.jpg" height=80 width=80><noscript><img src="/images/author/1.jpg" height=80 width=80></noscript><div class="ts-fab-social-links"><a href="http://twitter.com/xmodulo" title="Twitter" rel="nofollow"><img class="lazy" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/twitter_002.png" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/twitter.png" alt="My Twitter profile" height="24" width="24"><noscript><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/twitter.png" width="24" height="24" alt="My Twitter profile" /><noscript><img src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/twitter.png" width="24" height="24" alt="My Twitter profile" /></noscript></a><a href="http://facebook.com/xmodulo" title="Facebook" rel="nofollow"><img class="lazy" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/facebook_002.png" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/facebook.png" alt="My Facebook profile" height="24" width="24"><noscript><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/facebook.png" width="24" height="24" alt="My Facebook profile" /><noscript><img src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/facebook.png" width="24" height="24" alt="My Facebook profile" /></noscript></a><a href="http://plus.google.com/+DanNanni?rel=author" title="Google+" rel="nofollow"><img class="lazy" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/googleplus_002.png" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/googleplus.png" alt="My Google+ profile" height="24" width="24"><noscript><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/googleplus.png" width="24" height="24" alt="My Google+ profile" /><noscript><img src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/googleplus.png" width="24" height="24" alt="My Google+ profile" /></noscript></a><a href="https://www.linkedin.com/in/xmodulo" title="LinkedIn" rel="nofollow"><img class="lazy" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/linkedin_002.png" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/linkedin.png" alt="My LinkedIn profile" height="24" width="24"><noscript><img class="lazy lazy-hidden" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/linkedin.png" width="24" height="24" alt="My LinkedIn profile" /><noscript><img src="http://d2j4ekq3nza4ef.cloudfront.net/wp-content/plugins/fancier-author-box/images/linkedin.png" width="24" height="24" alt="My LinkedIn profile" /></noscript></a></div>
+		</div>
+		<div class="ts-fab-text">
+			<div class="ts-fab-header">
+				<h4>Latest posts by Dan Nanni <span class="latest-see-all">(<a href="http://xmodulo.com/author/nanni" rel="nofollow">see all</a>)</span></h4>
+			</div>
+			<div class="ts-fab-content">
+				<li>
+					<a href="http://xmodulo.com/tcp-udp-socket-bash-shell.html">How to open a TCP/UDP socket in a bash shell</a><span> - May 24, 2016</span> 
+				</li>
+				<li>
+					<a href="http://xmodulo.com/incremental-file-sync-many-users.html">How to enable incremental file sync for many users on Linux</a><span> - April 24, 2016</span> 
+				</li>
+				<li>
+					<a href="http://xmodulo.com/build-kernel-module-dkms-linux.html">How to build a kernel module with DKMS on Linux</a><span> - April 8, 2016</span> 
+				</li>
+		</div></div>
+	</div>
+		</div>
+	</div><div class="sharedaddy sd-sharing-enabled"><div class="robots-nocontent sd-block sd-social sd-social-official sd-sharing"><div class="sd-content"><ul><li class="share-google-plus-1"><div class="googleplus1_button"><div id="___plus_0" style="text-indent: 0px; margin: 0px; padding: 0px; background: transparent none repeat scroll 0% 0%; border-style: none; float: none; line-height: normal; font-size: 1px; vertical-align: baseline; display: inline-block; width: 98px; height: 20px;"><iframe title="+Share" data-gapiattached="true" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/sharebutton.htm" name="I0_1464778770705" id="I0_1464778770705" vspace="0" tabindex="0" style="position: static; top: 0px; width: 98px; margin: 0px; border-style: none; left: 0px; visibility: visible; height: 20px;" scrolling="no" marginwidth="0" marginheight="0" hspace="0" frameborder="0" width="100%"></iframe></div></div></li><li class="share-twitter"><iframe data-url="http://xmodulo.com/useful-command-line-network-monitors-linux.html" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/tweet_button.htm" title="Twitter Tweet Button" style="position: static; visibility: visible; width: 61px; height: 20px;" class="twitter-share-button twitter-share-button-rendered twitter-tweet-button" allowtransparency="true" scrolling="no" id="twitter-widget-0" frameborder="0"></iframe></li><li class="share-facebook"><div fb-iframe-plugin-query="app_id=249643311490&amp;container_width=0&amp;href=http%3A%2F%2Fxmodulo.com%2Fuseful-command-line-network-monitors-linux.html&amp;layout=button_count&amp;locale=en_US&amp;sdk=joey" fb-xfbml-state="rendered" class="fb-share-button fb_iframe_widget" data-href="http://xmodulo.com/useful-command-line-network-monitors-linux.html" data-layout="button_count"><span style="vertical-align: bottom; width: 91px; height: 20px;"><iframe class="" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/share_button.htm" style="border: medium none; visibility: visible; width: 91px; height: 20px;" title="fb:share_button Facebook Social Plugin" scrolling="no" allowfullscreen="true" allowtransparency="true" name="f33c0b280224ab" frameborder="0" height="1000px" width="1000px"></iframe></span></div></li><li class="share-reddit"><div class="reddit_button"><iframe src="http://www.reddit.com/static/button/button1.html?newwindow=true&amp;width=120&amp;url=http%3A%2F%2Fxmodulo.com%2Fuseful-command-line-network-monitors-linux.html&amp;title=What%20are%20useful%20command-line%20network%20monitors%20on%20Linux" scrolling="no" frameborder="0" height="22" width="120"></iframe></div></li><li class="share-end"></li></ul></div></div></div><div class="yarpp-related">
+<br><h3>Related FAQs:</h3><ul>
+<li><a href="http://xmodulo.com/interactive-apache-web-server-log-analyzer-linux.html" rel="bookmark" title="How to analyze and view Apache web server logs interactively on Linux">How to analyze and view Apache web server logs interactively on Linux </a></li>
+<li><a href="http://xmodulo.com/monitor-nginx-web-server-command-line-real-time.html" rel="bookmark" title="How to monitor Nginx web server from the command line in real time">How to monitor Nginx web server from the command line in real time </a></li>
+<li><a href="http://xmodulo.com/sniff-http-traffic-command-line-linux.html" rel="bookmark" title="How to sniff HTTP traffic from the command line on Linux">How to sniff HTTP traffic from the command line on Linux </a></li>
+<li><a href="http://xmodulo.com/combine-two-graphs-cacti.html" rel="bookmark" title="How to combine two graphs on Cacti">How to combine two graphs on Cacti </a></li>
+<li><a href="http://xmodulo.com/send-email-notifications-gmail-smtp-server-linux.html" rel="bookmark" title="How to send email notifications using Gmail SMTP server on Linux">How to send email notifications using Gmail SMTP server on Linux </a></li>
+</ul>
+</div>
+</div> <!-- .entry-content -->    
+    				<div class="heatmapthemead-footer-entry-meta">
+				<footer class="entry-meta">
+				
+										
+														<p class="heatmapthemead-cat-links">
+									Categories: <a href="http://xmodulo.com/category/networking" rel="tag">Networking</a>, <a href="http://xmodulo.com/category/sysadmin" rel="tag">System Administration</a>								</p>
+													
+													<p class="heatmapthemead-tag-links">
+								Tags: <a href="http://xmodulo.com/tag/cli" rel="tag">cli</a>, <a href="http://xmodulo.com/tag/network-monitoring" rel="tag">network monitoring</a>							</p>
+								
+								
+				</footer><!-- #heatmapthemead-article-meta -->    
+			</div><!-- #footer-entry-meta --> 
+    	<div id="comments" class="comments-area">
+	
+	
+			<h2 id="comments-title">
+			8 thoughts on “<span>What are useful command-line network monitors on Linux</span>”		</h2>
+
+		
+		<ol class="commentlist">
+					<li class="comment even thread-even depth-1" id="li-comment-9861">
+			<div class="heatmapthemead-comment-article">
+				<article id="comment-9861" class="comment">
+					<footer class="comment-meta">
+						<div class="reply">
+							<a rel="nofollow" class="comment-reply-link" href="http://xmodulo.com/useful-command-line-network-monitors-linux.html?replytocom=9861#respond" onclick='return addComment.moveForm( "comment-9861", "9861", "respond", "21662" )' aria-label="Reply to Tomas">Reply</a>						</div><!-- .reply -->
+						<div class="comment-author vcard">
+							<img alt="" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://2.gravatar.com/avatar/269b68beb789434c3d82b6220221776f?s=68&amp;d=mm&amp;r=g" data-lazy-srcset="http://2.gravatar.com/avatar/269b68beb789434c3d82b6220221776f?s=136&amp;d=mm&amp;r=g 2x" class="lazy lazy-hidden avatar avatar-68 photo" height="68" width="68"><noscript><img alt='' src='http://2.gravatar.com/avatar/269b68beb789434c3d82b6220221776f?s=68&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/269b68beb789434c3d82b6220221776f?s=136&amp;d=mm&amp;r=g 2x' class='avatar avatar-68 photo' height='68' width='68' /></noscript><span class="fn"><a href="https://www.lisenet.com/2014/measure-and-troubleshoot-linux-network-resource-usage/" rel="external nofollow" class="url">Tomas</a></span> on <a href="http://xmodulo.com/useful-command-line-network-monitors-linux.html#comment-9861"><time datetime="2015-01-09T23:03:29+00:00">January 9, 2015 at 11:03 pm</time></a> <span class="says">said:</span>		
+													</div><!-- .comment-author .vcard -->
+		
+								
+					</footer>
+		
+					<div class="comment-content"><p>Nice summary of tools. I'd also add sar, nload and iptraf.</p>
+</div>
+				</article><!-- #comment-## -->
+			</div><!-- .heatmapthemead-comment-article -->
+	
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-9865">
+			<div class="heatmapthemead-comment-article">
+				<article id="comment-9865" class="comment">
+					<footer class="comment-meta">
+						<div class="reply">
+							<a rel="nofollow" class="comment-reply-link" href="http://xmodulo.com/useful-command-line-network-monitors-linux.html?replytocom=9865#respond" onclick='return addComment.moveForm( "comment-9865", "9865", "respond", "21662" )' aria-label="Reply to crb3">Reply</a>						</div><!-- .reply -->
+						<div class="comment-author vcard">
+							<img alt="" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://0.gravatar.com/avatar/09787845edf68078f612bfe1a927bcd5?s=68&amp;d=mm&amp;r=g" data-lazy-srcset="http://0.gravatar.com/avatar/09787845edf68078f612bfe1a927bcd5?s=136&amp;d=mm&amp;r=g 2x" class="lazy lazy-hidden avatar avatar-68 photo" height="68" width="68"><noscript><img alt='' src='http://0.gravatar.com/avatar/09787845edf68078f612bfe1a927bcd5?s=68&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/09787845edf68078f612bfe1a927bcd5?s=136&amp;d=mm&amp;r=g 2x' class='avatar avatar-68 photo' height='68' width='68' /></noscript><span class="fn">crb3</span> on <a href="http://xmodulo.com/useful-command-line-network-monitors-linux.html#comment-9865"><time datetime="2015-01-10T03:33:36+00:00">January 10, 2015 at 3:33 am</time></a> <span class="says">said:</span>		
+													</div><!-- .comment-author .vcard -->
+		
+								
+					</footer>
+		
+					<div class="comment-content"><p>I'm not seeing iptraf in your list.
+ Once I've zeroed in on what local machine is hogging wired network 
+bandwidth using etherape, my next move is often to shell into either 
+that machine or my gateway and bring up iptraf to see listed all the 
+connections old and new.</p>
+</div>
+				</article><!-- #comment-## -->
+			</div><!-- .heatmapthemead-comment-article -->
+	
+		</li><!-- #comment-## -->
+		<li class="comment byuser comment-author-nanni bypostauthor even thread-even depth-1" id="li-comment-9866">
+			<div class="heatmapthemead-comment-article">
+				<article id="comment-9866" class="comment">
+					<footer class="comment-meta">
+						<div class="reply">
+							<a rel="nofollow" class="comment-reply-link" href="http://xmodulo.com/useful-command-line-network-monitors-linux.html?replytocom=9866#respond" onclick='return addComment.moveForm( "comment-9866", "9866", "respond", "21662" )' aria-label="Reply to Dan Nanni">Reply</a>						</div><!-- .reply -->
+						<div class="comment-author vcard">
+							<img alt="" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://0.gravatar.com/avatar/3a851be8f0817a4981056998f9f52562?s=68&amp;d=mm&amp;r=g" data-lazy-srcset="http://0.gravatar.com/avatar/3a851be8f0817a4981056998f9f52562?s=136&amp;d=mm&amp;r=g 2x" class="lazy lazy-hidden avatar avatar-68 photo" height="68" width="68"><noscript><img alt='' src='http://0.gravatar.com/avatar/3a851be8f0817a4981056998f9f52562?s=68&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3a851be8f0817a4981056998f9f52562?s=136&amp;d=mm&amp;r=g 2x' class='avatar avatar-68 photo' height='68' width='68' /></noscript><span class="fn"><a href="http://xmodulo.com/" rel="external nofollow" class="url">Dan Nanni</a></span> on <a href="http://xmodulo.com/useful-command-line-network-monitors-linux.html#comment-9866"><time datetime="2015-01-10T04:24:01+00:00">January 10, 2015 at 4:24 am</time></a> <span class="says">said:</span>		
+													</div><!-- .comment-author .vcard -->
+		
+								
+					</footer>
+		
+					<div class="comment-content"><p>Thanks guys.  Added iptraf to the list as it seems quite versatile.</p>
+</div>
+				</article><!-- #comment-## -->
+			</div><!-- .heatmapthemead-comment-article -->
+	
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-odd thread-alt depth-1" id="li-comment-9874">
+			<div class="heatmapthemead-comment-article">
+				<article id="comment-9874" class="comment">
+					<footer class="comment-meta">
+						<div class="reply">
+							<a rel="nofollow" class="comment-reply-link" href="http://xmodulo.com/useful-command-line-network-monitors-linux.html?replytocom=9874#respond" onclick='return addComment.moveForm( "comment-9874", "9874", "respond", "21662" )' aria-label="Reply to dcl">Reply</a>						</div><!-- .reply -->
+						<div class="comment-author vcard">
+							<img alt="" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://2.gravatar.com/avatar/869c7c26157082d6ea93ab31b1d0f9d1?s=68&amp;d=mm&amp;r=g" data-lazy-srcset="http://2.gravatar.com/avatar/869c7c26157082d6ea93ab31b1d0f9d1?s=136&amp;d=mm&amp;r=g 2x" class="lazy lazy-hidden avatar avatar-68 photo" height="68" width="68"><noscript><img alt='' src='http://2.gravatar.com/avatar/869c7c26157082d6ea93ab31b1d0f9d1?s=68&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/869c7c26157082d6ea93ab31b1d0f9d1?s=136&amp;d=mm&amp;r=g 2x' class='avatar avatar-68 photo' height='68' width='68' /></noscript><span class="fn">dcl</span> on <a href="http://xmodulo.com/useful-command-line-network-monitors-linux.html#comment-9874"><time datetime="2015-01-11T05:31:05+00:00">January 11, 2015 at 5:31 am</time></a> <span class="says">said:</span>		
+													</div><!-- .comment-author .vcard -->
+		
+								
+					</footer>
+		
+					<div class="comment-content"><p>At my place of work we've replaced httppry with Bro, though it has many other security and analysis capabilities too: <a href="https://www.bro.org/" rel="nofollow">https://www.bro.org</a></p>
+</div>
+				</article><!-- #comment-## -->
+			</div><!-- .heatmapthemead-comment-article -->
+	
+		<ul class="children">
+		<li class="comment byuser comment-author-nanni bypostauthor even depth-2" id="li-comment-9875">
+			<div class="heatmapthemead-comment-article">
+				<article id="comment-9875" class="comment">
+					<footer class="comment-meta">
+						<div class="reply">
+							<a rel="nofollow" class="comment-reply-link" href="http://xmodulo.com/useful-command-line-network-monitors-linux.html?replytocom=9875#respond" onclick='return addComment.moveForm( "comment-9875", "9875", "respond", "21662" )' aria-label="Reply to Dan Nanni">Reply</a>						</div><!-- .reply -->
+						<div class="comment-author vcard">
+							<img alt="" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://0.gravatar.com/avatar/3a851be8f0817a4981056998f9f52562?s=39&amp;d=mm&amp;r=g" data-lazy-srcset="http://0.gravatar.com/avatar/3a851be8f0817a4981056998f9f52562?s=78&amp;d=mm&amp;r=g 2x" class="lazy lazy-hidden avatar avatar-39 photo" height="39" width="39"><noscript><img alt='' src='http://0.gravatar.com/avatar/3a851be8f0817a4981056998f9f52562?s=39&#038;d=mm&#038;r=g' srcset='http://0.gravatar.com/avatar/3a851be8f0817a4981056998f9f52562?s=78&amp;d=mm&amp;r=g 2x' class='avatar avatar-39 photo' height='39' width='39' /></noscript><span class="fn"><a href="http://xmodulo.com/" rel="external nofollow" class="url">Dan Nanni</a></span> on <a href="http://xmodulo.com/useful-command-line-network-monitors-linux.html#comment-9875"><time datetime="2015-01-11T05:45:51+00:00">January 11, 2015 at 5:45 am</time></a> <span class="says">said:</span>		
+													</div><!-- .comment-author .vcard -->
+		
+								
+					</footer>
+		
+					<div class="comment-content"><p>You probably meant you replaced Snort with Bro.  Just curious: Is Bro rule-based?  If so, who's maintaining the rules?</p>
+</div>
+				</article><!-- #comment-## -->
+			</div><!-- .heatmapthemead-comment-article -->
+	
+		</li><!-- #comment-## -->
+</ul><!-- .children -->
+</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1" id="li-comment-9880">
+			<div class="heatmapthemead-comment-article">
+				<article id="comment-9880" class="comment">
+					<footer class="comment-meta">
+						<div class="reply">
+							<a rel="nofollow" class="comment-reply-link" href="http://xmodulo.com/useful-command-line-network-monitors-linux.html?replytocom=9880#respond" onclick='return addComment.moveForm( "comment-9880", "9880", "respond", "21662" )' aria-label="Reply to Matt Provost">Reply</a>						</div><!-- .reply -->
+						<div class="comment-author vcard">
+							<img alt="" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://2.gravatar.com/avatar/22475f6f4d673303c7e755103df78668?s=68&amp;d=mm&amp;r=g" data-lazy-srcset="http://2.gravatar.com/avatar/22475f6f4d673303c7e755103df78668?s=136&amp;d=mm&amp;r=g 2x" class="lazy lazy-hidden avatar avatar-68 photo" height="68" width="68"><noscript><img alt='' src='http://2.gravatar.com/avatar/22475f6f4d673303c7e755103df78668?s=68&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/22475f6f4d673303c7e755103df78668?s=136&amp;d=mm&amp;r=g 2x' class='avatar avatar-68 photo' height='68' width='68' /></noscript><span class="fn"><a href="https://github.com/mprovost/NFSping" rel="external nofollow" class="url">Matt Provost</a></span> on <a href="http://xmodulo.com/useful-command-line-network-monitors-linux.html#comment-9880"><time datetime="2015-01-11T19:00:55+00:00">January 11, 2015 at 7:00 pm</time></a> <span class="says">said:</span>		
+													</div><!-- .comment-author .vcard -->
+		
+								
+					</footer>
+		
+					<div class="comment-content"><p>I wrote nfsping which is a command 
+line program similar to fping but instead of ICMP it sends packets for 
+the six RPC protocols that are used by NFS so you can measure the RTT to
+ identify performance problems or verify that an NFS server is 
+functioning correctly.</p>
+<p><a href="https://github.com/mprovost/NFSping" rel="nofollow">https://github.com/mprovost/NFSping</a></p>
+</div>
+				</article><!-- #comment-## -->
+			</div><!-- .heatmapthemead-comment-article -->
+	
+		</li><!-- #comment-## -->
+		<li class="comment even thread-odd thread-alt depth-1" id="li-comment-9890">
+			<div class="heatmapthemead-comment-article">
+				<article id="comment-9890" class="comment">
+					<footer class="comment-meta">
+						<div class="reply">
+							<a rel="nofollow" class="comment-reply-link" href="http://xmodulo.com/useful-command-line-network-monitors-linux.html?replytocom=9890#respond" onclick='return addComment.moveForm( "comment-9890", "9890", "respond", "21662" )' aria-label="Reply to David">Reply</a>						</div><!-- .reply -->
+						<div class="comment-author vcard">
+							<img alt="" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://2.gravatar.com/avatar/85654f477b07063b71f16eded6cb50b6?s=68&amp;d=mm&amp;r=g" data-lazy-srcset="http://2.gravatar.com/avatar/85654f477b07063b71f16eded6cb50b6?s=136&amp;d=mm&amp;r=g 2x" class="lazy lazy-hidden avatar avatar-68 photo" height="68" width="68"><noscript><img alt='' src='http://2.gravatar.com/avatar/85654f477b07063b71f16eded6cb50b6?s=68&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/85654f477b07063b71f16eded6cb50b6?s=136&amp;d=mm&amp;r=g 2x' class='avatar avatar-68 photo' height='68' width='68' /></noscript><span class="fn">David</span> on <a href="http://xmodulo.com/useful-command-line-network-monitors-linux.html#comment-9890"><time datetime="2015-01-12T21:46:32+00:00">January 12, 2015 at 9:46 pm</time></a> <span class="says">said:</span>		
+													</div><!-- .comment-author .vcard -->
+		
+								
+					</footer>
+		
+					<div class="comment-content"><p>I would add bing: <a href="http://fgouget.free.fr/bing/bing_src-man.shtml" rel="nofollow">http://fgouget.free.fr/bing/bing_src-man.shtml</a></p>
+</div>
+				</article><!-- #comment-## -->
+			</div><!-- .heatmapthemead-comment-article -->
+	
+		</li><!-- #comment-## -->
+		<li class="comment odd alt thread-even depth-1" id="li-comment-9999">
+			<div class="heatmapthemead-comment-article">
+				<article id="comment-9999" class="comment">
+					<footer class="comment-meta">
+						<div class="reply">
+							<a rel="nofollow" class="comment-reply-link" href="http://xmodulo.com/useful-command-line-network-monitors-linux.html?replytocom=9999#respond" onclick='return addComment.moveForm( "comment-9999", "9999", "respond", "21662" )' aria-label="Reply to BW">Reply</a>						</div><!-- .reply -->
+						<div class="comment-author vcard">
+							<img alt="" src="data:image/gif;base64,R0lGODdhAQABAPAAAP///wAAACwAAAAAAQABAEACAkQBADs=" data-lazy-type="image" data-lazy-src="http://2.gravatar.com/avatar/5b258d1313f346da5e0792475174db2c?s=68&amp;d=mm&amp;r=g" data-lazy-srcset="http://2.gravatar.com/avatar/5b258d1313f346da5e0792475174db2c?s=136&amp;d=mm&amp;r=g 2x" class="lazy lazy-hidden avatar avatar-68 photo" height="68" width="68"><noscript><img alt='' src='http://2.gravatar.com/avatar/5b258d1313f346da5e0792475174db2c?s=68&#038;d=mm&#038;r=g' srcset='http://2.gravatar.com/avatar/5b258d1313f346da5e0792475174db2c?s=136&amp;d=mm&amp;r=g 2x' class='avatar avatar-68 photo' height='68' width='68' /></noscript><span class="fn">BW</span> on <a href="http://xmodulo.com/useful-command-line-network-monitors-linux.html#comment-9999"><time datetime="2015-01-24T00:06:38+00:00">January 24, 2015 at 12:06 am</time></a> <span class="says">said:</span>		
+													</div><!-- .comment-author .vcard -->
+		
+								
+					</footer>
+		
+					<div class="comment-content"><p>I understand there are many tools 
+for network monitors, but most of them are not default  installed. In 
+production environment, for big organisation, you have to wait for 
+approval to install software. </p>
+<p>I used "netstat" for network issue in most case. Netstat comes with operation system always.</p>
+</div>
+				</article><!-- #comment-## -->
+			</div><!-- .heatmapthemead-comment-article -->
+	
+		</li><!-- #comment-## -->
+		</ol>
+
+		
+	
+	
+					<div id="respond" class="comment-respond">
+			<h3 id="reply-title" class="comment-reply-title">Leave a comment <small><a rel="nofollow" id="cancel-comment-reply-link" href="http://xmodulo.com/useful-command-line-network-monitors-linux.html#respond" style="display:none;">Cancel reply</a></small></h3>				<form action="http://xmodulo.com/wp-comments-post.php" method="post" id="commentform" class="comment-form anti-spam-form-processed">
+					<p class="comment-notes"><span id="email-notes">Your email address will not be published.</span> Required fields are marked <span class="required">*</span></p><p class="comment-form-comment"><label for="comment">Comment</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></p><p class="comment-form-author"><label for="author">Name <span class="required">*</span></label> <input style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAAAXNSR0IArs4c6QAAALZJREFUOBFjYKAANDQ0rGWiQD9IqzgL0BQ3IKMXiB8AcSKQ/waIrYDsKUD8Fir2pKmpSf/fv3+zgPxfzMzMSbW1tbeBbAaQC+b+//9fB4h9gOwikCAQTAPyDYHYBciuBQkANfcB+WZAbPP37992kBgIUOoFBiZGRsYkIL4ExJvZ2NhAXmFgYmLKBPLPAfFuFhaWJpAYEBQC+SeA+BDQC5UQIQpJYFgdodQLLyh0w6j20RCgUggAAEREPpKMfaEsAAAAAElFTkSuQmCC&quot;); background-repeat: no-repeat; background-attachment: scroll; background-size: 16px 18px; background-position: 98% 50%;" id="author" name="author" size="30" maxlength="245" aria-required="true" required="required" type="text"></p>
+<p class="comment-form-email"><label for="email">Email <span class="required">*</span></label> <input id="email" name="email" size="30" maxlength="100" aria-describedby="email-notes" aria-required="true" required="required" type="text"></p>
+<p class="comment-form-url"><label for="url">Website</label> <input id="url" name="url" size="30" maxlength="200" type="text"></p>
+<p class="form-submit"><input name="submit" id="submit" class="submit" value="Post Comment" type="submit"> <input name="comment_post_ID" value="21662" id="comment_post_ID" type="hidden">
+<input name="comment_parent" id="comment_parent" value="0" type="hidden">
+</p><p style="display: none;"><input id="akismet_comment_nonce" name="akismet_comment_nonce" value="bfd44ea331" type="hidden"></p>		<p class="antispam-group antispam-group-q" style="clear: both; display: none;">
+			<label>Current ye@r <span class="required">*</span></label>
+			<input name="antspm-a" class="antispam-control antispam-control-a" value="2016" type="hidden">
+			<input name="antspm-q" class="antispam-control antispam-control-q" value="2016" autocomplete="off" type="text">
+		</p>
+		<p class="antispam-group antispam-group-e" style="display: none;">
+			<label>Leave this field empty</label>
+			<input name="antspm-e-email-url-website" class="antispam-control antispam-control-e" autocomplete="off" type="text">
+		</p>
+<p class="comment-subscription-form"><input name="subscribe_comments" id="subscribe_comments" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;" type="checkbox"> <label class="subscribe-label" id="subscribe-label" for="subscribe_comments">Notify me of follow-up comments by email.</label></p><p class="comment-subscription-form"><input name="subscribe_blog" id="subscribe_blog" value="subscribe" style="width: auto; -moz-appearance: checkbox; -webkit-appearance: checkbox;" type="checkbox"> <label class="subscribe-label" id="subscribe-blog-label" for="subscribe_blog">Notify me of new posts by email.</label></p><p style="display: none;"></p>				<input id="ak_js" name="ak_js" value="1464778770549" type="hidden"><input value="2016" class="antispam-control antispam-control-d" name="antspm-d" type="hidden"></form>
+					</div><!-- #respond -->
+		
+</div><!-- #comments .comments-area -->		</article><!-- #post-21662 -->        
+			<div id="heatmapthemead-post-navigation">
+            <nav role="navigation" id="nav-below" class="site-navigation post-navigation">
+        
+                    
+                <div class="nav-previous"><a href="http://xmodulo.com/dupeguru-deduplicate-files-linux.html" rel="prev"><span class="meta-nav">«</span> How to deduplicate files on Linux with dupeGuru</a></div>                <div class="nav-next"><a href="http://xmodulo.com/good-ide-for-c-cpp-linux.html" rel="next">What is a good IDE for C/C++ on Linux <span class="meta-nav">»</span></a></div>        
+                    
+            </nav><!-- .site-navigation post-navigation -->
+        </div><!-- #heatmapthemead-post-navigation -->
+		</div> <!-- id="heatmapthemead-the-content-container" --> 
+</div> <!-- id="heatmapthemead-the-content" --> 
+</div> <!-- id="heatmapthemead-content" --> 
+<!-- primary sidebar -->
+<div id="heatmapthemead-primary-sidebar">
+<div id="heatmapthemead-primary-sidebar-container" role="complementary">
+<div id="heatmapthemead-widget-position-primary" class="heatmapthemead-widget-position heatmapthemead-primary" role="complementary"><aside id="heatmapthemead_ad-6" class="widget heatmapthemead_ad_widget">				<div class="heatmapthemead_ad_widget"><script async="" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/adsbygoogle.js"></script>
+<!-- xmodulo-left-responsive -->
+<ins data-adsbygoogle-status="done" class="adsbygoogle" style="display: block; height: 600px;" data-ad-client="ca-pub-7245163904660683" data-ad-slot="7222393188" data-ad-format="auto"><ins id="aswift_3_expand" style="display:inline-table;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:160px;background-color:transparent"><ins id="aswift_3_anchor" style="display:block;border:none;height:600px;margin:0;padding:0;position:relative;visibility:visible;width:160px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_3" name="aswift_3" style="left:0;position:absolute;top:0;" frameborder="0" height="600" width="160"></iframe></ins></ins></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script></div>
+			</aside><aside id="categories-5" class="widget widget_categories"><h4 class="widget-title">Linux FAQ categories</h4>		<ul>
+	<li class="cat-item cat-item-158"><a href="http://xmodulo.com/category/amazon-aws">Amazon AWS</a>
+</li>
+	<li class="cat-item cat-item-171"><a href="http://xmodulo.com/category/android">Android</a>
+</li>
+	<li class="cat-item cat-item-391"><a href="http://xmodulo.com/category/arch-linux">Arch Linux</a>
+</li>
+	<li class="cat-item cat-item-169"><a href="http://xmodulo.com/category/audio">Audio</a>
+</li>
+	<li class="cat-item cat-item-424"><a href="http://xmodulo.com/category/business">Business</a>
+</li>
+	<li class="cat-item cat-item-31"><a href="http://xmodulo.com/category/centos">CentOS</a>
+</li>
+	<li class="cat-item cat-item-310"><a href="http://xmodulo.com/category/chromium-os">Chromium OS</a>
+</li>
+	<li class="cat-item cat-item-316"><a href="http://xmodulo.com/category/cisco">Cisco</a>
+</li>
+	<li class="cat-item cat-item-194"><a href="http://xmodulo.com/category/cloud-services">Cloud Services</a>
+</li>
+	<li class="cat-item cat-item-24"><a href="http://xmodulo.com/category/cloudstack">CloudStack</a>
+</li>
+	<li class="cat-item cat-item-15"><a href="http://xmodulo.com/category/databases">Databases</a>
+</li>
+	<li class="cat-item cat-item-17"><a href="http://xmodulo.com/category/debian" title="Debian is one of the oldest Linux distributions, whose first stable release dates back to 1996. The Debian archive consists of the &quot;main&quot; area which hosts only free and open-source software, and &quot;non-free&quot; and &quot;contrib&quot; areas which contain non-free software such as proprietary firmware or drivers and packages with legally questionable licenses.  Debian is maintained as three official branches: the &quot;stable&quot; branch which contains stable and well-tested software, the &quot;testing&quot; branch which undergoes testing before being turned into the stable branch in the next release, and the &quot;unstable&quot; branch (aka &quot;sid&quot;) which contains packages contributed by developers but not yet tested.
+">Debian</a>
+</li>
+	<li class="cat-item cat-item-7"><a href="http://xmodulo.com/category/desktop">Desktop</a>
+</li>
+	<li class="cat-item cat-item-12"><a href="http://xmodulo.com/category/development">Development</a>
+</li>
+	<li class="cat-item cat-item-14"><a href="http://xmodulo.com/category/editors">Editors</a>
+</li>
+	<li class="cat-item cat-item-222"><a href="http://xmodulo.com/category/fedora">Fedora</a>
+</li>
+	<li class="cat-item cat-item-18"><a href="http://xmodulo.com/category/filesystem">Filesystem</a>
+</li>
+	<li class="cat-item cat-item-183"><a href="http://xmodulo.com/category/games">Games</a>
+</li>
+	<li class="cat-item cat-item-189"><a href="http://xmodulo.com/category/google">Google</a>
+</li>
+	<li class="cat-item cat-item-16"><a href="http://xmodulo.com/category/graphics">Graphics</a>
+</li>
+	<li class="cat-item cat-item-27"><a href="http://xmodulo.com/category/hadoop">Hadoop</a>
+</li>
+	<li class="cat-item cat-item-143"><a href="http://xmodulo.com/category/hardware">Hardware</a>
+</li>
+	<li class="cat-item cat-item-29"><a href="http://xmodulo.com/category/java">Java</a>
+</li>
+	<li class="cat-item cat-item-26"><a href="http://xmodulo.com/category/kernel">Kernel</a>
+</li>
+	<li class="cat-item cat-item-272"><a href="http://xmodulo.com/category/kvm">KVM</a>
+</li>
+	<li class="cat-item cat-item-231"><a href="http://xmodulo.com/category/lightweight-linux">Lightweight Linux</a>
+</li>
+	<li class="cat-item cat-item-486"><a href="http://xmodulo.com/category/linux-mint">Linux Mint</a>
+</li>
+	<li class="cat-item cat-item-178"><a href="http://xmodulo.com/category/math">Math</a>
+</li>
+	<li class="cat-item cat-item-10"><a href="http://xmodulo.com/category/networking">Networking</a>
+</li>
+	<li class="cat-item cat-item-21"><a href="http://xmodulo.com/category/openvswitch">Open vSwitch</a>
+</li>
+	<li class="cat-item cat-item-9"><a href="http://xmodulo.com/category/openstack">OpenStack</a>
+</li>
+	<li class="cat-item cat-item-25"><a href="http://xmodulo.com/category/openwrt">OpenWRT</a>
+</li>
+	<li class="cat-item cat-item-30"><a href="http://xmodulo.com/category/perl">Perl</a>
+</li>
+	<li class="cat-item cat-item-415"><a href="http://xmodulo.com/category/php-2">PHP</a>
+</li>
+	<li class="cat-item cat-item-337"><a href="http://xmodulo.com/category/productivity">Productivity</a>
+</li>
+	<li class="cat-item cat-item-286"><a href="http://xmodulo.com/category/publishing">Publishing</a>
+</li>
+	<li class="cat-item cat-item-212"><a href="http://xmodulo.com/category/python">Python</a>
+</li>
+	<li class="cat-item cat-item-280"><a href="http://xmodulo.com/category/raspberry-pi">Raspberry Pi</a>
+</li>
+	<li class="cat-item cat-item-13"><a href="http://xmodulo.com/category/security">Security</a>
+</li>
+	<li class="cat-item cat-item-23"><a href="http://xmodulo.com/category/shells">Shells</a>
+</li>
+	<li class="cat-item cat-item-11"><a href="http://xmodulo.com/category/system">System</a>
+</li>
+	<li class="cat-item cat-item-369"><a href="http://xmodulo.com/category/sysadmin">System Administration</a>
+</li>
+	<li class="cat-item cat-item-8"><a href="http://xmodulo.com/category/ubuntu">Ubuntu</a>
+</li>
+	<li class="cat-item cat-item-4"><a href="http://xmodulo.com/category/utilities">Utilities</a>
+</li>
+	<li class="cat-item cat-item-22"><a href="http://xmodulo.com/category/video">Video</a>
+</li>
+	<li class="cat-item cat-item-201"><a href="http://xmodulo.com/category/virtualbox">VirtualBox</a>
+</li>
+	<li class="cat-item cat-item-20"><a href="http://xmodulo.com/category/virtualization">Virtualization</a>
+</li>
+	<li class="cat-item cat-item-5"><a href="http://xmodulo.com/category/vmware">VMware</a>
+</li>
+	<li class="cat-item cat-item-19"><a href="http://xmodulo.com/category/vyatta">Vyatta</a>
+</li>
+	<li class="cat-item cat-item-3"><a href="http://xmodulo.com/category/web">Web</a>
+</li>
+	<li class="cat-item cat-item-155"><a href="http://xmodulo.com/category/windows-azure">Windows Azure</a>
+</li>
+	<li class="cat-item cat-item-28"><a href="http://xmodulo.com/category/xen">Xen</a>
+</li>
+	<li class="cat-item cat-item-6"><a href="http://xmodulo.com/category/xenserver">XenServer</a>
+</li>
+		</ul>
+</aside></div> <!-- id="heatmapthemead-widget-position-primary" -->
+</div> <!-- id="heatmapthemead-primary-sidebar-container" -->
+</div> <!-- id="heatmapthemead-primary-sidebar" -->
+<!-- secondary sidebar -->
+<div id="heatmapthemead-secondary-sidebar">
+<div id="heatmapthemead-secondary-sidebar-container" role="complementary">
+<div id="heatmapthemead-widget-position-secondary" class="heatmapthemead-widget-position heatmapthemead-secondary widget-area" role="complementary"><aside id="feedburneremailwidget-2" class="widget FeedburnerEmailWidget"><h4 class="widget-title">Subscribe to daily Linux FAQ tips</h4><form id="feedburner_email_widget_sbef" action="https://feedburner.google.com/fb/a/mailverify" method="post" onsubmit="window.open('https://feedburner.google.com/fb/a/mailverify?uri=linuxfaq', 'popupwindow', 'scrollbars=yes,width=550,height=520');return true;" target="popupwindow"><input id="feedburner_email_widget_sbef_email" name="email" value="Enter your email address" onclick="javascript:if(this.value=='Enter your email address'){this.value= '';}" type="text"><input value="linuxfaq" name="uri" type="hidden"><input value="en_US" name="loc" type="hidden"><input id="feedburner_email_widget_sbef_submit" value="Subscribe" type="submit"></form></aside><aside id="text-18" class="widget widget_text">			<div class="textwidget"><ul class="asdf-banner-zone" id="asdf-banner-1" style="width:300px; height:160px; float:left;">
+<li style="width:140px; height:140px; margin:0 20px 20px 0;"><a rel="nofollow" target="_blank" href="http://xmodulo.com/go/digitalocean" title="SSD virtual server for $5/mon"><img class="lazy" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/digitalocean_small.jpg" data-lazy-type="image" data-lazy-src="http://xmodulo.com/images/digitalocean_small.jpg" alt="SSD virtual server for $5/mon" style="width:140px; height:140px; border:0px;"><noscript><img src="http://xmodulo.com/images/digitalocean_small.jpg" alt="SSD virtual server for $5/mon" style="width:140px; height:140px; border:0px;" /></noscript></a></li>
+<li style="width:140px; height:140px; margin:0 0 20px 0;">
+<a rel="nofollow" href="http://www.shareasale.com/r.cfm?b=768106&amp;u=1001808&amp;m=59485&amp;urllink=&amp;afftrack=" target="_blank" title="Become a Linux Certified System Administrator at Linux Foundation">
+<img class="lazy" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/lfcs.jpg" data-lazy-type="image" data-lazy-src="/images/lfcs.jpg" style="width:140px;height:140px;border:1px;" title="Become a Linux Certified System Administrator at Linux Foundation" border="1px"><noscript><img src="/images/lfcs.jpg" style="width:140px;height:140px;border:1px;" title="Become a Linux Certified System Administrator at Linux Foundation" border="1px"/></noscript></a>
+</li>
+</ul></div>
+		</aside><aside id="oio-widget-3" class="widget asdf">
+<ul class="asdf-banner-zone" id="asdf-banner-1" style="width:300px; height:140px; float:left;">
+<li style="width:140px; height:140px; margin:0 20px 20px 0;"><a rel="nofollow" target="_blank" href="http://xmodulo.com/wp-content/plugins/asdf/modules/tracker/go.php?id=11" title="Cross-platform C/C++ IDE"><img src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/140x140.png" alt="Cross-platform C/C++ IDE" style="width:140px; height:140px; border:0px;"></a></li>
+<li style="width:140px; height:140px; margin:0 0 20px 0;"><a rel="nofollow" target="_blank" href="http://xmodulo.com/advertise#banner" title="Advertise Here"><img src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/asdf.png" alt="Advertise Here" style="width:140px; height:140px; border:0px;"></a></li>
+</ul>
+<hr class="asdf-clear-left">
+</aside><aside id="search-4" class="widget widget_search"><form role="search" method="get" id="searchform" class="searchform" action="http://xmodulo.com/">
+				<div>
+					<label class="screen-reader-text" for="s">Search for:</label>
+					<input name="s" id="s" type="text">
+					<input id="searchsubmit" value="Search" type="submit">
+				</div>
+			</form></aside><aside id="relatedpoststhumbnailswidget-2" class="widget widget_relatedpoststhumbnailswidget"><h4 class="widget-title">Related Linux FAQs</h4><div style="clear: both"></div><div style="border: 0pt none ; margin: 0pt; padding: 0pt;"><a onmouseout="this.style.backgroundColor='#FFFFFF'" onmouseover="this.style.backgroundColor='#EEEEEF'" style="background-color: #FFFFFF; border-right: 1px solid #DDDDDD; border-bottom: medium none; margin: 0pt; padding: 6px; display: block; float: left; text-decoration: none; text-align: left; cursor: pointer;" href="http://xmodulo.com/how-to-enable-ip-forwarding-in-linux.html"><div style="border: 0pt none ; margin: 0pt; padding: 0pt; width: 130px; height: 230px;"><div style="border: 0pt none ; margin: 0pt; padding: 0pt; background: transparent url(http://farm4.staticflickr.com/3772/11124716595_a090840734_q.jpg) no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; width: 130px; height: 130px;"></div><div style="border: 0pt none; margin: 3px 0pt 0pt; padding: 0pt; font-family: ; font-style: normal; font-variant: normal; font-weight: normal; font-size: px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; color: #333333;">How to enable IP forwarding in Linux</div></div></a><a onmouseout="this.style.backgroundColor='#FFFFFF'" onmouseover="this.style.backgroundColor='#EEEEEF'" style="background-color: #FFFFFF; border-right: 1px solid #DDDDDD; border-bottom: medium none; margin: 0pt; padding: 6px; display: block; float: left; text-decoration: none; text-align: left; cursor: pointer;" href="http://xmodulo.com/mail-server-ubuntu-debian.html"><div style="border: 0pt none ; margin: 0pt; padding: 0pt; width: 130px; height: 230px;"><div style="border: 0pt none ; margin: 0pt; padding: 0pt; background: transparent url(http://farm6.staticflickr.com/5505/11899717434_b2708d9a8e_q.jpg) no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; width: 130px; height: 130px;"></div><div style="border: 0pt none; margin: 3px 0pt 0pt; padding: 0pt; font-family: ; font-style: normal; font-variant: normal; font-weight: normal; font-size: px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; color: #333333;">How to set up a mail server in Ubuntu or Debian</div></div></a><a onmouseout="this.style.backgroundColor='#FFFFFF'" onmouseover="this.style.backgroundColor='#EEEEEF'" style="background-color: #FFFFFF; border-right: 1px solid #DDDDDD; border-bottom: medium none; margin: 0pt; padding: 6px; display: block; float: left; text-decoration: none; text-align: left; cursor: pointer;" href="http://xmodulo.com/how-dns-works.html"><div style="border: 0pt none ; margin: 0pt; padding: 0pt; width: 130px; height: 230px;"><div style="border: 0pt none ; margin: 0pt; padding: 0pt; background: transparent url(http://farm4.staticflickr.com/3687/13300893605_b18d4c6c33_q.jpg) no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; width: 130px; height: 130px;"></div><div style="border: 0pt none; margin: 3px 0pt 0pt; padding: 0pt; font-family: ; font-style: normal; font-variant: normal; font-weight: normal; font-size: px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; color: #333333;">How DNS works</div></div></a><a onmouseout="this.style.backgroundColor='#FFFFFF'" onmouseover="this.style.backgroundColor='#EEEEEF'" style="background-color: #FFFFFF; border-right: 1px solid #DDDDDD; border-bottom: medium none; margin: 0pt; padding: 6px; display: block; float: left; text-decoration: none; text-align: left; cursor: pointer;" href="http://xmodulo.com/install-lamp-stack-centos.html"><div style="border: 0pt none ; margin: 0pt; padding: 0pt; width: 130px; height: 230px;"><div style="border: 0pt none ; margin: 0pt; padding: 0pt; background: transparent url(https://farm4.staticflickr.com/3943/15687685195_5149756b0e_q.jpg) no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; width: 130px; height: 130px;"></div><div style="border: 0pt none; margin: 3px 0pt 0pt; padding: 0pt; font-family: ; font-style: normal; font-variant: normal; font-weight: normal; font-size: px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; color: #333333;">How to install LAMP stack (Apache, MariaDB/MySQL and PHP) on CentOS</div></div></a><a onmouseout="this.style.backgroundColor='#FFFFFF'" onmouseover="this.style.backgroundColor='#EEEEEF'" style="background-color: #FFFFFF; border-right: 1px solid #DDDDDD; border-bottom: medium none; margin: 0pt; padding: 6px; display: block; float: left; text-decoration: none; text-align: left; cursor: pointer;" href="http://xmodulo.com/create-custom-backup-plan-debian.html"><div style="border: 0pt none ; margin: 0pt; padding: 0pt; width: 130px; height: 230px;"><div style="border: 0pt none ; margin: 0pt; padding: 0pt; background: transparent url(https://farm9.staticflickr.com/8636/15754955450_f3ef82217b_q.jpg) no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; width: 130px; height: 130px;"></div><div style="border: 0pt none; margin: 3px 0pt 0pt; padding: 0pt; font-family: ; font-style: normal; font-variant: normal; font-weight: normal; font-size: px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; color: #333333;">How to create a custom backup plan for Debian with backupninja</div></div></a><a onmouseout="this.style.backgroundColor='#FFFFFF'" onmouseover="this.style.backgroundColor='#EEEEEF'" style="background-color: #FFFFFF; border-right: 1px solid #DDDDDD; border-bottom: medium none; margin: 0pt; padding: 6px; display: block; float: left; text-decoration: none; text-align: left; cursor: pointer;" href="http://xmodulo.com/send-email-notifications-gmail-smtp-server-linux.html"><div style="border: 0pt none ; margin: 0pt; padding: 0pt; width: 130px; height: 230px;"><div style="border: 0pt none ; margin: 0pt; padding: 0pt; background: transparent url(https://c1.staticflickr.com/1/566/22873764251_8fe66bfd16_q.jpg) no-repeat scroll 0% 0%; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; width: 130px; height: 130px;"></div><div style="border: 0pt none; margin: 3px 0pt 0pt; padding: 0pt; font-family: ; font-style: normal; font-variant: normal; font-weight: normal; font-size: px; line-height: normal; font-size-adjust: none; font-stretch: normal; -x-system-font: none; color: #333333;">How to send email notifications using Gmail SMTP server on Linux</div></div></a></div><div style="clear: both"></div></aside><aside id="rss-2" class="widget widget_rss"><h4 class="widget-title"><a class="rsswidget" href="http://ask.xmodulo.com/feed"><img class="rss-widget-icon" style="border:0" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/rss.png" alt="RSS" height="14" width="14"></a> <a class="rsswidget" href="http://ask.xmodulo.com/">Ask Xmodulo</a></h4><ul><li><a class="rsswidget" href="http://ask.xmodulo.com/remove-network-namespaces-linux.html">How to remove all network namespaces at once on Linux</a></li><li><a class="rsswidget" href="http://ask.xmodulo.com/plot-bar-graph-gnuplot.html">How to plot a bar graph on Gnuplot</a></li><li><a class="rsswidget" href="http://ask.xmodulo.com/disable-mac-learning-linux-bridge.html">How to disable MAC learning in a Linux bridge</a></li><li><a class="rsswidget" href="http://ask.xmodulo.com/enable-htaccess-apache.html">How to enable .htaccess in Apache HTTP server</a></li><li><a class="rsswidget" href="http://ask.xmodulo.com/add-bookmarks-pdf-document-linux.html">How to add bookmarks to a PDF document on Linux</a></li><li><a class="rsswidget" href="http://ask.xmodulo.com/record-desktop-screen-area-linux.html">How to record a particular area of desktop screen on Linux</a></li><li><a class="rsswidget" href="http://ask.xmodulo.com/add-proxy-exceptions-ubuntu-desktop.html">How to add proxy exceptions on Ubuntu desktop</a></li><li><a class="rsswidget" href="http://ask.xmodulo.com/nfs-server-client-centos.html">How to set up NFS server and client on CentOS 7</a></li><li><a class="rsswidget" href="http://ask.xmodulo.com/detect-virtualization-command-line.html">How to detect the type of virtualization from the command line</a></li><li><a class="rsswidget" href="http://ask.xmodulo.com/install-newsbeuter-linux.html">How to install Newsbeuter command-line RSS reader on Linux</a></li></ul></aside><aside id="rss-3" class="widget widget_rss"><h4 class="widget-title"><a class="rsswidget" href="http://list.xmodulo.com/feed"><img class="rss-widget-icon" style="border:0" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/rss.png" alt="RSS" height="14" width="14"></a> <a class="rsswidget" href="http://list.xmodulo.com/">Xmodulo List</a></h4><ul><li><a class="rsswidget" href="http://list.xmodulo.com/kryo.html">Kryo</a></li><li><a class="rsswidget" href="http://list.xmodulo.com/apache-maven.html">Apache Maven</a></li><li><a class="rsswidget" href="http://list.xmodulo.com/graphite.html">Graphite</a></li><li><a class="rsswidget" href="http://list.xmodulo.com/cool-reader.html">Cool Reader</a></li><li><a class="rsswidget" href="http://list.xmodulo.com/netdata.html">netdata</a></li><li><a class="rsswidget" href="http://list.xmodulo.com/anjuta.html">Anjuta</a></li><li><a class="rsswidget" href="http://list.xmodulo.com/clamav.html">ClamAV</a></li><li><a class="rsswidget" href="http://list.xmodulo.com/gnu-octave.html">GNU Octave</a></li><li><a class="rsswidget" href="http://list.xmodulo.com/audacity.html">Audacity</a></li><li><a class="rsswidget" href="http://list.xmodulo.com/codelite.html">CodeLite</a></li></ul></aside><aside id="heatmapthemead_ad-7" class="widget heatmapthemead_ad_widget">				<div class="heatmapthemead_ad_widget"><a rel="nofollow" href="http://xmodulo.com/go/digitalocean" target="_blank">
+<img src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/digitalocean.jpg" alt="SSD virtual servers starting from $5/mon" border="0"></a>
+</div>
+			</aside></div> <!-- id="heatmapthemead-widget-position-secondary" -->
+</div> <!-- id="heatmapthemead-secondary-sidebar-container" -->
+</div> <!-- id="heatmapthemead-secondary-sidebar" -->
+</div> <!-- id="heatmapthemead-main" -->
+</div><ins data-adsbygoogle-status="done" style="display: none; width: auto; height: auto;" class="adsbygoogle"><ins id="aswift_0_expand" style="display:inline-table;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent"><ins id="aswift_0_anchor" style="display:block;border:none;height:0px;margin:0;padding:0;position:relative;visibility:visible;width:0px;background-color:transparent"><iframe marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" scrolling="no" allowfullscreen="true" onload="var i=this.id,s=window.google_iframe_oncopy,H=s&amp;&amp;s.handlers,h=H&amp;&amp;H[i],w=this.contentWindow,d;try{d=w.document}catch(e){}if(h&amp;&amp;d&amp;&amp;(!d.body||!d.body.firstChild)){if(h.call){setTimeout(h,0)}else if(h.match){try{h=s.upd(h,i)}catch(e){}w.location.replace(h)}}" id="aswift_0" name="aswift_0" style="left:0;position:absolute;top:0;" frameborder="0" height="0" width="0"></iframe></ins></ins></ins> <!-- id="heatmapthemead-main-wipe" -->
+<!-- Footer -->
+<div id="heatmapthemead-footer-wipe">
+<div id="heatmapthemead-footer">
+<div id="heatmapthemead-footer-container" role="complementary">
+				<div id="heatmapthemead-footer-menu" class="heatmapthemead-menu">
+					<nav role="navigation" class="site-navigation footer-navigation">
+						<div class="menu"><ul><li class="page_item page-item-5032"><a href="http://xmodulo.com/about">About</a></li><li class="page_item page-item-3805"><a href="http://xmodulo.com/advertise">Advertise</a></li><li class="page_item page-item-5367"><a href="http://xmodulo.com/write-us">Write for Us</a></li><li class="page_item page-item-574"><a href="http://xmodulo.com/contact">Contact</a></li></ul></div>
+					</nav>
+				</div>
+	<div id="heatmapthemead-credits" class="heatmapthemead-menu"><p>Hosted by <a target="_blank" rel="nofollow" href="http://xmodulo.com/go/stablehost">Stablehost</a></p></div></div> <!-- id="heatmapthemead-footer-container" -->
+</div> <!-- id="heatmapthemead-footer" -->
+</div> <!-- id="heatmapthemead-footer-wipe" -->
+<!-- wp_footer() -->
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-31255384-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>			<script>
+			function renderGooglePlus1() {
+				if ( 'undefined' === typeof gapi ) {
+					return;
+				}
+
+				jQuery( '.g-plus' ).each(function() {
+					var $button = jQuery( this );
+
+					if ( ! $button.data( 'gplus-rendered' ) ) {
+						gapi.plusone.render( this, {
+							href: $button.attr( 'data-href' ),
+							size: $button.attr( 'data-size' ),
+							annotation: $button.attr( 'data-annotation' )
+						});
+
+						$button.data( 'gplus-rendered', true );
+					}
+				});
+			}
+
+			(function() {
+				var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+				po.src = 'https://apis.google.com/js/plusone.js';
+				po.innerHTML = '{"parsetags": "explicit"}';
+				po.onload = renderGooglePlus1;
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+			})();
+
+			jQuery( document.body ).on( 'post-load', renderGooglePlus1 );
+			</script>
+						<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+					<script type="text/javascript">
+			var windowOpen;
+		jQuery(document).on( 'ready post-load', function(){
+			jQuery( 'a.share-facebook' ).on( 'click', function() {
+				if ( 'undefined' !== typeof windowOpen ){ // If there's another sharing window open, close it.
+					windowOpen.close();
+				}
+				windowOpen = window.open( jQuery(this).attr( 'href' ), 'wpcomfacebook', 'menubar=1,resizable=1,width=600,height=400' );
+				return false;
+			});
+		});
+		</script>
+		<div class=" fb_reset" id="fb-root"><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div><iframe src="http://staticxx.facebook.com/connect/xd_arbiter.php?version=42#channel=fbf2694059b1d&amp;origin=http%3A%2F%2Fxmodulo.com" style="border: medium none;" tabindex="-1" title="Facebook Cross Domain Communication Frame" aria-hidden="true" id="fb_xdm_frame_http" scrolling="no" allowfullscreen="true" allowtransparency="true" name="fb_xdm_frame_http" frameborder="0"></iframe><iframe src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/xd_arbiter_002.htm" style="border: medium none;" tabindex="-1" title="Facebook Cross Domain Communication Frame" aria-hidden="true" id="fb_xdm_frame_https" scrolling="no" allowfullscreen="true" allowtransparency="true" name="fb_xdm_frame_https" frameborder="0"></iframe></div></div><div style="position: absolute; top: -10000px; height: 0px; width: 0px;"><div></div></div></div>
+			<script>(function(d, s, id) { var js, fjs = d.getElementsByTagName(s)[0]; if (d.getElementById(id)) return; js = d.createElement(s); js.id = id; js.src = '//connect.facebook.net/en_US/sdk.js#xfbml=1&appId=249643311490&version=v2.3'; fjs.parentNode.insertBefore(js, fjs); }(document, 'script', 'facebook-jssdk'));</script>
+			<script>
+			jQuery( document.body ).on( 'post-load', function() {
+				if ( 'undefined' !== typeof FB ) {
+					FB.XFBML.parse();
+				}
+			} );
+			</script>
+			<script type="text/javascript" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/form.js"></script>
+<script type="text/javascript" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/anti-spam-4.js"></script>
+<script type="text/javascript" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/devicepx-jetpack.js"></script>
+<script type="text/javascript" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/comment-reply.js"></script>
+<script type="text/javascript" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/bj-lazy-load.js"></script>
+<script type="text/javascript" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/wp-embed.js"></script>
+<script type="text/javascript">
+/* <![CDATA[ */
+var sharing_js_options = {"lang":"en","counts":"1"};
+/* ]]> */
+</script>
+<script type="text/javascript" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/sharing.js"></script>
+<script type="text/javascript" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/e-201622.js" async="" defer="defer"></script>
+<script type="text/javascript">
+	_stq = window._stq || [];
+	_stq.push([ 'view', {v:'ext',j:'1:4.0.3',blog:'44272548',post:'21662',tz:'0',srv:'xmodulo.com'} ]);
+	_stq.push([ 'clickTrackerInit', '44272548', '21662' ]);
+</script>
+<!-- End of wp_footer() -->
+<!-- Number of Queries:47   Seconds: 1.409-->
+<!-- heatmapthemead_end_body hook -->
+<!-- END BODY Scripts -->
+
+
+<!-- end of heatmapthemead_end_body hook -->
+
+
+
+
+<div style="display: none; z-index: 19 ! important;" id="__lpform_s_numspan"></div><div style="max-height: 16px; vertical-align: top; position: absolute; top: 539.75px; left: 1222px; z-index: 18;" id="__lpform_s"><img style="opacity: 0.6; vertical-align: top;" id="__lpform_s_icon" height="16" width="16"></div><iframe tabindex="-1" style="width: 1px; height: 1px; position: absolute; top: -100px;" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/postmessageRelay.htm" id="oauth2relay989270842" name="oauth2relay989270842"></iframe><iframe style="position: absolute; visibility: hidden; display: none; width: 0px; height: 0px; padding: 0px; border: medium none;" allowfullscreen="true" allowtransparency="true" scrolling="no" id="rufous-sandbox" frameborder="0"></iframe><img id="wpstats" alt=":)" src="What%20are%20useful%20command-line%20network%20monitors%20on%20Linux%20-%20Xmodulo_files/g.gif" height="5" width="6"></body></html>
+<!-- End of render.php -->
+<!-- Performance optimized by W3 Total Cache. Learn more: http://www.w3-edge.com/wordpress-plugins/
+
+Minified using disk
+Page Caching using disk: enhanced
+Database Caching 4/51 queries in 0.023 seconds using disk
+Object Caching 2895/3027 objects using disk
+Content Delivery Network via Amazon Web Services: CloudFront: d2j4ekq3nza4ef.cloudfront.net
+
+ Served from: xmodulo.com @ 2016-06-01 05:04:42 by W3 Total Cache -->

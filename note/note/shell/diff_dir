@@ -1,0 +1,16 @@
+Simple script to compare two volumes/directories efficiently. Copy this script as "diff-dir" and "chmod +x diff-dir". You can execute it as "./diff-dir DIR1 DIR2". 
+
+#! /bin/bash
+## Author: Anand Babu Periasamy ab[at]gnu.org.in
+## License: GNU GPL v3 or later
+## usage: diff-dir DIR1 DIR2
+
+DIR1=$1
+DIR2=$2
+DIR1_OUT=$(tempfile -prefix "$DIR1"_)
+DIR2_OUT=$(tempfile -prefix "$DIR2"_)
+find $DIR1 -printf "%P %s\n" | sort > $DIR1_OUT
+find $DIR2 -printf "%P %s\n" | sort > $DIR2_OUT
+
+diff $DIR2_OUT $DIR1_OUT
+rm -f $DIR1_OUT $DIR2_OUT

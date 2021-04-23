@@ -1,0 +1,15 @@
+GoCD:
+Overview:
+written by Java, currently at version 18, many youtube clips for ver 17
+<passwordFile path="/home/go/admins.properties"/>
+Concept: https://docs.gocd.org/current/introduction/concepts_in_go.html
+task (single command)
+job: consist many tasks
+stage: have many jobs run independently, means parallel
+pipeline: have mutiple stage
+
+pipeline > stages > jobs > tasks
+
+pipeline will be display as a block in dashboard, so we can define many way of the flow:
+
+group pipeline is projectname_env, each pipeline is like build job and we have stage git-build-test-intergration test in each pipeline

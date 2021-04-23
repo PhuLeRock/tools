@@ -1,0 +1,8 @@
+
+php-fpm
+--prefix=/build/phpbaoVNE/ --with-config-file-path=/build/phpbaoVNE/etc/php.ini \
+--with-mysql --with-mysqli \
+--with-jpeg-dir=/usr --with-freetype-dir=/usr \
+--with-png-dir=/usr --with-gd --enable-gd-native-ttf --with-gdbm --with-gettext --enable-mbstring --with-pcre-regex --with-regex --enable-soap --enable-sockets \
+--enable-pdo --with-xmlrpc --enable-zip --with-zlib --with-bz2 --with-curl --enable-ftp --with-iconv --enable-pcntl --with-kerberos --with-pdo-mysql \
+--with-libdir=lib64 --with-openssl --with-mcrypt --with-mhash --with-gmp --enable-fpm --enable-libxml

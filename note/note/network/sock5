@@ -1,0 +1,27 @@
+[pc] --> [server]
+
+##########################
+[pc]  
+ssh -q -f -N -D 12345 user@server
+firefox set sock5 localhost port 12345
+
+or
+[server]
+ssh -q -f -N  -D 0.0.0.0:12345 user@server
+firefox set sock5 ipserver port 12345
+
+-D 12345 : This does the dynamic stuff and makes it behave as a SOCKS server.
+-f : This will fork the process into the background after you type your password.
+-C : Turns on compression.
+-q : Quiet mode. Since this is just a tunnel we can make it quiet.
+-N : Tells it no commands will be sent. (the -f will complain if we don’t specify this)
+
+
+DNS firefox through proxy: 
+about:config = "network.proxy.socks_remote_dns = true"
+system use sock5:
+/etc/proxychains.conf
+#dynamic_chain
+strict_chain
+socks5 port "socks5 127.0.0.1 5555"
+proxychains apt-get update

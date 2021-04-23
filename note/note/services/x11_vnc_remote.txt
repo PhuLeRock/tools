@@ -1,0 +1,13 @@
+ # van de lai start vncserver voi root moi chay duoc
+ apt install tigervnc-standalone-server tigervnc-xorg-extension tigervnc-viewer
+ vncserver -localhost no
+ 
+ # ssh phai enable x11 
+X11Forwarding yes
+X11DisplayOffset 10
+X11UseLocalhost yes
+
+# tren windows phai cai xming va start xming, putty enable x11, Xdisplay location : localhost:0, login bang root
+
+ 
+ 

@@ -1,0 +1,21 @@
+# aurora mysql get error 400 since same subnet, this may cause you default db subnet group which have 2 subnet in the same AZ
+  you need to create custom DBSubnetGroup and add subnets from diferent AZ
+
+# EC2 is not ez to create without experiences, please make sure GroupSet SecurityGroupIds is diffrent type data value
+  Ec2ForDev:
+    Type: 'AWS::EC2::Instance'
+    Condition: CreateDevResources
+    Properties:
+      DisableApiTermination: 'false'
+      InstanceInitiatedShutdownBehavior: stop
+      ImageId: !Ref UbuntuImageId
+      InstanceType: !Ref DevEc2
+      KeyName: !Ref SshPubKey
+      Monitoring: 'false'
+      SubnetId: #"subnet-0bd1a02d31cf034a9" # groupname ko duoc dung voi subnet, phai la secgroupids
+        Fn::ImportValue: !Sub "vpcdev-PublicSubnet1id"
+      SecurityGroupIds:
+        - Fn::ImportValue: !Sub 'sgHttpHttps'
+        - Fn::ImportValue: !Sub 'sgSSHallow'
+
+        

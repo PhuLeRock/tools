@@ -1,0 +1,13 @@
+$ sudo apt-get install cuetools shntool
+
+Split the album flac file into separate tracks:
+
+$ cuebreakpoints sample.cue | shnsplit -o flac sample.flac
+
+Copy the flac tags (if present):
+
+$ cuetag sample.cue split-track*.flac
+
+In case the cue file is not a separate file, but included in the flac file itself do this as the first step:
+
+$ metaflac --show-tag=CUESHEET sample.flac | grep -v ^CUESHEET > sample.cue

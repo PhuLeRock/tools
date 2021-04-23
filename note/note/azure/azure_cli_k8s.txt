@@ -1,0 +1,4 @@
+install azure cli
+az login (login on browser)
+az aks get-credentials --resource-group "Aussie" --name "aussie"
+

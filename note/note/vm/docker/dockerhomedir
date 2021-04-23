@@ -1,0 +1,9 @@
+
+docker ps | grep $1
+if [ $? = 1 ]; then
+echo container is not running
+else
+#echo ""
+echo ">>>>> COMMAND TO SET CONTAINER HOME IS VARIABLE"
+echo rootfs$1=/var/lib/docker/devicemapper/mnt/$(docker inspect -f '{{.Id}}' $1)/rootfs
+fi

@@ -1,0 +1,2 @@
+## uninstall_window_feature
+Uninstall-WindowsFeature -Name TelnetClient,TFTP

@@ -1,0 +1,21 @@
+
+acl magic_words1 url_regex -i 192.168 #We don't want to limit downloads on our local network.
+acl magic_words2 url_regex -i ftp .exe .mp3 .vqf .tar.gz .gz .rpm .zip .rar .avi .mpeg .mpe .mpg .qt .ram .rm .iso .raw .wav .mov
+acl day time 09:00-23:59
+
+delay_pools 2
+
+delay_class 1 2
+delay_parameters 1 -1/-1 -1/-1 #-1/-1 mean that there are no limits.
+delay_access 1 allow magic_words1
+ 
+
+delay_class 2 2
+delay_parameters 2 5000/150000 5000/120000
+
+delay_access 2 allow day
+delay_access 2 deny !day
+delay_access 2 allow magic_words2
+
+
+

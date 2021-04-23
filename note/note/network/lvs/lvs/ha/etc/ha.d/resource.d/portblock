@@ -1,0 +1,58 @@
+#!/bin/sh
+#
+# $Id: portblock.in,v 1.4 2005/11/03 07:45:51 xunsun Exp $
+#
+# Description:	wrapper of OCF RA portblock, based on original heartbeat RA.
+#		See OCF RA portblock for more information.
+#
+# Author:	Xun Sun <xunsun@cn.ibm.com> 
+# Support:      linux-ha@lists.linux-ha.org
+# License:      GNU General Public License (GPL)
+# Copyright:	(C) 2005 International Business Machines
+#
+
+. /etc/ha.d/resource.d//hto-mapfuncs
+CMD=`basename $0`
+usage()
+{
+	cat <<-!USAGE >&2
+	usage: $CMD {udp|tcp} portno,portno {block|unblock} {start|stop|status}
+
+	$CMD is used to temporarily block ports using iptables.
+
+	It can be used to turn off a port before bringing
+	up an IP address, and enable it after a service is started.
+	To do that for samba, the following resource line can be used:
+
+	$CMD::tcp::137,138::block		\\
+	    10.10.10.20				\\
+	    nmbd smbd 				\\
+	    $CMD::tcp::137,138::unblock
+
+	This will do the follwing things:
+
+	  - DROP all incoming packets for TCP ports 137 and 138
+	  - Bring up the IP alias 10.10.10.20
+	  - start the nmbd and smbd services
+	  - Re-enable TCP ports 137 and 138
+	        (enable normal firewall rules on those ports)
+
+	This prevents clients from getting ICMP port unreachable
+	if they try to reconnect to the service after the alias is
+	enabled but before nmbd and smbd are running.  These packets
+	will cause some clients to give up attempting to reconnect to
+	the server.
+
+	NOTE:  iptables is linux-specific...
+
+	!USAGE
+	exit 1
+}
+
+case $4 in
+  start|stop|status)
+	;;
+  *)
+	usage;;
+esac
+ra_execocf  "rsc_id=portblock_${1}_$2" "rsc_type=portblock" "provider=heartbeat" $4 "protocol=$1" "portno=$2" "action=$3"

@@ -1,0 +1,14 @@
+k3b tips: rip mp3 from CD
+#apt-get install  lame
+##insert CD, open k3b > Tool > Rip Audio CD
+##Start ripping > chose file type mp3 > click configure >  add -b 320 if you want to encode 320 kbps mp3,
+example:
+lame -h -b 320 --tt %t --ta %a --tl %m --ty %y --tc %c - %f
+
+if K3b failed to rip mp3, check 2 box "Swap Byte Order" and "Write Wave Header".
+
+
+#Burn m3u to CD
+sed '/^#/d' MyPlayListFile.m3u | tr '\n' '\0' | xargs -0 k3b --audiocd
+
+or sed '/^#/d' cd\ aprile\ 2009.m3u | tr '\n' '\0' | xargs -0 brasero -d

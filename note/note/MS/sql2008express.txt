@@ -1,0 +1,23 @@
+ [Microsoft SQL Server 2008 Express with Tools 10]
+
+This article has information on all the command line switches for SQL Server 2008 including Express. Details including required/optional switches, commands superseded from previous versions, repair/rebuild/uninstall, etc.
+
+http://msdn.microsoft.com/en-us/library/ms144259.aspx
+
+Here is the command I used:
+
+SQLEXPR32_x86_ENU.exe /QS /ACTION=Install /FEATURES=SQL,SDK /INSTANCENAME=MSSQLSERVER /SQLSVCACCOUNT="NT AUTHORITY\Network Service" /SQLSYSADMINACCOUNTS="Users" /AGTSVCACCOUNT="NT AUTHORITY\Network Service"
+Comments
+
+###############################
+f = your dvd/cd drive
+in command promp type
+f:\setup.exe /qn /instancename=YOURFAVORITENAME /sapwd=YOURPASSWORD
+
+for more information you can type in command prompt
+
+f:\setup.exe /?
+
+###########################
+You can call direct sqlexpr_x86_…exe from the right path for exe:
+sqlexpr_x86_enu.exe /CONFUGURATIONFILE=”Setup.ini”

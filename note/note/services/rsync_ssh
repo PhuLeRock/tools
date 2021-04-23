@@ -1,0 +1,45 @@
+##Over ssh
+rsync -avzr -e ssh root@src:/  dest
+
+Option:
+a = archive
+z = compress
+--exclude=".*/" # excluded hidden file or hidden directory./ba	
+r = recursive directory
+e = over ssh
+vv verbose
+--delete = xoa cac file co tren dest ma ko co tren src
+-u, --update                skip files that are newer on the receiver
+-p --perms keep permission
+
+EXAMPLE:
+[root@localhost backup]# tree test/
+test/
+|-- 1
+`-- 2
+    `-- 2.txt
+[root@localhost backup]# rsync --delete -azvv test/1/ test/2/
+[root@localhost backup]# tree test/
+test/
+|-- 1
+`-- 2
+Note: neu file A o src co date cu hon file A o dest thi src van overwrite dest, neu ko muon phai dung tham so -u
+
+rsync -avrt rsync://$url/centos/5.2/   \
+--exclude=debug/ --exclude=isos/ \
+--exclude=alpha/ --exclude=ia64/ --exclude=s390/ --exclude=s390x/  /var/www/html/centos/5.2/
+
+
+#rsync -avzr -e ssh /home \
+--exclude=/home/hotroms/public_html/images \
+ --exclude /home/hotroms/public_html/images \
+--exclude /home/hotroboom/public_html/static/temp \
+--exclude /home/hotroms/portal/temp \
+--exclude /home/hotrophongthan/portal/images \
+--exclude /home/hotrovolam/portal/images \
+--exclude https_access* \
+--exclude https_error* \
+root@10.30.7.11:/root/src/oldserver/
+
+
+

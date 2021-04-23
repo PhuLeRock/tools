@@ -1,0 +1,7 @@
+
+#Agent forwarding (-A), from 123.30.173.116 --> 10.60.80.117(LAN) --> 10.60.80.114(LAN)
+ssh -v -p3322 -i /home/phultv/Dropbox/Documents/sshkey/phultv.rsa -A -t root@123.30.173.116 \
+ssh -p3322 -i /root/.ssh/tunnel_keys/phultv.rsa -A -t root@10.60.80.117 \
+ssh -p3322 -i /home/phultv/Dropbox/Documents/sshkey/phultv.rsa -A root@10.60.80.114
+
+

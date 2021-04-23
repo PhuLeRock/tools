@@ -1,0 +1,11 @@
+set :stage, :production
+server "capiagent", user:'root', role: "web"
+server "capiagent02", user:'root', role: "db"
+set :application, 'cicd'
+set :scm, :git
+set :repo_url, 'http://phuletv:!Qhul3r0ck!@git.harveynash.vn/vanvut/ruby_course_materials.git'
+
+
+set :deploy_to, "/data/testgit/web"
+set :log_path,  '/var/log/cicd'
+set :keep_releases, 2

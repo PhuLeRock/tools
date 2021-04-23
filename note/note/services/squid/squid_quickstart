@@ -1,0 +1,45 @@
+# install
+./configure --prefix=/ssg/squid
+make install
+useradd squid
+#edit sysctp ipv4_forware=103
+chown -R squid.squid /ssg/squid/var/cache/squid
+chown -R squid.squid /ssg/squid/var/logs/
+
+
+
+
+Modify squid.conf :
+http_port 103.224.170.74:3128 transparent
+#cache_dir ufs /var/spool/squid 3000 16 256
+cache_effective_user squid #used to create cache_dir in -z option
+cache_dir ufs /ssg/squid/var/cache/squid  3000 16 256       
+cache_log /ssg/squid/var/logs/cache.log                 
+cache_store_log /ssg/squid/var/log/store.log             
+cache_mem 128 MB
+maximum_object_size_in_memory 512 KB
+maximum_object_size 500 MB
+mime_table /ssg/squid/etc/mime.conf        
+pid_filename /var/run/squid.pid               
+diskd_program /usr/lib/squid/diskd_daemon             
+quick_abort_min 16 KB                         
+quick_abort_max 16 KB                         
+quick_abort_pct 95                         
+#acl mynet src 192.168.0.0/24    
+acl mynet src 125.212.211.105/32
+
+
+acl SSL_ports port 443
+acl Safe_ports port 80		# http
+acl Safe_ports port 21		# ftp
+acl Safe_ports port 443		# https
+acl Safe_ports port 70		# gopher
+acl Safe_ports port 210		# wais
+acl Safe_ports port 1025-65535	# unregistered ports
+acl Safe_ports port 280		# http-mgmt
+acl Safe_ports port 488		# gss-http
+acl Safe_ports port 591		# filemaker
+acl Safe_ports port 777		# multiling http
+
+http_access deny !Safe_ports             
+http_access allow mynet Safe_ports        

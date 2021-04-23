@@ -1,0 +1,21 @@
+connect Host to Nat guest machine:
+$ VBoxManage setextradata <guestname> "VBoxInternal/Devices/pcnet/0/LUN#0/Config/ssh/HostPort" 2222
+$ VBoxManage setextradata <guestname> "VBoxInternal/Devices/pcnet/0/LUN#0/Config/ssh/GuestPort" 22
+$ VBoxManage setextradata <guestname> "VBoxInternal/Devices/pcnet/0/LUN#0/Config/ssh/Protocol" TCP
+$ ssh -l <user> -p 2222 localhost
+
+check
+$ VBoxManage getextradata <guestname> enumerate
+
+if remove: 
+set any value
+
+Nếu đang làm router trên virtualbox, sẽ có vấn đề là bật ip_forward nhưng không chạy, mô hình là: 
+
+Vhost01: 1 NAT + 1 Hostonly, bật ip_forward = 1
+Vhost02: 1 Hostonly, gateway chỉ về Vhost01 nhưng không ra được internet.
+
+Phiên bản: Virtualbox 4.1.12
+
+Cách giải là bật thêm 1 option nữa:
+net.ipv4.conf.all.proxy_arp = 1

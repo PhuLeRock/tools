@@ -1,0 +1,5 @@
+# disable GUI
+Uninstall-WindowsFeature Server-Gui-Shell, Server-Gui-Mgmt-Infra
+shutdown –r -t 0
+# enable GUI:
+cmd.exe > sconfig > choose 12

@@ -1,0 +1,1 @@
+*.harveynash.vn,nashtechglobal.com,192.168.127.128,192.168.194.85, localhost, 127.0.0.1, 192.168.168.0/24,192.168.195.0/24,192.168.194.172,10.12.1.0/24,10.128.240.0/24,hcm-sd-0573-wk,*.bitbucket.org,*.tinhte.vn,*vnexpress.net,*.soha.vn,*.vietcombank.com.vn, *.google.com.vn

@@ -1,0 +1,55 @@
+CREATE DATABASE db_name DEFAULT CHARACTER SET utf8 DEFAULT COLLATE utf8_general_ci;
+
+~~~~~~~~~~~~~~ CREAT USER
+GRANT ALL PRIVILEGES ON db_abc.* TO 'userABC'@'localhost' IDENTIFIED BY 'dcmclgt@123';
+
+~~~~~~~~~~~~~~ CHANGE PASSWORD
+SET PASSWORD FOR 'pmfsbtbdtt_pt'@'10.30.6.99' = PASSWORD('rDcq2PcSG3Ah9rfG');
+
+~~~~~~~~~~~~~~ CHANGE PASS ROOT:
+mysqladmin -uroot -p oldpass newpass
+or
+mysql
+use mysql;
+update user set password=PASSWORD("qwe123") where User='root';
+flush privileges;
+or
+mysqladmin --user=root password somepassword
+mysqladmin --user=root --password reload
+
+~~~~~~~~~~~~~~ RESET PASSWORD
+/etc/init.d/mysqld stop
+mysqld_safe --skip-grant-tables 
+mysql --user=root mysql
+
+update user set Password=PASSWORD('new-password') where user='root';
+flush privileges;
+exit;
+
+~~~~~~~~~~~~~~ MIGRATE USER
+## list all user:
+mysql -u root -B -N -p -e "SELECT user, host FROM user" mysql
+
+## after see the user we want to migrate
+mysql -u root -p -B -N -e"SHOW GRANTS FOR 'userName'@hostName"
+mysql -u root -p -B -N -e"SHOW GRANTS FOR 'vivek'@192.168.1.5"
+
+~~~~~~~~~~~~~~ RUN PROCEDURE
+NEED TO KNOW EXACTLY PROCEDURE_NAME: select db, name, type, definer from mysql.proc where db='db_name'
+~~~~ EXECUTE
+mysql> GRANT EXECUTE ON PROCEDURE db_name.GetHierarchyMenu TO 'user'@'localhost';
+
+mysql> GRANT EXECUTE ON PROCEDURE db_name.GetHierarchyCategories TO 'user'@'localhost';
+
+mysql> GRANT EXECUTE ON FUNCTION db_name.hierarchy_connect_by_parent TO 'user'@'localhost';
+
+mysql> GRANT EXECUTE ON FUNCTION db_name.hierarchy_connect_by_parent_menu TO 'user'@'localhost';
+~~~~ CREATE ROUTINE
+mysql> GRANT CREATE ROUTINE ON db_name.* TO  'user'@'localhost';
+OR
+mysql> GRANT EXCUTE, ALTER ROUTINE ON PROCEDURE db_name.procedure_name to  'user'@'localhost';
+mysql> GRANT EXCUTE, ALTER ROUTINE ON FUNCTION db_name.function_name to  'user'@'localhost';
+
+
+
+

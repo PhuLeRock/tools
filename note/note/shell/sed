@@ -1,0 +1,8 @@
+# replace /home/a/b/c --> /home/c/b/a
+sed 's,/home/a/b/c,/home/c/b/a,'
+
+# "acl verizonfios src 1.2.3.4" --> "server_name /da-ta/"
+sed 's,^acl verizonfios.*,server_name /da-ta/,' abc
+
+
+echo /home/phultv/Downloads/ | sed "s|home/phultv|abc|g"

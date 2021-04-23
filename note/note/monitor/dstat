@@ -1,0 +1,7 @@
+# all data in csv file is counted in bytes.
+
+=IF(abc!J8>=1048576,ROUND(abc!J8/100000,0)&" MB",IF(abc!J8>=1024,ROUND(abc!J8/1000,0)&" KB",abc!J8&" Bytes"))
+#abc! is sheet abc columm J8
+
+
+dstat -t -n -Neth0 -c -Ctotal -m --output abc.csv

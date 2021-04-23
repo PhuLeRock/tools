@@ -1,0 +1,19 @@
+Need install java jre 8 at first
+
+Like Sonar 5.6 on linux, need to change  sonar.properties
+wrapper.java.initmemory=3
+wrapper.java.maxmemory=32 
+
+# to use mssql as DB:
+Download driver at: Microsoft JDBC Driver 6.0 for SQL Server.
+for java 8 use 
+C:\Users\Administrator\Downloads\Microsoft JDBC Driver 6.0 for SQL Server\sqljdbc_6.0\enu\auth\x86\sqljdbc_auth.dll
+mkdir c:\sonarqube-5.6.6\extensions\jdbc-driver\mssql; place this file at this
+
+in sonar.properties:
+sonar.jdbc.username=Sonar
+sonar.jdbc.password=Sonar123
+..
+sonar.jdbc.url: jdbc:sqlserver://localhost;databaseName=Sonar;instanceName=MSSQLSERVER2012;selectMethod=cursor;
+sonar.jdbc.driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+sonar.jdbc.validationQuery: select 1

@@ -1,0 +1,27 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: phunginx-noselector
+spec:
+  ports:
+  - protocol: TCP
+    port: 90
+    targetPort: 80
+---
+kind: Endpoints
+apiVersion: v1
+metadata:
+  name: phunginx-noselector
+subsets:
+  - addresses:
+      - ip: 192.168.140.77
+    ports:
+      - port: 80
+  - addresses:
+      - ip: 192.168.196.199
+    ports:
+      - port: 80
+# this is service without selector, used for pointing to another hosts outside kubernetes cluster, 
+# this example we need to create create the endpoint with the name "phunginx-noselector", 
+# so the service above will route traffics to the endpoint, the key is
+# both service and endpoint have the same "name:"

@@ -1,0 +1,29 @@
+https://www.lynda.com/Python-tutorials/Up-Running-Python/122467-2.html
+Topics include:
+Installing Python
+Choosing an editor/IDE
+Working with variables and expressions
+Writing loops
+Using the date, time, and datetime classes
+Reading and writing files
+Fetching Internet data
+Parsing and processing HTML
+
+suggest from https://scriptcrunch.com/python-devops-tutorial-beginners/
+Python Basics and Flow Control
+Python Functions
+Lists, Dictionaries, and Structuring Data
+String manipulation and Regular expressions
+Working with Files
+Exception handling
+Debugging python scripts
+Working with Linux system configuration.
+Monitoring alerts using python
+System health checks using python
+Managing cron using python.
+
+https://www.codecademy.com/
+
+argument parse:
+https://docs.python.org/2/library/argparse.html
+https://stackoverflow.com/questions/8351732/python-2-7-argparse

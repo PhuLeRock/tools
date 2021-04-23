@@ -1,0 +1,20 @@
+The iptables application requires you to load certain kernel modules to activate some of its functions. Whenever any type of NAT is required, the iptable_nat module needs to be loaded. The ip_conntrack_ftp module needs to be added for FTP support and should always be loaded with the ip_conntrack module which tracks TCP connection states. As most scripts probably will keep track of connection states, the ip_conntrack module will be needed in any case. The ip_nat_ftp module also needs to be loaded for FTP servers behind a NAT firewall.
+
+Unfortunately, the /etc/sysconfig/iptables file doesn't support the loading of modules, so you'll have to add the statements to your /etc/rc.local file which is run at the end of every reboot.
+
+The script samples in this chapter include these statements only as a reminder to place them in the /etc/rc.local file 
+
+# File: /etc/rc.local
+
+# Module to track the state of connections
+modprobe ip_conntrack
+
+# Load the iptables active FTP module, requires ip_conntrack
+modprobe ip_conntrack_ftp
+  
+# Load iptables NAT module when required
+modprobe iptable_nat
+ 
+# Module required for active an FTP server using NAT
+modprobe ip_nat_ftp
+

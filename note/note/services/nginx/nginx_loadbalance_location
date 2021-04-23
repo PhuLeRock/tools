@@ -1,0 +1,79 @@
+##### sharding alias ##########
+location / {
+            root           /data/a/;	    
+            if ($uri = "/bxh") {				
+				fastcgi_pass 127.0.0.1:9000;				
+                }
+            fastcgi_pass   unix:/tmp/unix.socket;       
+            
+            fastcgi_index  index.php;
+            fastcgi_param  SCRIPT_FILENAME  /data/a/$fastcgi_script_name;
+			fastcgi_param  APPLICATION_ENV production;
+            include        fastcgi_params;
+        }
+
+########## upstream loadbalancing ##########
+note: 
+- SSL need to set both node site and LB site.
+- SSL need to use https upstream.
+- If your php generate html cache, need to use proxyweb, not proxyfpm
+- Proxyweb use "proxy_pass http://high_loadweb;"
+- Proxyfpm use "fastcgi_pass high_load;", and on LB have to set "root", "index"
+
+upstream high_loadfpm {
+                #ip_hash;
+                server 10.60.80.117:9001;
+                server 10.60.80.118:9001;
+                #############
+                #server lt117.game5.vn;
+        }
+
+upstream high_loadweb {
+                #ip_hash;
+                #############
+                server 10.60.80.117:80;
+                server 10.60.80.118:80;
+}
+upstream high_loadweb_https {
+                #ip_hash;
+                #############
+                server 10.60.80.117:443;
+                server 10.60.80.118:443;
+        }
+
+        server {
+                listen       123.30.173.116:80;
+                server_name  game5.vn www.game5.vn;
+                server_tokens off;                
+                access_log off;
+                error_log /dev/null;
+                #root  << without documentroot
+                #index  << without index
+                location / {
+                        proxy_pass http://high_loadweb;
+                        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+                        proxy_redirect default;
+                        proxy_buffering off;
+                        proxy_set_header        Host            game5.vn;
+                        proxy_set_header        X-Real-IP       $remote_addr; # to get browser IP
+                        proxy_set_header        X-Forwarded-For $remote_addr; # to get browser IP
+                }
+        }
+
+                server {
+                listen       123.30.173.116:443 ssl;
+                server_name  game5.vn www.game5.vn;
+                server_tokens off;
+                access_log off;
+                error_log /dev/null;
+                location / {
+                        proxy_pass https://high_loadweb_https;
+                        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+                        proxy_redirect default;
+                        proxy_buffering off;
+                        proxy_set_header        Host            game5.vn;
+                        proxy_set_header        X-Real-IP       $remote_addr;
+                        proxy_set_header        X-Forwarded-For $remote_addr;
+                }
+        }
+                    

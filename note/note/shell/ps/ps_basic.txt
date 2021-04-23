@@ -1,0 +1,13 @@
+# run script file
+Set-ExecutionPolicy RemoteSigned
+powershell.exe file.ps1 or .\file.ps1
+
+#var is commandline, search file
+$chrome = (where.exe -R c:\ chrome.exe)                                                                                                                                           
+$ym = "yahoo.com"                                                                                                                                                                        
+& $chrome $ym 
+
+
+
+# get computername, domain, manufacture info:
+gwmi win32_computersystem

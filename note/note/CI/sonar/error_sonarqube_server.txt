@@ -1,0 +1,20 @@
+--> Wrapper Started as Daemon
+Launching a JVM...
+JVM exited while loading the application.
+GC Warning: Out of Memory!  Returning NIL!
+GC Warning: Out of Memory!  Returning NIL!
+GC Warning: Out of Memory!  Returning NIL!
+*** Catastrophic failure while handling uncaught exception.
+JVM Restarts disabled.  Shutting down.
+<-- Wrapper Stopped
+
+
+# deo hieu tai sao conf lai bi, chinh /opt/sonar/conf/wrapper.conf
+wrapper.java.initmemory=3
+wrapper.java.maxmemory=32  # cai nay luc dau la 3
+
+
+################################################################
+nhat dinh phai dung java 8
+add-apt-repository ppa:openjdk-r/ppa
+apt-get install openjdk-8-jdk

@@ -1,0 +1,8 @@
+powershell DSC
+link: https://docs.microsoft.com/en-us/powershell/dsc/quickstarts/website-quickstart
+if have no .mof file, run command 
+MyConfig -OutputPath 'C:\temp\MyConfig'
+Start-DscConfiguration -Path 'C:\temp\MyConfig' -Verbose -Wait
+
+Import-Module ServerManager
+*-WindowsFeature cmlet may be not available for win10 pro because it doesn't have module servermanager

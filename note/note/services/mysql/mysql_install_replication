@@ -1,0 +1,144 @@
+MASTER:
+/etc/my.cnf
+#skip-networking
+#bind-address            = 127.0.0.1
+
+log-bin = /var/log/mysql/mysql-bin.log #this log is use by the slave to realize the changes on master
+binlog-do-db = powerdns # database "powerdns" will be replicated on slave.
+server-id = 1
+NOTE: if you want replicate more than one database, set up as below on master and slave:
+binlog-do-db=db1
+binlog-do-db=db2
+binlog-do-db=db3
+binlog-do-db=db4
+
+login mysql with root:
+GRANT REPLICATION SLAVE ON *.* TO 'repli'@'%' IDENTIFIED BY '<adsasdasd>';
+flush privileges;
+
+USE powerdns;
+FLUSH TABLES WITH READ LOCK;
+SHOW MASTER STATUS;
+
+mysql> SHOW MASTER STATUS;
++------------------+----------+--------------+------------------+
+| File             | Position | Binlog_Do_DB | Binlog_Ignore_DB |
++------------------+----------+--------------+------------------+
+| mysql-bin.000001 |       98 | powerdns     |                  | 
++------------------+----------+--------------+------------------+
+1 row in set (0.00 sec)
+
+mysqldump -uroot -p --opt powerdns > powerdns.sql
+
+mysql -u root -p
+Enter password:
+UNLOCK TABLES;
+quit;
+
+SLAVE:
+create database powerdns;
+
+#import db:
+mysql -uroot -p powerdns < powerdns.sql
+
+#/etc/my.cnf
+server-id=2
+master-host=10.30.4.47
+master-user=repli
+master-password=asdasdads
+master-connect-retry=60
+replicate-do-db=powerdns
+
+
+/etc/init.d/mysql restart
+mysql -u root -p
+SLAVE STOP;
+CHANGE MASTER TO MASTER_HOST='10.30.3.47', MASTER_USER='repli', MASTER_PASSWORD='<asdasddadas>', MASTER_LOG_FILE='mysql-bin.000001', MASTER_LOG_POS=98; 
+
+START SLAVE;
+quit;
+
+
+######################################################################################################
+########## How to Safetly Restart Your MySQL Slave Server ############################################
+######################################################################################################
+Make sure that nothing can access it 
+(take it off the load balancer).
+in mysql client do: STOP SLAVE;
+in mysql client do: FLUSH TABLES; 
+(if it gets stuck here, then you might need to fix it. You can try UNLOCK TABLES.)
+in command line do: /etc/init.d/mysql stop
+
+...do your what you need to do here...
+
+in command line do: /etc/init.d/mysql start 
+(check for errors, sometimes in my.cnf)
+in mysql client do: START SLAVE; 
+(normally this would be done automatically when you restart mysql)
+in mysql client do: SHOW SLAVE STATUS\G 
+(check that replication is working properly)
+After you are satisfied, set up the slave server back on the load balancer
+
+
+
+######################################################################################################
+########## Re-Sync ###################################################################################
+######################################################################################################
+
+
+
+
+
+This is the full step-by-step procedure to resync a master-slave replication from scratch:
+
+At the master:
+
+RESET MASTER;
+FLUSH TABLES WITH READ LOCK;
+SHOW MASTER STATUS;
+And copy the values of the result of the last command somewhere.
+
+Wihtout closing the connection to the client (because it would release the read lock) issue the command to get a dump of the master:
+
+mysqldump -uroot -p --all-databases > /a/path/mysqldump.sql
+Now you can release the lock, even if the dump hasn't end. To do it perform the following command in the mysql client:
+
+UNLOCK TABLES;
+Now copy the dump file to the slave using scp or your preferred tool.
+
+At the slave:
+
+Open a connection to mysql and type:
+
+STOP SLAVE;
+Load master's data dump with this console command:
+
+mysql -uroot -p < mysqldump.sql
+Sync slave and master logs:
+
+RESET SLAVE;
+CHANGE MASTER TO MASTER_LOG_FILE='mysql-bin.000001', MASTER_LOG_POS=98;
+Where the values of the above fields are the ones you copied before.
+
+Finally type
+
+START SLAVE;
+And to check that everything is working again, if you type
+
+SHOW SLAVE STATUS;
+you should see:
+
+Slave_IO_Running: Yes
+Slave_SQL_Running: Yes
+That's it!
+
+
+
+########################################## error
+-------- error --------
+140909 10:46:28 [ERROR] Slave SQL: Error 'Table 'spincode_copy' already exists' on query. Default database: 'pro_promotion_minigame'. Query: 'CREATE TABLE `spincode_copy`( 
+140909 10:46:28 [ERROR] Error running query, slave SQL thread aborted. Fix the problem, and restart the slave SQL thread with "SLAVE START". We stopped at log 'mysql-bin.000001' position 63313990
+
+stop slave;
+SET GLOBAL sql_slave_skip_counter = 1;
+start slave;

@@ -1,0 +1,1 @@
+http://www.thegeekstuff.com/2017/08/nginx-rewrite-examples/

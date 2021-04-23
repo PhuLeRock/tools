@@ -1,0 +1,24 @@
+﻿
+=====================Start with aws S3=========================
+1.insall aws-cli tren ubuntu
+- $ sudo apt-get install awscli
+2. kiểm tra cài đặt aws-cli
+- $ aws --version
+3. cấu hình chứng thực
+-$ aws configure
+ AWS Access Key ID [None]: ****************
+ AWS Secret Access Key [None]: ****************
+ Default region name [None]: us-west-2
+ Default output format [None]: json
+
+- Hoặc chỉnh sửa trong 2 file sau: ~/.aws/credentials và ~/.aws/config
+4. Liệt kê danh sách bucket trong s3
+- $ aws s3 ls
+5. Liệt kê danh sách file/folder trong bucket
+- $ aws s3 ls s3://bucket_name
+5. dùng s3 sync đồng bộ dử liệu từ local lên aws S3
+- $ aws s3 sync local/path s3://bucket/path
+6. Ngược lại sync dữ liệu từ aws S3 về local
+- $ aws s3 sync s3://bucket/path path/local
+
+

@@ -1,0 +1,24 @@
+mptcp
+http://multipath-tcp.org/
+http://reproducingnetworkresearch.wordpress.com/2012/06/04/multipath-tcp-over-wifi-and-3g-links/
+
+
+
+wget http://mirror-fpt-telecom.fpt.net/ubuntu-releases//precise/ubuntu-12.04.3-desktop-amd64.iso
+
+
+addr:10.0.2.15
+addr:10.0.4.15
+
+ ip rule add from 10.0.2.15 table 1
+  ip rule add from 10.0.4.15 table 2
+
+  # Configure the two different routing tables
+  ip route add 10.0.2.0/24 dev eth0 scope link table 1
+  ip route add default via 10.0.2.2 dev eth0 table 1
+
+  ip route add 10.0.4.0/24 dev eth2 scope link table 2
+  ip route add default via 10.0.4.2 dev eth2 table 2
+
+  # default route for the selection process of normal internet-traffic
+  ip route add default scope global nexthop via 10.0.2.2 dev eth0

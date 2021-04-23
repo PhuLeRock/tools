@@ -1,0 +1,8 @@
+$appPoolName = "MyAppPool"
+New-WebAppPool -Name $appPoolName
+$appPool = Get-Item "IIS:\AppPools\$appPoolName"
+$appPool.processModel.identityType = 3
+$appPool.processModel.username = "someUser"
+$appPool.processModel.password = "somePassword"
+$appPool.managedRuntimeVersion = "v4.0"
+$appPool.managedPipeLineMode = "Integrated"

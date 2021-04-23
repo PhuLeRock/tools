@@ -1,0 +1,7 @@
+The traditional deployment model someone use VAGRANT, someone use linux native, VMWare use by another one.
+Its hard to unified the platform software's version and configuration through all the machines.
+
+Even if everyone use VAGRANT, it take much time to import, export the .ova box to another machines.
+And if local test environment use on-premise, the deployment step take much more effort than deploy Docker images.
+
+Docker take less effort than the other Virtualization solution when your dev_env is complex.

@@ -1,0 +1,7 @@
+mkdir vg
+#create Vagrantfile, remember the first V is cab
+create shellscript and include to the file
+# run the Vagrantfile:
+vargrant up 
+# remeber vargrant will automatic mount current folder to /vargrant into the vbox
+# the default sshkey is in .vargrant folder

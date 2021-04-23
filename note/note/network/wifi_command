@@ -1,0 +1,42 @@
+ #Find out your wireless card chipset information
+ $ lspci
+$ lspci | grep -i wireless
+$ lspci | egrep -i --color 'wifi|wlan|wireless'
+#Sample outputs:
+0c:00.0 Network controller: Intel Corporation Ultimate N WiFi Link 5300
+
+#2: Find out wireless card driver information
+lspci -vv -s 0c:00.0
+#Sample outputs:
+0c:00.0 Network controller: Intel Corporation Ultimate N WiFi Link 5300
+	Subsystem: Intel Corporation Device 1121
+	Control: I/O- Mem+ BusMaster+ SpecCycle- MemWINV- VGASnoop- ParErr- Stepping- SERR+ FastB2B- DisINTx-
+	Status: Cap+ 66MHz- UDF- FastB2B- ParErr- DEVSEL=fast >TAbort- SERR-
+	Kernel driver in use: iwlwifi
+	
+#4: Configure a wireless network interface
+iwconfig Interface-Name-Here
+iwconfig wlan0
+
+#How do I find out link quality?
+iwconfig wlan0 | grep -i --color quality
+#Sample outputs:
+Link Quality=41/70  Signal level=-69 dBm
+#41/70 is is an aggregate value, and depends totally on the driver and hardware
+
+#How do I find out signal level?
+iwconfig wlan0 | grep -i --color signal
+
+#5: See link quality continuously on screen
+cat /proc/net/wireless
+
+#7: Say hello to wavemon
+
+wavemon is a ncurses-based monitoring application for wireless network devices. 
+$ wavemon
+############################## connect to wifi|wlan|wireless
+#list card:
+iw dev
+ip link set wlan0 up
+iw wlan0 scan
+

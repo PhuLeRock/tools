@@ -1,0 +1,102 @@
+﻿yum install pciutils -y
+lspci | grep Ethernet
+lsmod | grep e100
+modinfo e1000e
+rpm --import http://elrepo.org/RPM-GPG-KEY-elrepo.org
+rpm -Uvh http://elrepo.org/elrepo-release-6-4.el6.elrepo.noarch.rpm
+yum install -y kmod-e1000e.x86_64
+init 6
+modinfo e1000e
+vi /etc/grub.conf
+init 6
+
+pcie_aspm=off e1000e.IntMode=1,1 e1000e.InterruptThrottleRate=10000,10000 acpi=off
+
+
+#################################
+[root@Centos207 ~]# lspci | grep Ethernet
+06:00.0 Ethernet controller: Intel Corporation 82574L Gigabit Network Connection
+07:00.0 Ethernet controller: Intel Corporation 82574L Gigabit Network Connection
+[root@Centos207 ~]# lsmod | grep e100
+e1000e                140051  0
+[root@Centos207 ~]# modinfo e1000e
+filename:       /lib/modules/2.6.32-71.el6.x86_64/kernel/drivers/net/e1000e/e1000e.ko
+filename:       /lib/modules/2.6.32-358.6.1.el6.x86_64/weak-updates/e1000e/e1000e.ko #### new
+version:        1.2.7-k2
+license:        GPL
+description:    Intel(R) PRO/1000 Network Driver
+author:         Intel Corporation, <linux.nics@intel.com>
+srcversion:     93CB73D3995B501872B2982
+alias:          pci:v00008086d00001503sv*sd*bc*sc*i*
+alias:          pci:v00008086d00001502sv*sd*bc*sc*i*
+alias:          pci:v00008086d000010F0sv*sd*bc*sc*i*
+alias:          pci:v00008086d000010EFsv*sd*bc*sc*i*
+alias:          pci:v00008086d000010EBsv*sd*bc*sc*i*
+alias:          pci:v00008086d000010EAsv*sd*bc*sc*i*
+alias:          pci:v00008086d00001525sv*sd*bc*sc*i*
+alias:          pci:v00008086d000010DFsv*sd*bc*sc*i*
+alias:          pci:v00008086d000010DEsv*sd*bc*sc*i*
+alias:          pci:v00008086d000010CEsv*sd*bc*sc*i*
+alias:          pci:v00008086d000010CDsv*sd*bc*sc*i*
+alias:          pci:v00008086d000010CCsv*sd*bc*sc*i*
+alias:          pci:v00008086d000010CBsv*sd*bc*sc*i*
+alias:          pci:v00008086d000010F5sv*sd*bc*sc*i*
+alias:          pci:v00008086d000010BFsv*sd*bc*sc*i*
+alias:          pci:v00008086d000010E5sv*sd*bc*sc*i*
+alias:          pci:v00008086d0000294Csv*sd*bc*sc*i*
+alias:          pci:v00008086d000010BDsv*sd*bc*sc*i*
+alias:          pci:v00008086d000010C3sv*sd*bc*sc*i*
+alias:          pci:v00008086d000010C2sv*sd*bc*sc*i*
+alias:          pci:v00008086d000010C0sv*sd*bc*sc*i*
+alias:          pci:v00008086d00001501sv*sd*bc*sc*i*
+alias:          pci:v00008086d00001049sv*sd*bc*sc*i*
+alias:          pci:v00008086d0000104Dsv*sd*bc*sc*i*
+alias:          pci:v00008086d0000104Bsv*sd*bc*sc*i*
+alias:          pci:v00008086d0000104Asv*sd*bc*sc*i*
+alias:          pci:v00008086d000010C4sv*sd*bc*sc*i*
+alias:          pci:v00008086d000010C5sv*sd*bc*sc*i*
+alias:          pci:v00008086d0000104Csv*sd*bc*sc*i*
+alias:          pci:v00008086d000010BBsv*sd*bc*sc*i*
+alias:          pci:v00008086d00001098sv*sd*bc*sc*i*
+alias:          pci:v00008086d000010BAsv*sd*bc*sc*i*
+alias:          pci:v00008086d00001096sv*sd*bc*sc*i*
+alias:          pci:v00008086d0000150Csv*sd*bc*sc*i*
+alias:          pci:v00008086d000010F6sv*sd*bc*sc*i*
+alias:          pci:v00008086d000010D3sv*sd*bc*sc*i*
+alias:          pci:v00008086d0000109Asv*sd*bc*sc*i*
+alias:          pci:v00008086d0000108Csv*sd*bc*sc*i*
+alias:          pci:v00008086d0000108Bsv*sd*bc*sc*i*
+alias:          pci:v00008086d0000107Fsv*sd*bc*sc*i*
+alias:          pci:v00008086d0000107Esv*sd*bc*sc*i*
+alias:          pci:v00008086d0000107Dsv*sd*bc*sc*i*
+alias:          pci:v00008086d000010B9sv*sd*bc*sc*i*
+alias:          pci:v00008086d000010D5sv*sd*bc*sc*i*
+alias:          pci:v00008086d000010DAsv*sd*bc*sc*i*
+alias:          pci:v00008086d000010D9sv*sd*bc*sc*i*
+alias:          pci:v00008086d00001060sv*sd*bc*sc*i*
+alias:          pci:v00008086d000010A5sv*sd*bc*sc*i*
+alias:          pci:v00008086d000010BCsv*sd*bc*sc*i*
+alias:          pci:v00008086d000010A4sv*sd*bc*sc*i*
+alias:          pci:v00008086d0000105Fsv*sd*bc*sc*i*
+alias:          pci:v00008086d0000105Esv*sd*bc*sc*i*
+depends:
+vermagic:       2.6.32-71.el6.x86_64 SMP mod_unload modversions
+parm:           copybreak:Maximum size of packet that is copied to a new buffer on receive (uint)
+parm:           TxIntDelay:Transmit Interrupt Delay (array of int)
+parm:           TxAbsIntDelay:Transmit Absolute Interrupt Delay (array of int)
+parm:           RxIntDelay:Receive Interrupt Delay (array of int)
+parm:           RxAbsIntDelay:Receive Absolute Interrupt Delay (array of int)
+parm:           InterruptThrottleRate:Interrupt Throttling Rate (array of int)
+parm:           IntMode:Interrupt Mode (array of int)
+parm:           SmartPowerDownEnable:Enable PHY smart power down (array of int)
+parm:           KumeranLockLoss:Enable Kumeran lock loss workaround (array of int)
+parm:           WriteProtectNVM:Write-protect NVM [WARNING: disabling this can lead to corrupted NVM] (array of int)
+parm:           CrcStripping:Enable CRC Stripping, disable if your BMC needs the CRC (array of int)
+parm:           EEE:Enable/disable on parts that support the feature (array of int)
+[root@Centos207 ~]#
+
+
+###############################################################################
+
+
+

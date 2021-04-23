@@ -1,0 +1,9 @@
+install xfce
+sudo add-apt-repository ppa:xubuntu-dev/xfce-4.10
+sudo apt-get update
+sudo apt-get install xfce4
+remove xfce
+$ sudo apt-get install ppa-purge
+$ sudo ppa-purge ppa:xubuntu-dev/xfce-4.10
+
+install battery and pavucontrol 

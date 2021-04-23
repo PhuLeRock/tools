@@ -1,0 +1,6 @@
+Remove the password: 
+openssl rsa -in client.key -out client2.key
+It will prompt you for the current password, and write the decrypted key to client2.key
+
+Add or change the password: 
+openssl rsa -in client.key -out client2.key -des3

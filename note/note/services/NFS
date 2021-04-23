@@ -1,0 +1,55 @@
+/etc/exports
+
+<export_dir> <host1>(<options>) <hostN>(<options>)
+
+ex:
+/data/DB 192.168.0.1(ro) 192.168.0.2(rw,root_squash)
+/data/pub 172.16.0.0/24(rw)
+/data/pub02 *.example.com(rw)
+
+
+client:
+/etc/fstab
+192.168.0.10:/data/dbbackup/backup	/home/dbbackup/backup	nfs	rw	0	0
+
+
+## NOTE
+#reason given by server: Permission denied
+at server : /etc/fstab
+none                    /proc/fs/nfsd           nfsd
+[root@worker01 worker]# mount /proc/fs/nfsd  #this is bug of redhat
+
+hosts.allow: 
+portmap:10.30.3.44
+lockd:10.30.3.44
+mountd:10.30.3.44
+rquotad:10.30.3.44
+statd:10.30.3.44
+
+
+########################################################################################
+##########################      OPTION         #########################################
+########################################################################################
+
+http://tldp.org/HOWTO/NFS-HOWTO/server.html
+     the option listing for each machine will describe what kind of access that machine will have. Important options are:
+
+        *
+
+          ro: The directory is shared read only; the client machine will not be able to write to it. This is the default.
+        *
+
+          rw: The client machine will have read and write access to the directory.
+        *
+
+          no_root_squash: By default, any file request made by user root on the client machine is treated as if it is made by user nobody on the server. (Excatly which UID the request is mapped to depends on the UID of user "nobody" on the server, not the client.) If no_root_squash is selected, then root on the client machine will have the same level of access to the files on the system as root on the server. This can have serious security implications, although it may be necessary if you want to perform any administrative work on the client machine that involves the exported directories. You should not specify this option without a good reason.
+        *
+
+          no_subtree_check: If only part of a volume is exported, a routine called subtree checking verifies that a file that is requested from the client is in the appropriate part of the volume. If the entire volume is exported, disabling this check will speed up transfers.
+        *
+
+          sync: By default, all but the most recent version (version 1.11) of the exportfs command will use async behavior, telling a client machine that a file write is complete - that is, has been written to stable storage - when NFS has finished handing the write over to the filesysytem. This behavior may cause data corruption if the server reboots, and the sync option prevents this. See Section 5.9 for a complete discussion of sync and async behavior. 
+
+/usr/sbin/exportfs command, it displays a list of currently exported file systems. 
+
+

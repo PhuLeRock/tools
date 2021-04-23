@@ -1,0 +1,1 @@
+tar zcvf - dir | ssh remote_host tar zxvf -

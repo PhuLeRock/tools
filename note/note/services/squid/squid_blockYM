@@ -1,0 +1,11 @@
+acl yahoo1 port 5000-5010
+acl yahoo2 port 5050
+acl yahoo3 dstdom_regex .msg.yahoo.com .msg.dcn.yahoo.com .insider.msg.yahoo.com/ycontent .shttp.msg.yahoo.com .address.yahoo.com .pgq.yahoo.com .us.il.yimg.com
+http_access deny itmanager yahoo1 yahoo2 yahoo3
+#http_reply_access deny itmanager yahoo1 yahoo2 yahoo3
+ 
+iptables -A FORWARD -s 192.168.0.222/255.255.255.255 -p tcp --dport 5000:5100 -j REJECT
+iptables -A FORWARD -s 192.168.0.222/255.255.255.255 -p udp --dport 5000:5100 -j REJECT
+iptables -A FORWARD -s 192.168.0.222/255.255.255.255 -p udp --dport 5101 -j REJECT
+
+

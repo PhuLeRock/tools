@@ -1,0 +1,44 @@
+Ubuntu:
+apt-get install build-essential libncurses5 libncurses5-dev
+./configure \
+--prefix=/usr/local/mysql \
+--with-mysqld-user=mysql \
+--without-debug \
+--with-client-ldflags=-all-static \
+--with-mysqld-ldflags=-all-static \
+--disable-shared \
+--localstatedir=/usr/local/mysql/data \
+--with-extra-charsets=none \
+--enable-assembler \
+--with-unix-socket-path=/tmp/mysql.socket
+
+#--localstatedi : database data located
+
+cp support-files/my-medium.cnf /etc/my.cnf
+sudo /usr/local/mysql/bin/mysql_install_db --user=mysql --no-defaults
+
+Changing Owners
+
+sudo chown -R root  /usr/local/mysql
+sudo chown -R mysql /usr/local/mysql/var
+sudo chgrp -R mysql /usr/local/mysql
+
+Start the server
+
+/usr/local/mysql/bin/mysqld_safe -user=mysql&
+
+Set a root password for MySQL (does not affect system root's password)
+
+/usr/local/mysql/bin/mysqladmin -u root password new_password
+
+Try to log in!
+
+/usr/local/mysql/bin/mysql
+
+You should add /usr/local/mysql/bin to your path so you can always use mysql, mysqldump, mysqladmin and some others right from the shell.
+
+Starting Mysql at boot time
+
+sudo cp support-files/mysql.server /etc/init.d/mysql
+sudo chmod +x /etc/init.d/mysql
+sudo update-rc.d mysql defaults

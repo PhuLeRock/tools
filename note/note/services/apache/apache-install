@@ -1,0 +1,51 @@
+
+
+################# apache2.2.9 #########
+
+http://www.jalix.org/ressources/reseaux/apache/~vrac/apache-install.html
+for apache2.2.9
+## apache stand alone or with mysql basic
+./configure --enable-layout=RedHat \
+--enable-so \
+--enable-cgi \
+--enable-info \
+--enable-rewrite \
+--enable-speling \
+--enable-usertrack \
+--enable-deflate \
+--enable-ssl \
+--enable-mime-magic \
+--with-mpm=prefork \
+--enable-modules=access \
+--enable-modules=auth \
+--enable-modules=log_config
+make
+make install
+
+
+############## VHOST
+<VirtualHost *:8080>
+    ServerAdmin root@localhost
+    DocumentRoot /var/www/html/pma
+    ServerName pma
+    ErrorLog /var/log/pma_error.log
+    CustomLog /var/log/access_log common
+</VirtualHost>
+
+
+############## SECURE
+deny run php shell and other shell:
+
+<Location ~ "/(user|Ebook|Softwares|RecycleBin|Picture|OS|Oracle|Games|Ebook)/">
+  php_admin_flag engine off
+  AddType text/plain .html .htm .shtml .php
+</Location>
+ 
+if the directory belong document root of virtual 
+<Directory /var/www/html/gt>
+php_admin_flag engine On
+</Directory>
+
+
+
+

@@ -1,0 +1,19 @@
+#add module for keeping related ftp connection for passive mode.
+
+vi /etc/sysconfig/-config
+IPTABLES_MODULES="ip_conntrack_ftp"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+iptables -A INPUT -p tcp -m tcp --dport 21 -j ACCEPT
+iptables -A INPUT -p tcp --destination-port 12000:12003 -j ACCEPT
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+add
+chroot_local_user=Yes
+
+pasv_min_port=12000
+pasv_max_port=12003
+
+-m iprange --src-range IP-IP -j
+
+
+config Active mode:
+connect_from_port_20=YES

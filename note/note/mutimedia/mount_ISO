@@ -1,0 +1,18 @@
+mount NRG
+
+Mount những file *.iso, đăng nhập như root hoặc sử dựng sudo, và thực thi dòng lệnh sau:
+
+mount -t iso9660 -o loop,user "tên file iso".iso /"thư mục để mount file iso lên"
+
+Đối với file *.bin bạn có thể sử dụng cdmenu để chuyển đổi file *.bin thành file *.iso
+
+Đối với file *.mdf bạn có thể sử dụng mdf2iso để chuyển đổi file *.mdf/*.mds thành file *.iso, hoặc bạn có thể mount file *.mdf với dòng lệnh sau:
+
+mount "tên file mdf".mdf /"thư mục để mount file mdf lên" -o loop=/dev/loop0
+
+Đối với file *.nrg bạn có thể dử dụng nrg2iso để chuyển đồi file *.nrg thành file *.iso, hoặc bạn có thể mount file *.nrg với dòng lệnh sau:
+
+mount -o loop,offset=307200 "tên file nrg".nrg /"thư mục để mount file nrg lên"
+
+Đối với file *.img bạn có thể sử dụng ccd2iso để chuyển đổi *.img thành file *.iso
+ 

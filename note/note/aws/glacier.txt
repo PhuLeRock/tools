@@ -1,0 +1,5 @@
+glacier nó cũng tới 3 cập độ lận Expedited, Standard, and Bulk retrievals. Cái Expedited là phục hồi nhanh nhát có vài phút, Còn cái bulk khoảng 5 tiếng.
+
+Vauit là bucket tương tự s3, name của nó cũng ko được duplicate trong cùng region.
+
+upload lên như upload s3, upload xong là list name ra được liền, nói chung list cái key ra được hết, còn muốn download object về thì phải initial restore job, chờ đến khi nào nó hiện chứ standard ra thì download được, sau1 tg nhát định nó sẽ trời về trạng thái Glacier chứ ko còn standard được, mình có thể chỉnh job restore này để object ở trạng thái accessible lâu hơn, vài ngày chẳng hạn.

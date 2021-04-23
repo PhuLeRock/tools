@@ -1,0 +1,68 @@
+
+config=
+pidfile=
+binary=
+
+start() {
+if [ -z $(cat $pidfile) ]; then 
+	$binary -D -f $config -p $pidfile
+	echo start OK,pid is $(cat $pidfile)
+else
+	echo "Can't start, HAProxy is running with pid is" $(cat $pidfile)
+fi
+}
+
+stop() {
+if [ -z $(cat $pidfile) ]; then
+	echo "Can't stop, $pidfile is blank"
+else
+	echo "kill process's pid" $(cat $pidfile)
+	kill $(cat $pidfile)
+	echo > $pidfile
+fi
+}
+
+configtest() {
+echo $binary -c -f $config 
+$binary -c -f $config 
+}
+
+reload() {
+$binary -c -f $config 
+if [ $? -ne 0 ]; then
+	echo "Errors found in configuration file, pls check $config"
+    return 1
+else
+	$binary -D -f $config -p $pidfile -sf $(cat $pidfile)
+	echo reloading OK
+fi
+}
+
+status() {
+ps ax | grep $(cat /var/run/haproxy.pid)
+}
+# See how we were called.
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  restart)
+    stop
+    start
+    ;;
+  reload)
+    reload
+    ;;
+  status)
+    status
+    ;;
+  configtest)
+    configtest
+    ;;
+  *)
+    echo $"Usage: $BASENAME {start|stop|restart|reload|status|configtest}"
+    exit 1
+esac

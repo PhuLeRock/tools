@@ -1,0 +1,57 @@
+nmap --top-ports 10 192.168.4.2
+
+nmap 192.168.1.1-20
+nmap 192.168.1.*
+nmap 192.168.1.0/24
+
+nmap -iL /tmp/test.txt
+
+nmap 192.168.1.0/24 --exclude 192.168.1.5,192.168.1.254
+nmap -iL /tmp/scanlist.txt --excludefile /tmp/exclude.txt
+
+## OS and version detect
+nmap -v -A 192.168.1.1
+
+# scan host protected by firewall
+nmap -PN server1.cyberciti.biz
+
+# find out if a host protected by firewall
+nmap -sA 192.168.1.254
+nmap -sA server1.cyberciti.biz
+
+
+# scan local network 
+nmap -sP 192.168.1.0/24
+
+# fast scan
+nmap -F 192.168.1.1
+
+# only show open port 
+nmap --open server1.cyberciti.biz
+
+# packet send and receive
+nmap --packet-trace 192.168.1.1
+
+# specify port
+nmap -p U:53,111,137,T:21-25,80,139,8080 server1.cyberciti.biz
+
+# OS detect
+nmap -O 192.168.1.1
+
+# scan UDP service
+nmap -sU 192.168.1.1
+
+
+######### Firewall weakness
+## TCP Null Scan to fool a firewall to generate a response ##
+## Does not set any bits (TCP flag header is 0) ##
+nmap -sN 192.168.1.254
+ 
+## TCP Fin scan to check firewall ##
+## Sets just the TCP FIN bit ##
+nmap -sF 192.168.1.254
+ 
+## TCP Xmas scan to check firewall ##
+## Sets the FIN, PSH, and URG flags, lighting the packet up like a Christmas tree ##
+nmap -sX 192.168.1.254
+

@@ -1,0 +1,157 @@
+{
+"AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Template 1",
+    "Parameters": {
+        "KeyPair":{
+            "Description": "The default VPC",
+            "Type": "AWS::EC2::KeyPair::KeyName"
+        },
+        "EC2Type" : {
+            "Type" : "String",
+            "Default" : "t2.micro",
+            "AllowedValues" : ["t2.micro", "m1.small", "m1.large"],
+            "Description" : "Enter t2.micro, m1.small, or m1.large. Default is t2.micro."
+          }
+    },
+    "Mappings": {
+        "RegionMap" : {
+            "us-east-2" : { "16" : "ami-cd0f5cb6", "14" : "ami-841f46ff" },
+            "us-west-2" : { "16" : "ami-6e1a0117", "14" : "ami-718c6909" }
+          }
+
+    },
+    "Conditions": {
+        "CreateEC2" : {"Fn::Equals" : [{"Ref" : "EC2Type"}, "t2.micro"]}
+
+    },
+    "Resources": {
+        "myVPC1": {
+          "Type": "AWS::EC2::VPC",
+          "Properties": {
+            "CidrBlock": "192.168.0.0/16",
+            "InstanceTenancy" : "default",
+            "Tags": [{"Key": "Name", "Value": "myVPC1"}]
+          }
+        },
+        
+        "myRT1": {
+          "Type": "AWS::EC2::RouteTable",
+          "Properties": {
+            "VpcId": {"Ref": "myVPC1"},
+            "Tags": [{"Key": "Name", "Value": "myRT1"},
+                {"Key": "Main", "Value": "Yes"}]
+          }
+        },
+        "mySubnet1" : {
+            "Type" : "AWS::EC2::Subnet",
+            "Properties" : {
+               "VpcId" : { "Ref" : "myVPC1" },
+               "CidrBlock" : "192.168.0.0/24",
+               "AvailabilityZone" : "us-west-2a",
+               "Tags" : [ { "Key" : "Name", "Value" : "mySubnet1" } ]
+            }
+         },
+         "mySubnetRouteTableAssociation1" : {
+            "Type" : "AWS::EC2::SubnetRouteTableAssociation",
+            "Properties" : {
+               "SubnetId" : {"Ref": "mySubnet1"},
+               "RouteTableId" : {"Ref": "myRT1"}
+            }
+         },
+         "myIgw1": {
+            "Type": "AWS::EC2::InternetGateway",
+            "Properties": {
+              "Tags": [{"Key": "Name", "Value": "igw01" }]
+            }
+          },
+          "AttachGateway1": {
+            "Type": "AWS::EC2::VPCGatewayAttachment",
+            "Properties": {
+              "VpcId": {"Ref": "myVPC1"},
+              "InternetGatewayId": { "Ref": "myIgw1" }
+            }
+          },
+          
+          "myroute": {
+            "Type": "AWS::EC2::Route",
+            "Properties": {
+              "RouteTableId": {"Ref": "myRT1"},
+              "DestinationCidrBlock": "0.0.0.0/0",
+              "GatewayId": {"Ref": "myIgw1"}
+            }
+          },
+          "mySecGroupName1" : {
+            "Type" : "AWS::EC2::SecurityGroup",
+            "Properties" : {
+              "GroupDescription" : "Allow all http connect",
+              "SecurityGroupIngress" : [ {
+                "IpProtocol": "tcp",
+                "FromPort": "0",
+                "ToPort": "65535",
+               "CidrIp" : "0.0.0.0/0"
+               
+              }],
+              "SecurityGroupEgress" : [{
+               "IpProtocol" : "tcp",
+               "FromPort" : "0",
+               "ToPort" : "65535",
+               "CidrIp" : "0.0.0.0/0"
+            }],
+              "VpcId" : {"Ref": "myVPC1"},
+              "Tags" :  [{"Key": "Name", "Value": "mysecGroup1"}]
+            }
+          },
+          "myEC2Ins1": {
+            "Type": "AWS::EC2::Instance",
+            "Condition" : "CreateEC2",
+            "Properties": {
+                "KeyName": {"Ref": "KeyPair"},
+                "ImageId": { "Fn::FindInMap" : [ "RegionMap", { "Ref" : "AWS::Region" }, "16"]},
+                "InstanceType": "t2.micro",
+                "NetworkInterfaces": [{
+                    "AssociatePublicIpAddress": "true",
+                    "DeviceIndex": "0",
+                    "GroupSet": [{"Ref": "mySecGroupName1"}],
+                    "SubnetId": {"Ref": "mySubnet1"}
+                }],
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "\n",
+                            [
+                                "#!/bin/bash -ex",
+                                "sudo apt-get update",
+                                "sudo apt-get install -y apache2",
+                                "sudo chown -R ubuntu.ubuntu /var/www/html",
+                                "cd /var/www/html",
+                                "echo '<html><body><h1>hello world! I'm Hien Dep Trai</h1></body></html>' > index.html",
+                                "sudo systemctl start apache2"
+                            ]
+                        ]
+                    }
+                },
+                "Tags": [ 
+                    {
+                        "Key": "Name",
+                        "Value": "myEC2Ins1"
+                    }
+                ]
+            }
+        },    
+        "myElasticIP1": {
+            "Condition" : "CreateEC2",
+            "Type": "AWS::EC2::EIP",
+            "Properties": {
+            "Domain": "vpc",
+            "InstanceId": {"Ref": "myEC2Ins1"}
+            }
+        } 
+    },
+    "Outputs": {
+        "here is output info":{
+            "Condition" : "CreateEC2",
+            "Description": "Public ip ec2",
+            "Value": {"Ref": "myElasticIP1"}
+        }
+    }
+}

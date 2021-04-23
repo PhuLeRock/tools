@@ -1,0 +1,38 @@
+openssl : http://www.madboa.com/geek/openssl/#cert-self
+                         http://www.openssl.org/docs/HOWTO/certificates.txt
+
+#apache ssl
+http://shapeshed.com/journal/setting_up_mod_ssl_on_apache_centos_52/
+
+
+yum install mod_ssl openssl
+# If you are using production server or online services server, you need to use Trusted Certificate Authority. 
+#But if you only use server for personal or local workgroup, we can generate self-signed certificate
+#To create the key we will need to be root
+
+openssl genrsa -out ca.key 1024 # Generate private key 
+openssl req -new -key ca.key -out ca.csr # Generate csr
+openssl x509 -req -days 365 -in ca.csr -signkey ca.key -out ca.crt # Generate self-signed key
+
+#Update Apache SSL config:
+#At file /etc/httpd/conf.d/ssl.conf, edit lines:
+
+SSLCertificateFile /Path/To/This/ca.crt 
+SSLCertificateKeyFile  /Path/To/This/ca.key 
+
+# if you have only one site on you httpd, add this line in httpd.conf
+SSLEngine on
+SSLCertificateFile  /Path/To/This/ca.crt
+SSLCertificateKeyFile /Path/To/This/ca.key 
+#if you use virtualhost, you will configure like this
+
+<VirtualHost *:443>
+        SSLEngine on
+        SSLCertificateFile  /Path/To/This/ca.crt
+        SSLCertificateKeyFile /Path/To/This/ca.key 
+        <Directory /var/www/vhosts/yoursite.com/httpsdocs>
+        AllowOverride All
+        </Directory>
+        DocumentRoot /var/www/vhosts/yoursite.com/httpsdocs
+        ServerName yoursite.com
+</VirtualHost> 

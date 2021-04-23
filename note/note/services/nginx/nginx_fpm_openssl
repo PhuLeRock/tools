@@ -1,0 +1,80 @@
+wget http://www.openssl.org/source/openssl-1.0.1c.tar.gz
+tar zxvf openssl-1.0.1c.tar.gz
+cd openssl-1.0.1c
+./config --prefix=/ssg/openssl  enable-tlsext shared
+
+
+yum install -y gcc.x86_64 libgcc.x86_64 pcre.x86_64 pcre-devel.x86_64 libxml2.x86_64 libxml2-devel.x86_64 libxslt.x86_64 libxslt-devel.x86_64 gd.x86_64 php-gd.x86_64 gd-devel.x86_64
+cd /source/; wget http://tengine.taobao.org/download/tengine-1.3.0.tar.gz
+vi /source/tengine-1.3.0/src/http/ngx_http_header_filter_module.c
+go to:
+static char ngx_http_server_string[] = "Server: Tengine" CRLF;
+static char ngx_http_server_full_string[] = "Server: " TENGINE_VER CRLF;
+change:
+static char ngx_http_server_string[] = "Server: SSGinx" CRLF;
+static char ngx_http_server_full_string[] = "Server: SSGINX_VER" CRLF;
+
+tar -zxvf ngx_cache_purge-1.6.tar.gz
+
+tar zxvf tengine-1.3.0.tar.gz
+cd tengine-1.3.0
+
+./configure --prefix=/ssg/nginx --with-poll_module --with-select_module --with-rtsig_module --with-http_ssl_module --with-http_addition_module --with-http_xslt_module --with-http_image_filter_module --with-http_sub_module --with-http_dav_module --with-http_flv_module --with-http_gzip_static_module --with-http_random_index_module --with-http_stub_status_module --with-pcre --with-md5-asm --with-sha1-asm --with-openssl="/source/openssl-1.0.1c/" --add-module=/source/ngx_cache_purge-1.6
+
+make && make install
+
+/ssg/nginx/sbin/nginx -V
+
+
+
+yum install -y bzip2.x86_64 bzip2-devel.x86_64 bzip2-libs.x86_64 libmcrypt.x86_64 libmcrypt-devel.x86_64
+yum install -y libcurl.x86_64 libcurl-devel.x86_64
+yum install -y gdbm.x86_64 gdbm-devel.x86_64
+yum install -y gmp.x86_64 gmp-devel.x86_64 gmp-static.x86_64
+yum install -y mysql-devel
+yum install -y net-snmp.x86_64 net-snmp-devel.x86_64 net-snmp-libs.x86_64 net-snmp-perl.x86_64 net-snmp-python.x86_64 net-snmp-utils.x86_64
+
+    tar zxvf php-5.3.15.tar.gz
+
+    cd php-5.3.15
+
+    ./configure --prefix=/ssg/php-fpm --with-config-file-path=/ssg/php-fpm/etc/php.ini --with-libdir=lib64 --enable-fpm --with-mysql --with-mysqli --with-jpeg-dir=/usr --with-freetype-dir=/usr --with-png-dir=/usr --with-gd --enable-gd-native-ttf --with-gdbm --with-gettext --enable-mbstring --with-pcre-regex --with-regex --enable-soap --enable-sockets --enable-pdo --enable-zip --with-zlib --with-bz2 --with-curl --enable-ftp --enable-magic-quotes --with-iconv --enable-pcntl --enable-bcmath --with-kerberos --with-pdo-mysql --with-mcrypt --with-mhash --with-gmp --enable-libxml --with-snmp
+
+
+cp php.ini-production /ssg/php-fpm/etc/php.ini
+
+cp sapi/fpm/init.d.php-fpm /ssg/init.d/php-fpm
+
+vi /ssg/init.d/php-fpm
+
+php_opts="--fpm-config $php_fpm_CONF"
+
+change
+
+php_opts="--fpm-config $php_fpm_CONF -c /ssg/php-fpm/etc/php.ini"
+
+cd /ssg/php-fpm/etc
+mv php-fpm.conf.default php-fpm.conf
+
+vi php-fpm.conf
+    [global]
+    ; Pid file
+    ; Note: the default prefix is /ssg/php/var
+    ; Default Value: none
+    pid = run/php-fpm.pid
+
+### OPENSSL extension
+cd /source/php-5.3.16/ext/openssl
+cp config0.m4 config.m4
+/ssg/php/bin/phpize
+./configure --with-php-config=/ssg/php-fpm/bin/php-config --with-openssl=/ssg/openssl
+make
+make install
+cp /ssg/php/lib/php-fpm/extensions/no-debug-non-zts-20090626/openssl.so /ssg/php-fpm/lib/php/extensions/
+ /ssg/php/etc/php.ini thêm dòng: 
+vi php.ini
+[openssl]
+extension=openssl.so
+
+
+

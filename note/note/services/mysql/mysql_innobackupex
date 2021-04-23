@@ -1,0 +1,1 @@
+innobackupex --user=root --password=y5FCrYGN5t9oiplGHuVfFwyLf --defaults-file=/etc/my.cnf --databases="daming" /ssg/ss29_database_backup/

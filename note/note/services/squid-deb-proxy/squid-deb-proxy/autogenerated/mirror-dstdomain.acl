@@ -1,0 +1,33 @@
+# WARNING: this file is auto-generated from the files in
+#          /etc/squid-deb-proxy/mirror-dstdomain.acl.d
+#          on squid-deb-proxy (re)start, do NOT edit here
+# mirror-dstdomain.conf
+# 
+# network destinations that are allowed by this cache
+
+# default ubuntu and ubuntu country archive mirrors
+
+#official third party repositories
+
+# default changelogs location, this includes changelogs and the meta-release
+# file that has information about new ubuntu versions
+.vn
+.com
+.org
+# additional destinations can be added to the directory:
+#  /etc/squid-deb-proxy/mirror-dstdomain.acl.d
+# /etc/squid-deb-proxy/mirror-dstdomain.acl.d/10-default
+# 
+# network destinations that are allowed by this cache
+
+# launchpad personal package archives (disabled by default)
+#ppa.launchpad.net
+#private-ppa.launchpad.net
+
+# add additional mirror domains here (disabled by default)
+#linux.dropbox.com
+#download.virtualbox.org
+#archive.getdeb.net
+#packages.medibuntu.org
+#dl.google.com
+#repo.steampowered.com

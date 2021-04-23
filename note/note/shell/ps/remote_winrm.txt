@@ -1,0 +1,65 @@
+﻿################################# basic #################################
+http://www.howtogeek.com/117192/how-to-run-powershell-commands-on-remote-computers/
+#local:192.168.195.1
+Enable-PSRemoting -Force
+Set-Item wsman:\localhost\client\trustedhosts 192.168.195.101 (can also use * or ip;ip) #for non-domain system
+#check
+Get-Item wsman:\localhost\client\trustedhosts
+
+Restart-Service winrm
+Test-WSMan 192.168.195.101
+Invoke-Command -ComputerName 192.168.195.101 -ScriptBlock { Get-ChildItem 'C:\Program Files\' } -Credential "administrator"
+
+#destination windows: 192.168.195.101
+Enable-PSRemoting -Force
+Set-Item wsman:\localhost\client\trustedhosts 192.168.195.1
+Restart-Service winrm
+
+#################################
+#################################
+################################# without entry password #################################
+$Username = 'administrator'
+$Password = 'devops@dmin321'
+$SecureString = ConvertTo-SecureString -AsPlainText $Password -Force
+
+# Users you password securly
+$MySecureCreds = New-Object -TypeName System.Management.Automation.PSCredential -ArgumentList $Username,$SecureString
+
+Invoke-Command -ComputerName 192.168.195.101 -ScriptBlock { Remove-Item c:\b.ps1 } -Credential $MySecureCreds
+
+#################################
+#################################
+################################# transfer file
+# copy b.ps1 from local to .101
+$session = New-PSSession -ComputerName 192.168.195.101 -Credential $MySecureCreds
+Copy-Item C:\b.ps1 -Destination c:\ -ToSession $session
+# copy a.ps1 from .101 to local
+$session = New-PSSession -ComputerName 192.168.195.101 -Credential $MySecureCreds
+Copy-Item c:\a.ps1 -Destination c:\users\phuletv\ -FromSession $session
+
+################################# NOTE
+WinRM Port number 5985
+Invoke-Command:
+-ScriptBlock = run command on remote host
+-FilePath = run script that is placed at local host, transfer it to remote host and run
+#remote session
+Enter-PSSession -ComputerName 192.168.195.101 -Credential administrator
+
+#### note
+3 cau nay set tren destination, thi rundeck moi connect duoc
+winrm set winrm/config/client/auth '@{Basic="true"}'
+winrm set winrm/config/service/auth '@{Basic="true"}'
+winrm set winrm/config/service '@{AllowUnencrypted="true"}'
+
+- tren rundeck phai config job secure auth de no tu dien password
+? toi nay ve thu remove resources.xml cac user va password xem the nao
+- về cơ bản khi powershell chạy winrm quickconfig thì http soap chứ khoông phải https, 
+muốn chạy https thì server phải winrm quickconfig lại:
+https://github.com/xebialabs/overthere/#winrm-winrm_internal-and-winrm_native << coi phần To use the WINRM_INTERNAL or WINRM_NATIVE, winrm quickconfig -transport:https, dau tien la server phai cai iis truoc da, quan trọng là tạo ssl cert với CN: phải là IP hoặc hostname đúng, mà client kết nối đến với -ComputernName y như vậy mới được
+.\selfssl.exe /T /N:cn=192.168.195.103  /V:3650
+winrm create winrm/config/Listener?Address=*+Transport=HTTPS '@{Hostname="192.168.195.103"; CertificateThumbpr
+Còn client windows thì 
+Invoke-Command ... -UseSSL  -SessionOption (New-PSSessionOption -SkipCACheck -SkipCNCheck) (port 5986)
+
+
+

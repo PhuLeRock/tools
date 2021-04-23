@@ -1,0 +1,18 @@
+
+
+#accel=reverse proxy mode
+#cache_mgr lienlac@nhacso.net
+http_port 180.148.129.211:80 accel vhost
+http_port 180.148.129.200:80 accel vhost
+
+
+
+
+# 0=icp port is need , originserver=for reverse mode, this parent is webserver
+
+cache_peer 180.148.129.201  parent 80 0 no-query originserver name=server_1
+cache_peer_domain server_1 st.nhacso.net st02.nhacso.net 180.148.129.200
+
+cache_peer 180.148.129.202  parent 80 0 no-query originserver name=server_2
+cache_peer_domain server_2 st.nhacso.net st02.nhacso.net 180.148.129.200
+ 180.148.129.200 dùng đề nằm sau LVS direct

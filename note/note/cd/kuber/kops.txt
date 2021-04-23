@@ -1,0 +1,59 @@
+# refer https://aws.amazon.com/blogs/compute/kubernetes-clusters-aws-kops/
+
+
+register aws account cli
+
+https://github.com/kubernetes/kops/blob/master/docs/aws.md
+
+# khong can DNS
+
+# create s3 bucket
+aws s3api create-bucket --bucket kopsresource --create-bucket-configuration LocationConstraint=$(aws configure list | grep region | awk '{print $2}')
+
+# phan nay chu y, trong tai lieu gi la gossip-based cluster thi phai ghi k8s.local vao NAME
+# cái KOPS_STATE_STORE thì điền tên bucket vừa tạo
+export NAME=nash.k8s.local
+export KOPS_STATE_STORE=s3://kopsresource
+
+# vì kops sẽ cài k8s lên ec2 vào một AZ mà mình chọn, nên kiểm tra xem mình được quyền tạo ec2 trên AZ nào bằng lệnh, trường hợp này cài lên ap-southeast-1
+aws ec2 describe-availability-zones --region $(aws configure list | grep region | awk '{print $2}')
+
+# cài kops:
+curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
+chmod +x kops-linux-amd64
+sudo mv kops-linux-amd64 /usr/local/bin/kops
+# cài k8s, cái kops mới lệnh hơi khác chút, lần này cho chọn ec2 type luôn mới vãi lồn
+kops create help
+
+#tao cluster
+kops create cluster --zones=ap-southeast-1a --name=${NAME} \
+  --node-count=2  --node-size=t2.medium --master-size=t2.medium
+
+### muon thay doi cau hinh ec2 :
+kops get instancegroups --name nash.k8s.local (lay thong tin name cua master va node)
+kops edit ig nodes --name $NAME #(edit nodes)
+kops edit ig master-ap-southeast-1a --name $NAME #(edit master)
+
+  
+# tao truoc ssh key
+kops create secret --name nash.k8s.local sshpublickey admin -i /home/ec2-user/phuletv.pub
+  
+# update va list ra toan bo config cua cluster
+kops update cluster $NAME
+
+#update va apply luon thi dung
+kops update cluster --yes $NAME 
+#làm lộn thì xóa làm lại 
+kops delete cluster --name=${NAME} --yes
+
+#su dung
+login vao master bang user admin, key ssh vua tao
+
+# dashboard
+kubectl create -f https://raw.githubusercontent.com/kubernetes/kops/master/addons/kubernetes-dashboard/v1.8.3.yaml
+phai add rbac vao nua, doi hoi lau no moi len cai service loadbalancer
+https://github.com/kubernetes/kops/blob/master/docs/addons.md > coi phan RBAC
+
+login bang token, ve nguyen tac thang lồn serviceaccount nào cũng có token, get serviceaccount là ra token name, nó base64 lại rồi.
+kubectl get secret kubernetes-dashboard-token-kft49 -n kube-system  -o jsonpath={.data.token} | base64 --decode
+

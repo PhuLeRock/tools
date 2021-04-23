@@ -1,0 +1,8 @@
+https://docs.sonarqube.org/display/SONARQUBE51/Installing+and+Configuring+SonarQube+Runner
+config file:  <install_directory>/conf/sonar-runner.properties 
+
+cd to the project directory, make sure it have sonar.properties, run command "sonar-runner"
+
+
+
+https://docs.sonarqube.org/display/SONARQUBE51/Analyzing+with+SonarQube+Runner << for multiple project language

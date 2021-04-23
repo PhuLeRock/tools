@@ -1,0 +1,45 @@
+#!/bin/sh
+#
+# $Id: Xinetd.in,v 1.5 2005/11/13 17:16:43 davidlee Exp $
+#
+# Description:	wrapper of OCF RA Xinetd, based on original heartbeat RA.
+#		See OCF RA Xinetd for more information.
+#
+# Author:	Xun Sun <xunsun@cn.ibm.com> 
+# Support:      linux-ha@lists.linux-ha.org
+# License:      GNU General Public License (GPL)
+# Copyright:	(C) 2005 International Business Machines
+#
+
+# Source function library.
+. /etc/ha.d/resource.d//hto-mapfuncs
+
+ETC=/etc
+RCFILE=$ETC/xinetd.d/$1
+
+xup_usage () {
+        echo "Usage: $0 <xinetd-service-name> {start|stop|restart|status}"
+}
+
+if [ $# -ne 2 ]; then
+    xup_usage
+    exit 1
+fi 
+
+# Make sure the first parameter is a valid xinetd service name
+if [ ! -f $RCFILE ]; then
+    echo "ERROR:  Service descriptor $RCFILE not found!"
+    xup_usage
+    exit 1
+fi
+
+# See how we were called.
+case "$2" in
+  start|stop|restart|status)
+	;;
+  *)
+	xup_usage
+	exit 1
+esac
+
+ra_execocf  "rsc_id=Xinetd" "rsc_type=Xinetd" "provider=heartbeat" $2 "service=$1"

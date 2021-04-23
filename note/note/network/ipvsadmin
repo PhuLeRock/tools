@@ -1,0 +1,108 @@
+New update for centos 6
+VIP: 192.168.56.55
+Real1: 192.168.56.6
+Real2: 192.168.56.7
+##### check
+all server subnet same segment  (dr mode)
+all modules needed
+!! not sure lb vip have gateway ?
+
+###########
+LB:
+modprobe ip_vs_dh ;\
+modprobe ip_vs_ftp ;\
+modprobe ip_vs ;\
+modprobe ip_vs_lblc ;\
+modprobe ip_vs_lblcr ;\
+modprobe ip_vs_lc ;\
+modprobe ip_vs_nq ;\
+modprobe ip_vs_rr ;\
+modprobe ip_vs_sed ;\
+modprobe ip_vs_sh ;\
+modprobe ip_vs_wlc ;\
+modprobe ip_vs_wrr 
+
+
+check:
+lsmod | grep 'ip_vs_dh\|ip_vs_ftp\|ip_vs\|ip_vs_lblc\|ip_vs_lblcr\|ip_vs_lc\|ip_vs_nq\|ip_vs_rr\|ip_vs_sed\|ip_vs_sh\|ip_vs_wlc\|ip_vs_wrr' | wc -l
+/etc/rc.local:
+modprobe ip_vs_dh 
+modprobe ip_vs_ftp 
+modprobe ip_vs 
+modprobe ip_vs_lblc 
+modprobe ip_vs_lblcr 
+modprobe ip_vs_lc 
+modprobe ip_vs_nq 
+modprobe ip_vs_rr 
+modprobe ip_vs_sed 
+modprobe ip_vs_sh 
+modprobe ip_vs_wlc 
+modprobe ip_vs_wrr 
+
+#Add modules
+
+echo 'ip_vs_dh
+ip_vs_ftp
+ip_vs
+ip_vs_lblc
+ip_vs_lblcr
+ip_vs_lc
+ip_vs_nq
+ip_vs_rr
+ip_vs_sed
+ip_vs_sh
+ip_vs_wlc
+ip_vs_wrr' > /etc/modules
+
+/etc/sysctl.conf
+net.ipv4.ip_forward = 1
+#################################################################################
+#################### IP IP ipip encapsulation (tunneling)  ######################
+#################################################################################
+ifconfig eth1:0 192.168.56.55 netmask 255.255.255.255 #need alias, netmask 32 !!!
+ipvsadm -A -t test.com:80 -s wlc -p
+ipvsadm -a -t test.com:80 -r 192.168.56.6 -i
+ipvsadm -a -t test.com:80 -r 192.168.56.7 -i
+
+Real1, Real2:
+ifconfig  tunl0 192.168.56.55 netmask 255.255.255.255
+/etc/sysctl.conf
+net.ipv4.ip_forward = 1
+net.ipv4.conf.eth1.arp_ignore = 1
+net.ipv4.conf.all.arp_announce = 2
+
+#################################################################################
+##################### Direct Routing ###########################
+#################################################################################
+ifconfig eth1:0 192.168.56.55 netmask 255.255.255.255 #need alias, netmask 32 !!!
+ipvsadm -A -t test.com:80 -s wlc -p
+ipvsadm -a -t test.com:80 -r 192.168.56.6 -g
+ipvsadm -a -t test.com:80 -r 192.168.56.7 -g
+
+Real1, Real2:
+ifconfig  lo:0 192.168.56.55 netmask 255.255.255.255
+/etc/sysctl.conf
+net.ipv4.ip_forward = 1
+net.ipv4.conf.eth1.arp_ignore = 1
+net.ipv4.conf.all.arp_announce = 2
+
+#hiding interface lo:110, will not arp
+echo "1" >/proc/sys/net/ipv4/conf/all/hidden
+cat       /proc/sys/net/ipv4/conf/all/hidden
+echo "1" >/proc/sys/net/ipv4/conf/lo/hidden
+cat       /proc/sys/net/ipv4/conf/lo/hidden
+
+
+#################################################################################
+#################################################################################
+#################################################################################
+save config:
+ipvsadm -S | tess lvs.sh
+Restore
+cat lvs.sh | ipvsadm -R
+
+test:
+capture source
+tcpdump -i eth0 scr 10.181.140.216 and port 22
+or exclude
+tcpdump -i eth0 not arp and not rarp

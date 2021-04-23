@@ -1,0 +1,25 @@
+cat Dockerfile
+FROM centos:centos6.6
+MAINTAINER phultv@hvn.vn <cloud-ops@centos.org>
+#RUN yum -y update
+RUN yum clean all
+RUN yum -y install epel-release
+RUN yum -y install nginx
+#RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+RUN echo "nginx on CentOS 6 inside Docker" > /usr/share/nginx/html/index.html
+#copy echo.png /root/
+
+
+
+#
+docker build -t test/nginx .
+##
+after build, the new image is create and you need to start container from this images
+docker run --name="nginx" -d -p 80:80 -it test/nginx /bin/bash
+docker exec nginx /etc/init.d/nginx restart
+
+
+
+Dockerfile:
+RUN = execute any commands in a new layer on top of the current image and commit the results. The resulting committed image will be used for the next step in the Dockerfile.
+CMD = don't commit results

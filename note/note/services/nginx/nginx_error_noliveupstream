@@ -1,0 +1,3 @@
+in upstream:
+enable ip hash
+keep alive 8000 (or more)

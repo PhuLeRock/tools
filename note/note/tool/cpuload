@@ -1,0 +1,24 @@
+http://people.seas.harvard.edu/~apw/stress/
+
+or bash
+and then uses gzip to make some CPU intensive job. Such a function is mono thread, so it generates 100% load on a single core. To generate 100% load on a multicore architecture, the script has to create multiple instances of the CPU consuming function. The script accept has input parameter the number of CPU consuming functions it has to launch..
+
+#!/bin/bash
+cpuConsumingFunc()
+{
+         dd if=/dev/urandom | bzip2 -9 >> /dev/null;
+}
+fulload()
+{
+    x=0
+    while [ $x -lt $1 ]; do
+        cpuConsumingFunc&
+        let x=x+1 
+    done
+};
+echo "----- Starting CPU load" 
+fulload $1;
+echo "Press enter to stop CPU load"
+read;
+echo "----- CPU load stopped"
+killall dd

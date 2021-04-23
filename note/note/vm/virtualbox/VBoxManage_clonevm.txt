@@ -1,0 +1,7 @@
+VBoxManage clonevm "Win2012r2_winapp_tc_octopus02" --snapshot "winapp_tc_octopus_net452" --name hihi --mode machine --register  --options link 
+VBoxManage startvm hihi --type headless
+sleep 60
+VBoxManage guestproperty enumerate hihi | grep "V4/IP" | awk '{print$4}'
+
+VBoxManage controlvm hihi acpipowerbut
+VBoxManage unregistervm hihi --delete

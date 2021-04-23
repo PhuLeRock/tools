@@ -1,0 +1,82 @@
+## cài đặt https://blog.alexellis.io/kubernetes-in-10-minutes/
+kubeadm init --pod-network-cidr=10.244.0.0/16 --apiserver-advertise-address=192.168.195.101 --kubernetes-version stable-1.8
+
+kubeadm join --token 23cd13.d87257aa4da5b0af 192.168.195.101:6443 --discovery-token-ca-cert-hash sha256:1c9138da5d94a559c86ecf329de2b9673c784a3365a7ccf4509bac8696a4f38b
+kubeadm join --token 9c4016.96ab76745fb4ec68 192.168.195.101:6443 --discovery-token-ca-cert-hash sha256:1c9138da5d94a559c86ecf329de2b9673c784a3365a7ccf4509bac8696a4f38b
+###################
+
+
+kubectl get pods --all-namespaces << run after installing flannel to check init
+kubectl get all --namespace=kube-system << check all component of k8s
+
+kubectl get nodes << list all nodes
+
+k8ctl run p900 --image=phulerock/lemphp7.0 --port=80 --hostport=900 --expose=true
+>> câu này vừa đúng vừa sai, tạo deployment 1 container tên p900, khi dùng expose=true nó sẽ tạo ra service enpoint port 80, dựa theo --port nên --hostport ko có ý nghĩa. --hostport=-1 hiện tại chưa biết dùng thế nào. Cho nên --expose=true chỉ expose enpoint service cho --port chứ không tạo ra port khác được, cách tốt nhất là tạo deployment sau đó expose service bằng câu lệnh kế tiếp. 
+Ngoài ra việc kubectl expose chỉ tạo ra service enpoinet với ip là cluster-ip của kube, không có NAT ra ngoài network của kube, nếu muốn phải dùng --external-ip=
+
+note: 
+- what is pod and deployment: pod is containers, one pod (kubectl get pods) have many containers, list pods is list container name, deployment is the set of pods spread to nodes
+advance: 
+- dùng kubectl đến master ở node khác, export apiserver ra ngoài để remote từ ngoài 
+https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/#pod-network
+- phải coi từ từ lại thôi, vãi lồn xồi, coi từ deployment 
+https://kubernetes.io/docs/concepts/services-networking/service/
+concept:
+pod is wrapper of container, can schedule
+controller is manager of pods, if pod in NodeA fail, controller will schedule pod to another Node, Controller have 3 type: deployment, statefulset and Daemonset
+
+>> statefulset: set the unique domain name and only available in kuber network (chưa hiểu là nó tạo domain ra thì curl đến endpoint nào), giống service à 
+
+
+
+next: tìm hiểu 1 pod 2 container có lẽ container nào có tên cùng với tên pod thì làm container nhận connections
+
+
+rm -rf $HOME/.kube
+mkdir $HOME/.kube
+cp /etc/kubernetes/admin.conf $HOME/.kube/config
+chown $(id -u):$(id -g) $HOME/.kube/config
+export KUBECONFIG=$HOME/.kube/config
+echo "export KUBECONFIG=$HOME/.kube/config" | tee -a ~/.bashrc
+
+kubectl get pods -n kube-system
+kubectl get all --namespace=kube-system
+
+- research DNS 
+>> DNS co van de, kube se lay resolv.conf cua master de refer, nen dung domain nashtech se ko tot
+   nen config 8.8.8.8 tren master de kubeadm dung config do cho kube-dns
+   Nếu máy host master restart và cập nhật động /etc/resolv.conf thì nguy cơ kube-dns cũng update theo, chết.
+   phải add fix trong /etc/rc.local. chưa tìm ra cách configmap cho kube-dns fix luôn, hoặc
+   vim /etc/resolvconf/resolv.conf.d/base add nameserver 8.8.8.8 vào đó
+   https://unix.stackexchange.com/questions/128220/how-do-i-set-my-dns-when-resolv-conf-is-being-overwritten
+>> neu cac node join vao cluster ma dang giu .kube/config cu thi van chay
+   nhung khi master kubectl exec, describe den pod dang chay tren node do thi ko ket noi duoc
+   cach tot nhat la xoa .kube tren cac node truoc khi join.
+- tao 2 pod o 2 node khac nhau, chay script nslookup ve kubedns loadtest
+>> kube-dns có cách update config bằng configmap, stubdomain nghĩa là với những domain 
+   đặc thù như codesinsider.harveynash thì dùng stubdoamin. upstream domain nghĩa là những domain
+   không nằm trong cluster.local thì forward ra DNS ngoài vd như 8.8.8.8. có thể exec vào pod kube-dns 
+   container dnsmasq để xem trong /etc/k8s/..
+- networking trong pod không thể ping, curl đến ip của node khác, vd pod A trên node01 chỉ ping được 
+  ip nodeA, không ping đến ip nodeB vì routing table không dùng card của node.
+  >> ráng tìm routing table có liên quan đến real vlan
+
+- tìm nameserver và ip của kuber
+>>  kubectl -n kube-system describe po/$(kubectl -n kube-system get po | grep kube-dns | cut -d" " -f1 | head -n 1) | grep -e '--probe=dnsmasq'
+    kubectl -n kube-system get svc -l k8s-app=kube-dns | grep -v NAME # lấy cluster IP của DNS
+    nslookup $(kubectl -n kube-system get svc -l k8s-app=kube-dns | grep -v NAME | awk '{print$3}') $(kubectl -n kube-system get svc -l k8s-app=kube-dns | grep -v NAME | awk '{print$3}')
+- tim formula tao ra dns name cua service
+$SERVICENAME.$NAMESPACE.svc.clustername (kubernetes-dashboard.kube-system.svc.cluster.local)
+>>  volume:
+- tai lieu ve volume cho thay docker ko quan li duoc lifetime, network disk.
+- local va hostPath khac nhau the nao, test nfs
+- https://kubernetes.io/docs/concepts/storage/persistent-volumes/ phần này giải thích PV và PVC là gì
+--- tóm lại PV là storage, thuộc về kubernetes quản lí, chưa cấp phát cho ai cả, được đặt tên bằng storageClassName:
+--- PVC là phần storage được cấp phát từ PV, cấp cụ thể cho pod nào đó. có thể hiểu là pod được cấp phát từ node, PVC được cấp phát từ PV.
+--- dynamic volume provision: là 1 phần trong PV, cho phép tạo ra volume ngay lập tức theo yêu cầu, bằng cách tự động làm các việc theo thứ tự như sau: gọi cloud hoặc storage provider tạo ra volume -> tạo persistent volume -> tạo claim dùng volume đó. Việc này được làm bằng cách tạo ra StorageClass, có thể hiểu là 1 dạng profile chứa toàn bộ thông tin như cloud gì, region nào, type nào và claim sẽ dùng resources.requests.storage để gọi ra dung lượng đĩa mình cần. dynamic thường dùn trên cloud chứ ít khi dùng cho onprems vì NFS không thể tạo động được mà phải có NFS sharepoint trước.
+--- storageClass theo k8s tạm hiểu là profile, nó chứa tên và các parameters cho PV. Khi muốn tạo ra 1 volume cho pod thì tạo ra PVC, PVC này sẽ gọi đến PV bằng storageClassName. https://kubernetes.io/docs/concepts/storage/storage-classes/
+
+>> bị lỗi kubectl exec pod lỗi 
+root@master:~# kubectl exec phunginx-77f6cbdbc4-jvwrw ls
+error: unable to upgrade connection: pod does not exist

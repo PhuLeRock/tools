@@ -1,0 +1,28 @@
+httpd: apr_sockaddr_info_get() failed for HOSTNAME
+If you get this error when starting Apache 2 here is the fix…
+
+Performing sanity check on apache22 configuration:
+httpd: apr_sockaddr_info_get() failed for someserver1.host-name.net
+httpd: Could not reliably determine the server’s fully qualified domain name, using 127.0.0.1 for ServerName
+Syntax OK
+Starting apache22.
+httpd: apr_sockaddr_info_get() failed for someserver1.host-name.net
+httpd: Could not reliably determine the server’s fully qualified domain name, using 127.0.0.1 for ServerName
+
+The repair is very easy, just fix your hosts file locate at `/etc/hosts`.
+
+First, determing your hostname of the machine that you are on…
+
+#> hostname
+someserver1.host-name.net
+
+Then open your hosts file…
+
+#> vi /etc/hosts
+
+Then change all the host items to match
+
+::1 localhost.someserver1.host-name.net localhost
+127.0.0.1 localhost.someserver1.host-name.net localhost
+192.1.0.123 someserver1.host-name.net someserver1
+192.1.0.123 someserver1.host-name.net.

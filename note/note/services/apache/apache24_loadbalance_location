@@ -1,0 +1,21 @@
+<VirtualHost 1.1.1.101:80>
+    ServerAdmin webmaster@dummy-host2.example.com
+    DocumentRoot "/data/example.com"
+    ServerName example.com
+    ErrorLog "logs/dummy-host2.example.com-error_log"
+    CustomLog "logs/dummy-host2.example.com-access_log" common
+    DirectoryIndex index.php
+<Directory "/data/example.com">
+    Options Indexes FollowSymLinks
+    AllowOverride None
+    Require all granted
+</Directory>
+#<Directory "/data/example.com/info">
+#    Options Indexes FollowSymLinks
+#    AllowOverride None
+#    Require all granted
+#</Directory>
+
+ProxyPassMatch ^/(.*\.php(/.*)?)$ fcgi://127.0.0.1:9000/data/example.com/$1
+ProxyPassMatch ^/info$ fcgi://127.0.0.1:9001/data/example.com/info/index.php
+</VirtualHost>

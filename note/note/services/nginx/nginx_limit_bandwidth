@@ -1,0 +1,14 @@
+# nginx use mbit, kbit, this ex limit 150k after user reach 1mbit.
+location ^~ /videos/ {
+...
+limit_rate_after 1m;
+limit_rate 150k;
+...
+}
+
+
+To limit 10 conn per IP, 128kb if reach 1mb per each
+# server block:
+limit_rate 128K; limit_zone one $binary_remote_addr 10m;
+## location block:
+limit_conn one 10;

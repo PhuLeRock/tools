@@ -1,0 +1,43 @@
+# source https://github.com/kubernetes/contrib/blob/master/ingress/controllers/nginx/examples/multi-tls/multi-tls.yaml
+# ví dụ này tuy là http nhưng có mention đến việc multiple tls trong từng hostname
+# In this example we have 2 service "nginx:80" belong to bar.baz.com and "echoheaders:80"  belong to foo.bar.com, the ingress at the end of this file describe 
+# how to set multiple hostname in ingress, of course these hostnames have different tls secrect.
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: foo-tls
+  namespace: default
+spec:
+  tls:
+  - hosts:
+    - foo.bar.com
+    # This secret must exist beforehand
+    # The cert must also contain the subj-name foo.bar.com
+    # You can create it via:
+    # make keys secret SECRET=/tmp/foobar.json HOST=foo.bar.com NAME=foobar
+    # https://github.com/kubernetes/contrib/tree/master/ingress/controllers/gce/https_example
+    secretName: foobar
+  - hosts:
+    - bar.baz.com
+    # This secret must exist beforehand
+    # The cert must also contain the subj-name bar.baz.com
+    # You can create it via:
+    # make keys secret SECRET=/tmp/barbaz.json HOST=bar.baz.com NAME=barbaz
+    # https://github.com/kubernetes/contrib/tree/master/ingress/controllers/gce/https_example
+    secretName: barbaz
+  rules:
+  - host: foo.bar.com
+    http:
+      paths:
+      - backend:
+          serviceName: echoheaders
+          servicePort: 80
+        path: /
+  - host: bar.baz.com
+    http:
+      paths:
+      - backend:
+          serviceName: nginx
+          servicePort: 80
+        path: /

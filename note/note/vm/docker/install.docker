@@ -1,0 +1,10 @@
+apt-get -y install curl
+curl -sSL https://get.docker.com/ | sh
+#Note: If your company is behind a filtering proxy, you may find that the apt-key command fails for the Docker repo during installation. To work around this, add the key directly using the following:
+#curl -sSL https://get.docker.com/ | sh
+
+# docker compose 1.5.2 Dec 4, 2015, go to https://github.com/docker/compose/releases
+docker_compose() {
+curl -L https://github.com/docker/compose/releases/download/1.5.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+chmod +x /usr/local/bin/docker-compose
+}

@@ -1,0 +1,1 @@
+yum install kernel-devel xinetd libXtst-devel libXrender-devel

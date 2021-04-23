@@ -1,0 +1,8 @@
+﻿1. Quá trình build của 1 repo được mô tả trong .gitlab-ci.yml, đặt tại thư mục gốc của repo của mình trên gitlab.com
+2. .gitlab-ci.yml cơ bản chứa 2 phần, viết đẹp như ansible, 1 phần là before script đại khái như apt-get /echo / hoặc restart redis chẳng hạn, còn script sẽ mô tả các lệnh khi build như make / maven v.v
+3. gitlab khi thấy file .gitlab-ci.yml sẽ tự hiểu, bất cứ cú push hay merge nào xảy ra, thì gitlab lập tức nhìn vào .gitlab-ci.yml và gọi gitlab-runner chạy build đúng theo steps như vậy, kết quả báo build OK sẽ xanh lá, failed là đỏ như chang github.com
+4. gitlab-runner chính chủ được viết bằng GO, nhưng có sẵn bin nên khỏi build gì cả, runner và gitlab liên lạc thông qua API, nên server cài runner chỉ cần có internet là được, nó sẽ tự động gọi gitlab.com theo định thời. Runner có hướng dẫn cài trên server, VPS, docker v.v
+5. 1 runner có thể chạy cho nhiều proj gitlab, gọi là shared runner.
+6. vào gitlab repo của mình, sẽ có phần configure runners phía trái, trong đó sẽ có 2 thứ cần lấy, url và 1 cái token. Trên server build chạy lệnh gitlab-ci-multi-runner register, nó sẽ hỏi các thông tin, hỏi đến đâu điền đến đấy.
+7. nếu cấu hình đúng xong runner, vào gitlab.com của mình sẽ thấy runner được add vào báo màu xanh, mất kết nối với runner thì báo đỏ. 
+cụ thể tại https://docs.gitlab.com/ce/ci/quick_start/

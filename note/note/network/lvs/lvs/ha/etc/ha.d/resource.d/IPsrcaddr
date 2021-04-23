@@ -1,0 +1,66 @@
+#!/bin/sh
+#
+# $Id: IPsrcaddr.in,v 1.2 2005/11/03 07:45:51 xunsun Exp $
+#
+# Description:	wrapper of OCF RA IPsrcaddr, based on original heartbeat RA.
+#		See OCF RA IPsrcaddr for more information.
+#
+# Author:	Xun Sun <xunsun@cn.ibm.com>
+# Support:	linux-ha@lists.linux-ha.org
+# License:	GNU General Public License (GPL)
+# Copyright:	(C) 2005 International Business Machines
+#
+#	It can add a preferred source address, or remove one.
+#
+#	usage: IPsrcaddr ip-address {start|stop|status|monitor}
+#
+#	The "start" arg adds a preferred source address.
+#
+#	Surprisingly, the "stop" arg removes it.	:-)
+#
+#	NOTES:
+#
+#	1) There must be exactly one default route!
+#	2) The script depends on Alexey Kuznetsov's ip utility from the
+#	iproute aka iproute2 package.
+#	3) No checking is done to see if the passed in IP address can
+#	reasonably be associated with the interface on which the default
+#	route exists.  So unless you want to deliberately spoof your source IP,
+#	check it!  Normally, I would expect that your haresources looks
+#	something like:
+#
+#		nodename ip1 ip2 ... ipN IPsrcaddr::ipX
+#
+#	where ipX is one of the ip1 to ipN.
+#
+
+. /etc/ha.d/resource.d//hto-mapfuncs
+
+USAGE="usage: $0 ip-address {start|stop|status|monitor}";
+
+usage() {
+	echo $USAGE >&2
+}
+
+#
+#	Add or remove the preferred source IP address to be used for packets
+#	originating on the localhost and leaving via the default route.
+#
+
+if
+	[ $# -ne 2 ]
+then
+	usage
+	exit 1
+fi
+
+case $2 in
+	start|stop|status|monitor)
+	;;
+	*)
+	usage
+	exit 1
+	;;
+esac
+
+ra_execocf  "rsc_id=IPsrcaddr" "rsc_type=IPsrcaddr" "provider=heartbeat" $2 "ipaddress=$1"

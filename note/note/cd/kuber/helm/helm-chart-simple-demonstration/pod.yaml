@@ -1,0 +1,32 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: shell
+  labels:
+    app: shell
+spec:
+#  ports:
+#  - port: 900
+#    name: notuse
+  clusterIP: None
+  selector:
+    app: shell
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: shell
+spec:
+  selector:
+    matchLabels:
+      app: shell # has to match .spec.template.metadata.labels
+  serviceName: "nginx"
+  serviceName: "shell"
+  template:
+    metadata:
+      labels:
+        app: shell
+    spec:
+      containers:
+        - name: nginx
+          image: nginx

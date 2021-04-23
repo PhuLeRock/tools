@@ -1,0 +1,3 @@
+#  wsmancmd.py + pywinrm remote to windows server with keypair
+http://www.cloudbase.it/windows-without-passwords-in-openstack/
+

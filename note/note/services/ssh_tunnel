@@ -1,0 +1,20 @@
+local client ---> access server ---> remote host
+
+sample: ssh -L Port:Remotehost:Remotehostport Access_server_ip
+
+1.1.1.129  destination server
+1.1.1.130  ACCESS SERVER
+
+phulerock@PLR:~$ sudo ssh -l root -L 34:1.1.1.129:22 root@1.1.1.130 -N
+
+-L option is only available on the root privileged
+so if you have key authenticated on the access server, you need to put it on /root/.ssh/
+
+ ex:
+phulerock@PLR:~$ sudo ssh -L 11:10.30.7.11:22 -L 98:10.30.7.98:22 phultv@10.30.9.24 -N
+
+access server phultv@10.30.9.24
+ssh phultv@localhost:98 or ssh phultv@localhost:11
+
+
+*** NOTE: ON THE ACCESS SERVER, TURN ON "PermitTunnel yes " IN SSHD-CONFIG

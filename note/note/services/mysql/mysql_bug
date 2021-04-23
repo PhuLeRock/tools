@@ -1,0 +1,38 @@
+mysqldump: Error 1194: Table 'watchdog' is marked as crashed and should be repaired when dumping table `watchdog` at row: 283
+Stage 1: Checking your tablesRun myisamchk *.MYI or myisamchk -e *.MYI if you have more time. Use the -s (silent) option to suppress unnecessary information.If the mysqld server is stopped, you should use the --update-state option to tell myisamchk to mark the table as “checked.”You have to repair only those tables for which myisamchk announces an error. For such tables, proceed to Stage 2.If you get unexpected errors when checking (such as out of memory errors), or if myisamchk crashes, go to Stage 3.
+Stage 2: Easy safe repairFirst, try myisamchk -r -q tbl_name (-r -q means “quick recovery mode”). This attempts to repair the index file without touching the data file. If the data file contains everything that it should and the delete links point at the correct locations within the data file, this should work, and the table is fixed.source: Website
+
+
+
+[root@www storage]# myisamchk -r -q /var/lib/mysql/drupal/watchdog.MYI
+
+- check record delete-chain
+
+- recovering (with sort) MyISAM-table '/var/lib/mysql/drupal/watchdog.MYI'Data records: 513
+
+- Fixing index 1
+
+Found block that points outside data file at 122592
+
+MyISAM-table '/var/lib/mysql/drupal/watchdog.MYI' is not fixed because of errors
+
+Try fixing it by using the --safe-recover (-o), the --force (-f) option or by not using the --quick (-q) flag
+
+[root@www storage]# myisamchk -r /var/lib/mysql/drupal/watchdog.MYI
+
+- recovering (with sort)
+
+MyISAM-table '/var/lib/mysql/drupal/watchdog.MYI'
+
+Data records: 513
+
+- Fixing index 1
+
+Found block that points outside data file at 122592
+
+- Fixing index 2
+
+
+
+As you can see, I had to get rid of the -q option to get it to work, but it did in fact work. Same command worked to fix g2_CasheMap, but that one took quite a bit longer.
+

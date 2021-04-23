@@ -1,0 +1,45 @@
+convert flac, wav, ogg, mp3, acc, : soundconverter
+apt-get install pacpl
+
+pacpl -r -t mp3 --bitrate 320 *.flac
+
+shnsplit -f *.cue -o flac -t %a-%p-%n-%t -m \ _ *.wav
+“%a-%p-%n-%t” = artist-performer-tracknumber-tracktitle
+
+ape to mp3/wav: 
+ffmpeg -i 'path/'file.ape file.wav
+ffmpeg -i 'path/'file.ape -ab 320k file.mp3 # -a is encode unknow number of chanels to mono (sum of these chanel)
+ffmpeg -i inputaudio.ape outputaudio.flac
+
+
+If you want to see what formats and codecs are available on your PC  just
+type:
+
+$ ffmpeg -formats
+
+convert .flv to .mpg
+ffmpeg -i yourfile.flv -ab 56 -ar 22050 -b 500 -s 320×240 yourfile.mpg
+
+convert .3gp to .avi
+ffmpeg -i file.3gp -f avi -acodec mp3 *.avi
+
+extract audio .3gp to .mp3
+ffmpeg -y -i *.3gp -ac 1 -acodec mp3 -ar 22050 -f wav *.mp3
+
+Convert wma to ogg
+ffmpeg -i *.wma -acodec vorbis -aq 100 *.ogg
+
+Convert wma to mp3
+ffmpeg -i *wma -acodec mp3 -aq 100 *.mp3 
+ffmpeg -i "in.wma" -acodec libmp3lame -ab 160k -ac 2 -ar 44100 "out.mp3" # ac 2 mean 2 channel, default is 1
+Note: WinFF uses "mp3" instead of "libmp3lame" due to the way it's compiled
+
+If you have a lot of files to convert run this command in the directory
+where your wma files reside
+convert wma to ogg
+for i in *.wma; do ffmpeg -i $i -acodec vorbis -aq 100 ${i%.wma}.ogg; done
+
+convert wma to mp3
+for i in *.wma; do ffmpeg -i $i -acodec mp3 -aq 100 ${i%.wma}.mp3; done 
+
+

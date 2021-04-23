@@ -1,0 +1,4 @@
+for php 5.3.x, you should use 
+gearmand 0.14
+php extension gearman 0.8
+

@@ -1,0 +1,27 @@
+####  only allow domain list in "valid_referers"
+location ~ \.(jpe?g|png|gif)$ {
+     valid_referers none blocked mysite.com *.mysite.com;
+     if ($invalid_referer) {
+        return   403;
+    }
+}
+
+# for location images
+location /images/ {
+     valid_referers none blocked mysite.com *.mysite.com;
+     if ($invalid_referer) {
+        rewrite   ^/   http://haitac2.game9.vn/;
+    }
+}
+
+#### only deny domain
+location ~* (\.mp4)$ {
+   if ($http_referer ~ ^(http://www.bad.com|http://stupid.com) ) {
+       # Redirect to a specific file
+       #rewrite  ^/(.*)$ http://mysite.com/dont-hotlink.html last; 
+
+       # Redirect to a dynamic url where /hotlinked/ is some script that
+       # displays some info about the hotlinked file.
+       rewrite  ^/(.*)$ http://mysite.com/hotlinked/$1/ last; 
+   }   
+}

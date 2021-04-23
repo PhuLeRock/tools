@@ -1,0 +1,23 @@
+post-commit:
+muon svn update bang hook script vao thu muc nao thi phai checkout ngay tai thu muc do.
+vd
+svn co https://svn.a.com/proj2 /var/www/proj2
+
+sau do moi config trong post-commit
+
+
+REPOS="$1"
+REV="$2"
+
+SVN_PATH=`svnlook changed -r $REV $REPOS | awk '{print $2}'`
+PATH_PARTS=(`echo -n $SVN_PATH | awk -F'/' '{print $1 "\n" $2 "\n" $3}' `)
+
+
+if [ ${PATH_PARTS[0]} = "gdssmproc" ] && [ ${PATH_PARTS[1]} = "trunk" ] && [ ${PATH_PARTS[2]} = "src" ] ; then
+  svn up -r $REV  /var/www/gdsvnstable
+else
+  if [ ${PATH_PARTS[0]} = "smproc2" ] && [ ${PATH_PARTS[1]} = "trunk" ] && [ ${PATH_PARTS[2]} = "src" ] ; then
+    svn up -r $REV /var/www/smproc2
+  fi
+fi
+

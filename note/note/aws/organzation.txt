@@ -1,0 +1,6 @@
+AWS Organizations DEMO - Create & Invite AWS Account | Organizational Units | Service Control Policy
+https://www.youtube.com/watch?v=-HsfTwdRxRI
+
+- Phai hieu day ko phai IAM, ma la 1 root acc co truoc hoac chua co cung duoc (reset pass).
+- Root se tao ra organization, dung de gom het billing account lai lam 1 duoc. 
+vd: Cong ty A dung acc A, con ty B mua lai A va add account A vao organization cua A.

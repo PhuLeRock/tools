@@ -1,0 +1,90 @@
+# How to use:
+# vagrant ssh 
+# 
+# vagrant status
+# vagrant up k8slocal
+# vagrant suspend k8slocal
+# vagrant resume k8slocal
+
+$sshkey = <<SCRIPT
+echo Hello World >> /root/hello.txt
+echo ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAzPKGrRox7DgQwDyZr/PGnWeXD8ymbGOIJTebO9QBgEUSq9BORv8a3Mbxnb7ctli3nVz7/NEOd3qI730gXAhfEltdzJiiDa1bH5g2t9Rig/MLPAX587u7zqmSjrZc1mj9b0u3r+dIaIVWenuIsVbv6oWVe+UuN3hWLu6HXVOVetzTfSwt27EKYTTu3QH9WQTlq3uZjlk2ffLSgnnf5er0JyywHXeyIuZo4RjrLgfcjkZVqPQVmGY/MPstuTrSlloqGJLtwB/i1FgJ4lkIJcNGmz74u3rj2UFlCBPjJQtfSCsBqxH0177zr+ucCZRShFc8iqK8vEqtHSuOAB+vB1/UQw== phulerock@mocxi-lappy >> /home/vagrant/.ssh/authorized_keys
+mkdir -p "/root/.ssh"
+echo ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAzPKGrRox7DgQwDyZr/PGnWeXD8ymbGOIJTebO9QBgEUSq9BORv8a3Mbxnb7ctli3nVz7/NEOd3qI730gXAhfEltdzJiiDa1bH5g2t9Rig/MLPAX587u7zqmSjrZc1mj9b0u3r+dIaIVWenuIsVbv6oWVe+UuN3hWLu6HXVOVetzTfSwt27EKYTTu3QH9WQTlq3uZjlk2ffLSgnnf5er0JyywHXeyIuZo4RjrLgfcjkZVqPQVmGY/MPstuTrSlloqGJLtwB/i1FgJ4lkIJcNGmz74u3rj2UFlCBPjJQtfSCsBqxH0177zr+ucCZRShFc8iqK8vEqtHSuOAB+vB1/UQw== phulerock@mocxi-lappy >> /root/.ssh/authorized_keys
+SCRIPT
+
+$installk8s = <<SCRIPT
+apt-get update
+apt-get install -y docker.io
+systemctl enable docker
+curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+apt-add-repository "deb http://apt.kubernetes.io/ kubernetes-xenial main"
+apt-get install -y kubeadm
+swapoff -a
+hostnamectl set-hostname k8slocal
+kubeadm init --pod-network-cidr=192.168.0.0/16 --apiserver-advertise-address=1.1.1.110 --kubernetes-version stable-1.12
+rm -rf $HOME/.kube
+mkdir $HOME/.kube
+cp /etc/kubernetes/admin.conf $HOME/.kube/config
+chown $(id -u):$(id -g) $HOME/.kube/config
+export KUBECONFIG=$HOME/.kube/config
+echo "export KUBECONFIG=$HOME/.kube/config" | tee -a ~/.bashrc
+source <(kubectl completion bash)
+echo "source <(kubectl completion bash)" >> ~/.bashrc
+source <(kubectl completion bash)
+rm -rf /home/vagrant/.kube
+mkdir /home/vagrant/.kube
+cp /etc/kubernetes/admin.conf /home/vagrant/.kube/config
+chown vagrant:vagrant /home/vagrant/.kube/config
+echo "export KUBECONFIG=/home/vagrant/.kube/config" | tee -a ~/.bashrc
+echo "source <(kubectl completion bash)" >> /home/vagrant/.bashrc
+kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/rbac-kdd.yaml
+kubectl apply -f https://docs.projectcalico.org/v3.3/getting-started/kubernetes/installation/hosted/kubernetes-datastore/calico-networking/1.7/calico.yaml
+kubectl taint nodes --all node-role.kubernetes.io/master-
+SCRIPT
+
+$installnfs = <<SCRIPT
+apt-get update
+apt-get install -y nfs-kernel-server
+apt-get install -y nfs-common
+mkdir /nfsdata
+mkdir /nfstest
+echo "/nfsdata 1.1.1.0/24(rw,sync,no_subtree_check,no_root_squash)" >> /etc/exports
+systemctl restart nfs-kernel-server
+mount 1.1.1.102:/nfsdata /nfstest
+cp /etc/exports /nfstest/; ls -la /nfsdata
+SCRIPT
+
+Vagrant.configure("2") do |config|
+        config.vm.define "1804001" do |hihi|
+			hihi.vm.box = "generic/ubuntu1804"
+			hihi.vm.provider "hyperv"
+			#default la co 1 carf NAT roi, them 1 cai hostonly nua ne
+			hihi.vm.network "private_network", ip: "1.1.1.110"
+			hihi.vm.hostname = "1804001"
+			hihi.vmname = "1804001"
+            hihi.vm.provider "hyperv" do |h|
+			  h.enable_virtualization_extensions = true
+			  h.linked_clone = true
+			end
+        end
+#			hihi.vm.provider "virtualbox" do |vb|
+#				vb.memory = "4000"
+#				vb.cpus = "2"
+#			end
+#			hihi.vm.provision "shell", inline: $sshkey
+#			hihi.vm.provision "shell", inline: $installk8s
+#		end
+#        config.vm.define "nfsserver" do |nfsserver|
+#			nfsserver.vm.box = "ubuntu/bionic64"
+#			#default la co 1 carf NAT roi, them 1 cai hostonly nua ne
+#			nfsserver.vm.network "private_network", ip: "1.1.1.102"
+#			nfsserver.vm.hostname = "nfsserver"
+#			nfsserver.vm.provider "virtualbox" do |vb|
+#				vb.memory = "512"
+#				vb.cpus = "1"
+#			end
+#			nfsserver.vm.provision "shell", inline: $sshkey
+#			nfsserver.vm.provision "shell", inline: $installnfs
+#		end		
+end	

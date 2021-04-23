@@ -1,0 +1,2 @@
+﻿- install: should install from PPA repo, don't use default repo because it use node v4
+- to reload nodejs app automatically incase the nodeapp scratched, user supervisored

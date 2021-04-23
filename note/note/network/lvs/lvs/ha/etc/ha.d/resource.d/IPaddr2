@@ -1,0 +1,76 @@
+#!/bin/sh
+#
+# $Id: IPaddr2.in,v 1.12 2006/06/10 17:33:30 alan Exp $
+#
+# Description:	wrapper of OCF RA IPaddr2, based on original heartbeat RA.
+#		See OCF RA IPaddr2 for more information.
+#
+# Author:	Xun Sun <xunsun@cn.ibm.com>
+# Support:      linux-ha@lists.linux-ha.org
+# License:      GNU General Public License (GPL)
+# Copyright:	(C) 2005 International Business Machines
+#
+#	This script manages IP alias IP addresses
+#
+#	It can add an IP alias, or remove one.
+#
+#	usage: $0 ip-address[/netmaskbits[/interface[:label][/broadcast]]] \
+#	    {start|stop|status|monitor}
+#
+#	The "start" arg adds an IP alias.
+#
+#	Surprisingly, the "stop" arg removes one.	:-)
+#
+unset LANG; export LANG
+LC_ALL=C
+export LC_ALL
+
+. /etc/ha.d/resource.d//hto-mapfuncs
+
+USAGE="usage: $0 ip-address[/netmaskbits[/interface[:label][/broadcast]]]
+{start|stop|status|monitor}\n\nNote: $0 only works on Linux";
+
+usage() {
+  echo -e $USAGE >&2
+}
+
+#
+#	Add or remove IP alias for the given IP address...
+#
+if
+    [ $# -ne 2 ]
+then
+    usage
+    exit 1
+fi
+
+# We need to split the argument into pieces that IPaddr2 OCF RA can
+# recognize, sed is prefered over Bash specific builtin functions
+# for portability.
+
+BASEIP=`echo $1 | sed 's%/.*%%'`
+str=`echo $1 | sed 's%^'$BASEIP'/*%%'`
+
+if [ ! -z "$str" ]; then
+  NETMASK=`echo $str | sed 's%/.*%%'`
+  str=`echo $str | sed 's%^'$NETMASK'/*%%'`
+
+  NIC=`echo $str | sed 's%/.*%%'`
+  case $NIC in
+       [0-9]*) BROADCAST=$NIC
+               NIC=
+               ;;
+       "")     ;;
+       *)      BROADCAST=`echo $str | sed -e 's%^'$NIC'/*%%' -e 's%/.*%%'`
+               ;;
+  esac
+fi
+
+case $2 in
+    start|stop|status|monitor)	;;
+    *)	usage
+ 	exit 1
+	;;
+esac
+
+ra_execocf  "rsc_id=IPaddr2_$BASEIP" "rsc_type=IPaddr2" "provider=heartbeat" $2 "ip=$BASEIP" "broadcast=$BROADCAST" "nic=$NIC" "cidr_netmask=$NETMASK"

@@ -1,0 +1,183 @@
+Mechanism:
+DHCP > TFPT > boot.msg > pxelinux.cfg/default > http://kickstart.cfg > install from http
+
+1 .First client get IP from DHCP. and go to PXE server by TFTP protocal
+2 .Client will get Linux image for bootloader, repository and the configuration file from this FTP.
+3. Via the configuration file pxelinux.cfg, client will use the specific protocol (http, ftp or nfs) to connect to the repository.
+4. Client will get the install configuration file in httpserver and install packages from this http server base on this configuration.
+
+TFTP server need look like this:
+
+    /tftp/initrd-6.2.img # ramdisk image of redhat 6.2
+          initrd-7.2.img # ramdisk image of redhat 7.2
+          pxelinux.0
+          vmlinuz-6.2 # kernel image of redhat 6.2
+          vmlinuz-7.2 # kernel image of redhat 7.2
+          Kickstart_end
+
+    /tftp/pxelinux.cfg/C0A8000B -> default.netboot-7.2
+                       C0A8000C -> default.netboot-6.2
+                       default
+                       default.netboot-6-2
+                       default.netboot-7.2
+
+#the pxe bootloader need 2 file inited.img and vmlinuz
+cp i386/images/pxeboot/initrd.img /tftp/initrd-7.2.img
+cp i386/images/pxeboot/vmlinuz /tftp/vmlinuz-7.2
+   
+HTTP server should be like this:
+html/
+|-- CentOS_5_I386
+|   |-- CentOS
+|   |-- EULA
+|   |-- GPL
+|   |-- NOTES
+|   |-- RELEASE-NOTES-cz
+|   |-- RELEASE-NOTES-cz.html
+|   |-- RELEASE-NOTES-de
+|   |-- RELEASE-NOTES-de.
+|-- ks_CentOS51.cfg
+
+in ks_CentOS51.cfg content the installation configuration.
+
+
+
+#/tftpboot/pxelinux.cfg/default
+default 5
+
+prompt 1
+timeout 600
+display boot.msg
+
+label 1
+kernel vmlinuz_CentOS5I386 # vmlinuz_CentOS5I386 is at /tftpboot/vmlinuz_CentOS5I386
+append ksdevice=eth1 initrd=initrd_CentOS5I386.img ks=http://10.71.0.2/ks_CentOS_5_I386.cfg #initrd_CentOS5I386.img at /tfptboot/initrd_CentOS5I386.img
+
+label 2
+kernel vmlinuz_RedhatAS4.3
+append ksdevice=eth1 initrd=initrd_RedhatAS4.3.img ks=http://10.71.0.2/ks_RedhatAS4.3.cfg
+
+
+label 3
+kernel vmlinuz_VMwareESX
+append ksdevice=eth0 initrd=initrd_VMwareESX.img ks=http://10.71.0.2/ks_VMWareESX.cfg
+
+label 4
+kernel vmlinuz_Mandrake9.2
+append ksdevice=eth0 initrd=all_Mandrake9.2.rdz ks=http://10.71.0.2/ks_Mandrake9.2.cfg
+
+label 5
+kernel vmlinuz_CentOS51
+append ksdevice=eth0 initrd=initrd_CentOS51.img ks=http://10.71.0.2/ks_CentOS51.cfg
+
+label 6
+kernel mboot.c32
+append vmkernel.gz --- binmod.tgz --- environ.tgz --- cim.tgz
+
+label 7
+localboot 0
+
+
+#/tftpboot/boot.msg
+	1		CentOS_5_I386
+	2		Redhat_AS_4.3
+	3		VMWare_ESX_3.5
+	4		Mandrake_9.2
+	5		CentOS_5.1_x86_64
+	6		VMware_ESXi
+	7		Local_boot
+
+
+/var/www/html/ks_CentOS_5_I386.cfg
+
+#System  language
+lang en_US
+
+#Language modules to install
+langsupport en_US
+
+#System keyboard
+keyboard us
+
+#System mouse
+mouse
+
+#Sytem timezone
+timezone --utc Asia/Saigon
+
+#Root password is "12345@"
+rootpw 12345@
+
+#Reboot after installation
+reboot
+
+#Use text mode install
+text
+
+#Install OS instead of upgrade
+install
+
+#Use NFS installation Media
+#nfs --server=192.168.0.2  --dir=/centos44
+#Use http installation
+url --url http://10.71.0.2/cent51_32_final/
+
+#System bootloader configuration
+bootloader --location=mbr 
+
+#Clear the Master Boot Record
+zerombr yes
+
+#Partition clearing information
+clearpart --all --initlabel 
+
+#Disk partitioning information
+part /boot --fstype ext3 --size 100 --asprimary
+part swap --size 4096 --asprimary
+part / --fstype ext3 --size 1 --grow
+
+#System authorization infomation
+auth  --useshadow  --enablemd5 
+
+#Network information
+network --bootproto=dhcp --device=eth0 --hostname Centos51
+#network --bootproto=static --ip=10.71.0.5 --netmask 255.255.255.0 --gateway=10.71.0.1 --device=eth0 --hostname test_ks
+#Firewall configuration
+firewall --disabled
+
+#SELinux configuration
+selinux --disabled
+
+#Do not configure XWindows
+skipx
+
+#Package install information
+
+%packages --resolvedeps
+@development-libs
+@editors
+@development-tools
+net-snmp
+mc
+nmap
+zsh
+iptraf
+tcpdump
+sysstat
+
+%post
+# turn off packages that we don't want running
+#echo Turning off some packages
+#/sbin/chkconfig --level 0123456 lpd off
+#/sbin/chkconfig --level 0123456 xfs off
+#/sbin/chkconfig --level 0123456 gpm off
+#/sbin/chkconfig --level 0123456 wine off
+#/sbin/chkconfig --level 0123456 atd  off
+#/sbin/chkconfig --level 0123456 autofs  off
+#/sbin/chkconfig --level 0123456 auditd  off
+#/sbin/chkconfig --level 0123456 bluetooth off
+#/sbin/chkconfig --level 0123456 cups off
+#/sbin/chkconfig --level 0123456 ip6tables off
+#/sbin/chkconfig --level 0123456 iptables off
+#/sbin/chkconfig --level 0123456 sendmail off
+
