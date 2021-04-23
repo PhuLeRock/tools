@@ -1,8 +1,0 @@
-/boot/grub/grub.conf
-
-title CentOS (2.6.18-164.el5)
-        root (hd0,0)
-        kernel /vmlinuz-2.6.18-164.el5 ro root=LABEL=/ rd_NO_LUKS rd_NO_LVM rd_NO_MD rd_NO_DM crashkernel=auto rhgb
-        initrd /initrd-2.6.18-164.el5.img
-
-
