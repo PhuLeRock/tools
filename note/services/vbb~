@@ -1,7 +1,0 @@
-create database forum DEFAULT CHARACTER SET utf8   DEFAULT COLLATE utf8_general_ci;
-grant all privileges on forum.* to 'forum'@'localhost' identified by 'ssgame123!@#';
- 
-
-cp includes/config.php.new includes/config.php
-edit dbname, user, pass in includes/config.php
-
