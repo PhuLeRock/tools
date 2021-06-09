@@ -3,16 +3,20 @@ https://docs.aws.amazon.com/AmazonECS/latest/developerguide/ECS_GetStarted.html
 
 Cluster -> services -> tasks (mỗi tasks có thể có nhiều containers)
 
-tạo task định nghĩa dockerimg -> tạo services là phải có LB, vpc, subnet trước rồi, định nghĩa replica of tasks -> 
 
 note: nếu ALB phải có trước.
 
 tasks: 
+  - định nghĩa dockerimg, port, en, volume v.v 
   - networkmode: nếu chọn fargate thì awspvc only khi tạo tasks, awspvc awsvpc network mode give Amazon ECS tasks the same networking properties as Amazon EC2 instances. When you use the awsvpc network mode in your task definitions, every task that is launched from that task definition gets its own elastic network interface, a primary private IP address, and an internal DNS hostname. The task networking feature simplifies container networking and gives you more control over how containerized applications communicate with each other and other services within your VPCs. 
-  - tasks này có thể hiểu như 1 deployment
+  - tasks này có thể hiểu như 1 pod
 
 
 Serivces: 
+  - phải có LB, vpc, subnet trước
+  - Trên service mới có cho chọn autoscaling cho tasks
+  - service có thể hiểu là replica của task
+  - service có thể có hoặc ko cần ALB, public IP
   - khi tạo service có thể chọn tiếp cấu hình codepipeline
   - loadbalancer phải có trước service, ko cho create new khi tạo service
   - classic lb chỉ cho chọn 1 subnet trong 1 AZ, thế nên khi config service fargate thì ko nên chọn 2 subnet trong 1 az là ăn lồn nhé.
