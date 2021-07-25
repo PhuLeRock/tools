@@ -1,0 +1,6 @@
+
+open automator create new application -> add variable +  "run shell script"
+Get value Variable =  là gọi var phía dưới mình set sẵn
+Set value variable = tạo biến chưa có
+tạo variable bên dưới sau đó cứ dùng "Get Value Variable" phía trước con shell, nếu có 2 "Get Value Variable" thì nó sẽ nhận $1 $2
+preference -> keyboard -> shortcut -> application -> tìm cái app vừa làm
