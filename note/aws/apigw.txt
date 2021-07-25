@@ -2,3 +2,24 @@ apigw dung vpc rieng cua aws, nen muon goi qua svc trong vpc thi phai dung ontac
 tao vpclink co nghia la tao theo 1 nlb
 tao vpclink truoc, sau do moi tao apigw, 
 chu y cai depends on trong deployment, phai co de no update tat ca cac method va resource phia tren
+
+- apigw resource: là các api resource đứng sau api đó vd như service/v1, service/v2, service/v1/getabc
+- method request -> integration request: trong mỗi resource, quy định các loại method http như options post get, sau đó sẽ qui định request đó sẽ đi vào đâu - gọi là integration request, có thể integrate vào 1 trong các thứ sau: lambda, NLB/ALB, URI. URI thì có thể là url bên ngoài như api.vnexpress.net vậy.
+ 
+- Cloudmap là 1 cái discovery DNS, chỉ hiệu quả trong local, đưa name về IP, chỉ IP mà thôi. vd mình có ec2 thì mình có thể đặt 1 cái namespace tên là ahihi, sau đó service tên là ec2 đưa về ip đó, khi app gọi chỉ cần http://ec2.ahihi là ra.
+
+vpc links là gì ? lambda thì khỏi nói, nó nằm trong aws vpc, còn vpc của mình bọc bởi 1 lớp security layer nên apigw muốn access được ALB, NLB, k8s các resource trong vpc thì phải tạo vpc link và add security group cho cái link đó
+
+https://www.youtube.com/watch?v=A0jMIXldYAw << hay ne, apigateway dung vpclink qua NLB
+
+- stage: 1 apigw có thể deploy nhiều stage, đại diên cho mỗi env, như dev, uat v.v nên coi kĩ phần stage variable nó qui định url của stage đó. Vd env loadtest nó sẽ có integrat api là loadtest.api.elb.com, còn pro thì api là api.elb.com. nó qui định trong từng stage nên mình coi phần resource sẽ thấy nó là cái var http://${stageVariables.nlbUrl}/{proxy}
+
+- api_id.abcd.execute-api.cxxx = nhìn url có executeapi là biết nó là api gw, căi id đầu tiên là id của api
+
+
+Riêng về Cloudmap, 1 namespace chứa nhiều service, mỗi service có thể khai báo nhiều serivce instance - IP:port. Mỗi serivce instance có mục custom attributes cho phép cấu hình key:value. Cái này hiểu y chang label selector của k8s. vd ta có service gethostname có 2 instance và custom attribute như sau:
+
+instanceid/ip:port/key=value = gethostname01/192.168.1.1:443/version=1
+instanceid/ip:port/key=value = gethostname02/192.168.1.1:443/version=2
+
+chúng ta có thể call đến version 2 như sau: gethostname.local/version=2. 

@@ -94,7 +94,8 @@ listnumphuam = phunamtonumber(listphuam)
 sumnguyenam = sumfinal(listnumnguyenam)
 sumphuam = sumfinal(listnumphuam)
 
-print('Sum Nguyen Am Linh Hon la: ' + str(sumnguyenam) + ', Phu Am Nhan Cach la:' + str(sumphuam))
+print('Sum Nguyen Am Linh Hon la: ' + str(sumnguyenam) + )
+print('Phu Am Nhan Cach la:' + str(sumphuam))
 
 
 
