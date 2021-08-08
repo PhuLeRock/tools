@@ -24,3 +24,9 @@ Serivces:
   - classic lb phải chọn target là IP chứ ko phải instances, vì fargate 
   - lb thì phải nằm trong publicsubnet và tasks chạy trong private subnet, lb mà nằm private thì call cái url quài đéo ra
   - trong lúc tạo service khúc cuối cùng có service discovery, nó cho phép các service trong cluster call nhau đơn giản bằng name.namespace. Namespace là 1 cái domain local trong internal, vd như servicea.local, và code có thể calll nhau bằng svc1.local -> svc2.local. Coi kiểm tra trong route53 có
+Capacity provider
+- Quản lí capacity về compute của cluster, nó có autoscaling group default thì trong này ko có, add ASG mới vào cũng được, tóm lại là vào đây add ASG
+- Hình như ASG trong Capacity này sẽ không tự xoá, ko chắc.
+
+command thường gặp:
+aws ecs list-services --cluster qc-environment
