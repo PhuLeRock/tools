@@ -10,3 +10,54 @@ what is terraform:
 
 A Terraform configuration consists of a root module, where evaluation begins, along with a tree of child modules created when one module calls another.
 
+terraform
+
+##################################
+https://www.youtube.com/watch?v=JmfEKEYdxKU&list=WL&index=8&t=498s
+
+- mỗi workspace là 1 env
+- mỗi env dùng 1 file tfvars khác nhau để có thể dùng các instance type hay cấu hình mạnh yếu khác nhau.
+terraform apply -var-file prod.tfvars
+terraform apply -var-file dev.tfvars
+
+
+15:09 - 15:49 get workspace name and select var file
+
+##################################
+https://www.youtube.com/watch?v=mOsiLZGdXS4&list=WL&index=9
+- https://github.com/terraform-aws-modules << tìm chỗ này
+- nhớ ép version của provider
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 3.0"
+    }
+  }
+}
+
+# Configure the AWS Provider
+provider "aws" {
+  region = "us-east-1"
+}
+- cách dùng module trên registry (nhớ version cũng quan trọng):
+module "vpc" {
+  source  = "terraform-aws-modules/vpc/aws"
+  version = "2.21.0”. 
+
+  name = var.vpc_name
+  enable_nat_gateway = var.vpc_enable_nat_gateway
+…
+  tags = var.vpc_tags
+}
+- null_resouce: tách local exec hay remote exec ra ngoài resource thông thường.
+resource “null_resouce” “this” {
+    provisioner = “local-exec” {
+        command = “aws ec2 …”
+        when = “create”
+    }
+    depends_on = [“aws_vpc.this”]
+}
+
+- Terraform 0.12 with simpler syntax, shoud learn for each, loop and operator from từ 0.12, specially template, 0.12 mới có null_resource
+- Tại sao không nên dùng workspace, nên chia env theo directory hơn là dùng workspace, vì nhìn code tell exactly what infra is, trong trường hợp RDS dev dùng mysql còn prod dùng aurora thì rõ ràng nó có khác biệt rất nhiều trong code 
