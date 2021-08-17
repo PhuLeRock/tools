@@ -1,0 +1,7 @@
+https://www.youtube.com/watch?v=rtfj6W5X0YA
+short describe: loggin app base on Elastisearch, but much easier to use.
+Flow: 
+create input bind_address:port, number of worker -> 
+EXTRACTOR (is parser) is optional, when log come to graylog server through INPUT, EXTRACTOR filter log before push it into stream. 10:18
+
+create stream (rule, index) -> index
