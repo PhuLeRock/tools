@@ -33,7 +33,7 @@ server_name your.domain.com;
 }
 
 selfsign:
-1. gen ra privatekey
+1. gen ra private-key
 2. dung privatekey tao csr
 3. dung privatekey + csr tao publickey
 
