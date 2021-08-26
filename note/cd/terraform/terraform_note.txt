@@ -11,6 +11,14 @@ what is terraform:
 A Terraform configuration consists of a root module, where evaluation begins, along with a tree of child modules created when one module calls another.
 
 terraform
+##################################
+touch main.tf outputs.tf terraform.tfvars variables.tf
+
+main.tf: describe all resouces
+outputs.tf: print output values 
+terraform.tfvars: input values 
+variables.tf: list of all variables
+
 
 ##################################
 https://www.youtube.com/watch?v=JmfEKEYdxKU&list=WL&index=8&t=498s
