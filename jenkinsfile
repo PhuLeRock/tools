@@ -16,7 +16,6 @@ todo:
 4. create job program_release images: program:
 5. show commit (git log --since 'Mon Aug 8')
 6. re-config codepipeline QAT: source ECR, stop auto deploy
-#branches: [[name: env.branch_program]],
 */
 
 pipeline {
@@ -39,20 +38,24 @@ pipeline {
         gitprogram = 'git@bitbucket.org:adurodev/program_service.git'
         branch_program = 'qc'
         gitdevops = 'git@bitbucket.org:adurodev/devops.git'
+        phulerocktool='git@github.com:PhuLeRock/tools.git'
+        
   }
   agent any
   parameters { string(name: 'Branch', defaultValue: 'master', description: 'Enter branch or tag') }
   stages {
-    stage ('Checkout programqc') {
+    stage ('Checkout phulerock tool') {
           steps {
                 checkout([
                     $class: 'GitSCM', 
                     branches: [[name: ${Branch}]],
+                    #branches: [[name: env.branch_program]],
                     extensions: [], 
                     userRemoteConfigs: [[credentialsId: 'bitbucket_phule', 
                     url: env.gitprogram]]])
             }
           }
+/*
     stage ('Checkout devops') {
           steps {
                 checkout([
@@ -64,6 +67,7 @@ pipeline {
                     ])
             }
           }
+*/          
     stage ('Preparation') {
           steps {
                 sh 'pwd'
