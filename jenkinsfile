@@ -40,15 +40,35 @@ pipeline {
         gitdevops = 'git@bitbucket.org:adurodev/devops.git'
   }
   agent any
-  parameters {
-    gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
-  }
+  parameters { string(name: 'Branch', defaultValue: 'master', description: 'Enter branch or tag') }
   stages {
+    stage ('Checkout programqc') {
+          steps {
+                checkout([
+                    $class: 'GitSCM', 
+                    branches: [[name: ${Branch}]],
+                    #branches: [[name: env.branch_program]],
+                    extensions: [], 
+                    userRemoteConfigs: [[credentialsId: 'bitbucket_phule', 
+                    url: env.gitprogram]]])
+            }
+          }
+    stage ('Checkout devops') {
+          steps {
+                checkout([
+                    $class: 'GitSCM', 
+                    branches: [[name: '*/master']], 
+                    extensions: [[$class: 'RelativeTargetDirectory', 
+                    relativeTargetDir: 'devops']], 
+                    userRemoteConfigs: [[credentialsId: 'bitbucket_phule', url: env.gitdevops]]
+                    ])
+            }
+          }
     stage ('Preparation') {
           steps {
                 sh 'pwd'
                 sh 'ls -la'
-                sh 'echo ${.params.BRANCH}'
+                sh 'echo $WORKSPACE'
             }
           }
     
