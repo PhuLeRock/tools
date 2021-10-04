@@ -55,7 +55,7 @@ pipeline {
                     url: env.gitprogram]]])
             }
           }
-/*
+
     stage ('Checkout devops') {
           steps {
                 checkout([
@@ -67,7 +67,7 @@ pipeline {
                     ])
             }
           }
-*/          
+          
     stage ('Preparation') {
           steps {
                 sh 'pwd'
