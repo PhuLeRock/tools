@@ -69,3 +69,6 @@ resource “null_resouce” “this” {
 
 - Terraform 0.12 with simpler syntax, shoud learn for each, loop and operator from từ 0.12, specially template, 0.12 mới có null_resource
 - Tại sao không nên dùng workspace, nên chia env theo directory hơn là dùng workspace, vì nhìn code tell exactly what infra is, trong trường hợp RDS dev dùng mysql còn prod dùng aurora thì rõ ràng nó có khác biệt rất nhiều trong code 
+--------------------------
+diagram https://www.cloudcraft.co
+

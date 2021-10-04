@@ -4,3 +4,11 @@ It will prompt you for the current password, and write the decrypted key to clie
 
 Add or change the password: 
 openssl rsa -in client.key -out client2.key -des3
+
+######################
+OpenVPN 2.0 and later include a feature that allows the OpenVPN server to securely obtain a username and password from a connecting client
+https://openvpn.net/community-resources/using-alternative-authentication-methods/
+client add:
+auth-user-pass 
+server add
+
