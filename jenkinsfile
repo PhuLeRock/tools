@@ -1,0 +1,58 @@
+/*
+Goal: 
+- Need to have 1 kind of Release images, so we can use this image to deply any current env
+- All existing build jobs will be kept, this for QAT and Loadtest for trial
+Requirement:
+
+2. don't autobuild, don't autodeploy
+3. separate repo
+4. user input: branch/tag 
+5. dockerfile --target
+
+todo:
+1. Jenkinsfile để trong devops, jenkins tạo tab RELEASE 
+2. add aws credentail to jenkins, j
+3. create tab program
+4. create job program_release images: program:
+5. show commit (git log --since 'Mon Aug 8')
+6. re-config codepipeline QAT: source ECR, stop auto deploy
+*/
+
+pipeline {
+  environment {
+	    DOCKER_IMAGE_NAME = "${env.JOB_NAME}"
+        REGION = "us-west-2"
+        APP_NAME = "program_service"
+        APP_ENV = "uat1"
+        REPO_ID = "762035899142"
+        REPO_NAME = "${REPO_ID}.dkr.ecr.us-west-2.amazonaws.com/dev"
+        BUILD_DIRECTORY = "."
+        DEPLOY_DIR = "${BUILD_DIRECTORY}/deploy"
+	    ECR_PROFILE = "aduro-ecr-prod"
+        S3_PROFILE = "jenkins-to-s3-dev"
+        APP = "program-service"
+        S3_LOCATION = "s3://adurodev-deploy/program_service_withjob_uat1/"
+        ECS_CONTAINER_NAME = "programwithjob_uat1"
+	    IMAGE_TAG = "${ECS_CONTAINER_NAME}-${BUILD_NUMBER}"
+        DOCKER_FILE = "./devops/cicd/program/Dockerfile.aws.withjob.uat1"
+        gitprogram = 'git@bitbucket.org:adurodev/program_service.git'
+        branch_program = 'qc'
+        gitdevops = 'git@bitbucket.org:adurodev/devops.git'
+  }
+  agent any
+  stages {
+    parameters {
+    gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
+  }
+    stage ('Preparation') {
+          steps {
+                sh 'pwd'
+                sh 'ls -la'
+                sh 'echo ${.params.BRANCH}'
+            }
+          }
+    
+  }
+  
+}
+
