@@ -56,6 +56,18 @@ pipeline {
             }
           }
 
+    stage ('Checkout devops') {
+          steps {
+                checkout([
+                    $class: 'GitSCM', 
+                    branches: [[name: '*/master']], 
+                    extensions: [[$class: 'RelativeTargetDirectory', 
+                    relativeTargetDir: 'devops']], 
+                    userRemoteConfigs: [[credentialsId: 'bitbucket_phule', url: env.gitdevops]]
+                    ])
+            }
+          }
+          
     stage ('Preparation') {
           steps {
                 sh 'pwd'
