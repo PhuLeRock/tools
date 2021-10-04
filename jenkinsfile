@@ -49,7 +49,7 @@ pipeline {
           steps {
                 checkout([
                     $class: 'GitSCM', 
-                    branches: [[name: ${params.Branch}]],
+                    branches: [[name: params.Branch]],
                     extensions: [], 
                     userRemoteConfigs: [[credentialsId: 'bitbucket_phule', 
                     url: env.gitprogram]]])
