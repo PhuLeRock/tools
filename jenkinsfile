@@ -40,10 +40,10 @@ pipeline {
         gitdevops = 'git@bitbucket.org:adurodev/devops.git'
   }
   agent any
-  stages {
-    parameters {
+  parameters {
     gitParameter branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'BRANCH', type: 'PT_BRANCH'
   }
+  stages {
     stage ('Preparation') {
           steps {
                 sh 'pwd'
