@@ -1,13 +1,19 @@
 selfsign:
 # Generate private key 
-openssl genrsa -out ca.key 2048 
+openssl genrsa -out private.key 2048 
 # Generate CSR 
-openssl req -new -key ca.key -out ca.csr
-# Generate Self Signed Key << publickey for browser
-openssl x509 -req -days 365 -in ca.csr -signkey ca.key -out ca.crt
+openssl req -new -key private.key -out ca.csr
 #OR create both private and CSR in one step
-openssl req -new -newkey rsa:2048 -nodes -keyout ca.key -out ca.csr
+openssl req -new -newkey rsa:2048 -nodes -keyout private.key -out ca.csr
+# Generate Self Signed Key << certificate will be use in webserver
+openssl x509 -req -days 365 -in ca.csr -signkey private.key -out certificate.crt
 
+# view csr file
+openssl req -text -noout -verify -in ca.csr
+# View Certificate Entries
+openssl x509 -text -noout -in certificate.crt
+# Verify a Certificate was Signed by a CA, Use this command to verify that a certificate (domain.crt) was signed by a specific CA certificate (ca.crt):
+openssl verify -verbose -CAFile ca.crt domain.crt
 
 
 
@@ -18,8 +24,8 @@ openssl req -new -newkey rsa:2048 -nodes -keyout ca.key -out ca.csr
 DocumentRoot /var/www/html2
 ServerName www.yourdomain.com
 SSLEngine on
-SSLCertificateFile /path/to/your_domain_name.crt  #publickey for browser (for selfsign: openssl x509 -req -days 365 -in ca.csr -signkey ca.key -out ca.crt)
-SSLCertificateKeyFile /path/to/your_private.key   #privatekey (for selfsign: openssl genrsa -out ca.key 2048 )
+SSLCertificateFile /path/to/certificate.crt  #certificate for browser (for selfsign: openssl x509 -req -days 365 -in ca.csr -signkey ca.key -out certificate.crt)
+SSLCertificateKeyFile /path/to/private.key   #privatekey (for selfsign: openssl genrsa -out ca.key 2048 )
 SSLCertificateChainFile /path/to/DigiCertCA.crt
 </VirtualHost> 
 

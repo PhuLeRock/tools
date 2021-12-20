@@ -1,0 +1,29 @@
+https://access.redhat.com/solutions/68098
+
+Tạo private key rồi tạo CA-cert trước. 
+Trên server tạo privatekey của server sau đó dùng CA-cert để tạo cert cho server.
+Trên client cũng vậy, tạo privatekey của client rồi dùng CA-cert để tạo cert cho client.
+Vậy cả server cert và client cert đều được chứng nhận bởi chung 1 CA-cert.
+
+ca-key.pem -> CA-cert.pem 
+
+server-key.pem -> server-req.pem 
+server-cert.pem = CA-cert.pem + server-key.pem  + server-req.pem 
+serrver:
+ssl
+ssl-ca=/etc/mysql/newcerts/CA-cert.pem 
+ssl-cert=/etc/mysql/newcerts/server-cert.pem
+ssl-key=/etc/mysql/newcerts/server-key.pem
+
+client:
+client-key.pem -> client-req.pem
+client-cert.pem = CA-cert.pem  + client-key.pem + client-req.pem
+/etc/my.cnf or $HOME/.my.cnf
+[client]
+ssl-ca=/tmp/CA-cert.pem
+ssl-cert=/tmp/client-cert.pem
+ssl-key=/tmp/client-key.pem
+
+test connection:
+mysql --ssl-ca=CA-cert.pem --ssl-key=client-key.pem --ssl-cert=client-cert.pem -u root -p -v -v -v  
+
