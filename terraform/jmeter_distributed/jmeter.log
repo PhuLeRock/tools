@@ -1,0 +1,29 @@
+2022-01-10 12:26:00,052 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2022-01-10 12:26:00,065 INFO o.a.j.JMeter: Loading user properties from: /opt/homebrew/Cellar/jmeter/5.4.3/libexec/bin/user.properties
+2022-01-10 12:26:00,065 INFO o.a.j.JMeter: Loading system properties from: /opt/homebrew/Cellar/jmeter/5.4.3/libexec/bin/system.properties
+2022-01-10 12:26:00,069 INFO o.a.j.JMeter: Copyright (c) 1998-2021 The Apache Software Foundation
+2022-01-10 12:26:00,069 INFO o.a.j.JMeter: Version 5.4.3
+2022-01-10 12:26:00,069 INFO o.a.j.JMeter: java.version=17.0.1
+2022-01-10 12:26:00,069 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
+2022-01-10 12:26:00,069 INFO o.a.j.JMeter: os.name=Mac OS X
+2022-01-10 12:26:00,069 INFO o.a.j.JMeter: os.arch=aarch64
+2022-01-10 12:26:00,069 INFO o.a.j.JMeter: os.version=12.1
+2022-01-10 12:26:00,069 INFO o.a.j.JMeter: file.encoding=UTF-8
+2022-01-10 12:26:00,069 INFO o.a.j.JMeter: java.awt.headless=null
+2022-01-10 12:26:00,069 INFO o.a.j.JMeter: Max memory     =1073741824
+2022-01-10 12:26:00,069 INFO o.a.j.JMeter: Available Processors =8
+2022-01-10 12:26:00,075 INFO o.a.j.JMeter: Default Locale=English (EN)
+2022-01-10 12:26:00,075 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2022-01-10 12:26:00,075 INFO o.a.j.JMeter: JMeterHome=/opt/homebrew/Cellar/jmeter/5.4.3/libexec
+2022-01-10 12:26:00,075 INFO o.a.j.JMeter: user.dir  =/Users/ball/Documents/code/phulerock/tools/terraform/jmeter_distributed
+2022-01-10 12:26:00,076 INFO o.a.j.JMeter: PWD       =/Users/ball/Documents/code/phulerock/tools/terraform/jmeter_distributed
+2022-01-10 12:26:00,076 INFO o.a.j.JMeter: IP: 192.168.1.29 Name: ip-192-168-1-29.us-west-2.compute.internal FullName: ip-192-168-1-29.us-west-2.compute.internal
+2022-01-10 12:26:00,516 INFO o.a.j.JMeter: Setting LAF to: com.github.weisj.darklaf.DarkLaf:com.github.weisj.darklaf.theme.DarculaTheme
+2022-01-10 12:26:01,177 INFO o.a.j.JMeter: Loaded icon properties from org/apache/jmeter/images/icon.properties
+2022-01-10 12:26:01,758 INFO o.j.r.JARSourceHTTP: Requesting https://jmeter-plugins.org/repo/?installID=mac_os_x-d44f7d464b9bce60b093b7c7ddcb38e5-gui
+2022-01-10 12:26:03,912 INFO o.j.r.PluginManager: Plugins Status: [jpgc-plugins-manager=1.7, jmeter-core=5.4.3, jmeter-ftp=5.4.3, jmeter-http=5.4.3, jmeter-jdbc=5.4.3, jmeter-jms=5.4.3, jmeter-junit=5.4.3, jmeter-java=5.4.3, jmeter-ldap=5.4.3, jmeter-mail=5.4.3, jmeter-mongodb=5.4.3, jmeter-native=5.4.3, jmeter-tcp=5.4.3, jmeter-components=5.4.3]
+2022-01-10 12:41:40,102 INFO o.a.j.e.DistributedRunner: Stopping remote engines
+2022-01-10 12:41:40,106 WARN o.a.j.e.DistributedRunner: Host not found in list of active engines: 127.0.0.1
+2022-01-10 12:41:40,106 WARN o.a.j.e.DistributedRunner: Host not found in list of active engines:  52.38.160.148
+2022-01-10 12:41:40,106 WARN o.a.j.e.DistributedRunner: Host not found in list of active engines:  54.149.220.3
+2022-01-10 12:41:40,107 INFO o.a.j.e.DistributedRunner: Remote engines have been stopped
