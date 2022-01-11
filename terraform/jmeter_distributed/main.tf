@@ -2,6 +2,13 @@ resource "aws_security_group" "sg_Jmeter_distributed" {
   name        = "sg_Jmeter_distributed"
   description = "Allow web and ssh traffic"
   vpc_id      = var.vpc
+
+  ingress {
+    from_port   = 0
+    to_port     = 65535
+    protocol    = "tcp"
+    cidr_blocks = ["172.31.0.0/20"]
+  }
   #SSH
   ingress {
     from_port   = 22
@@ -59,7 +66,19 @@ resource "aws_security_group" "sg_Jmeter_distributed" {
     to_port     = 4445
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
-  }              
+  } 
+  ingress {
+    from_port   = 36791
+    to_port     = 36791
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }                
+  ingress {
+    from_port   = 37925
+    to_port     = 37925
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }   
   #Outbound internet access
   egress {
     from_port   = 0
@@ -94,8 +113,8 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 docker pull dragoscampean/testrepo:jmetrumaster
 docker pull dragoscampean/testrepo:jmetruslave
 HostIP=$(ip route show | awk '/default/ {print $9}')
-docker run -dit --name master --network host -e HostIP=$HostIP -e Xms=4g -e Xmx=4g  -v /opt/Sharedvolume:/opt/Sharedvolume dragoscampean/testrepo:jmetrumaster /bin/bash
-docker run -dit --name slave --network host -e HostIP=$HostIP -e Xms=8g -e Xmx=8g  dragoscampean/testrepo:jmetruslave /bin/bash
+docker run -dit --name master --network host -e HostIP=$HostIP -e Xms=512m -e Xmx=512m  -v /opt/Sharedvolume:/opt/Sharedvolume dragoscampean/testrepo:jmetrumaster /bin/bash
+docker run -dit --name slave --network host -e HostIP=$HostIP -e Xms=512m -e Xmx=512m  dragoscampean/testrepo:jmetruslave /bin/bash
 cat /home/ubuntu/.ssh/authorized_keys > /root/.ssh/authorized_keys
 echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCkUls/JN5Jlv3wdSliF86Z5HEBLm1QiqX9/oJDLCte26Towk9dLaqBihyqEQtDbHWqoZDUfg8LZW65A56u2MXu4duPNa+cFSu6hcnpmQX4jpKnMOYsAD349LqOExl6Oge+/tc9PwU+t5xlsNTjGGMTtTCEZUnrWnHcPIdIlXC0IpVJik7x5qNMTZ4zxtc9OzMeIRXjtcUrmHbVNP8IsofzpRFSWZ6scB6Jwue9bskvMl2gENxkcd1blUclJqCQGXEX/4zvImtj/RmqlXBDPAbWjqLMAwKBwHCT5sOY3AT3NVrcs4IhCnksIR4AWKobWX///dnxtZGtEoQ1FigZGCBeQUh9DezALMBG1UhiTBe/Cz4ryQh18/z1rq53T+fgvGbKtQdkAALJtPH9j18lV0fYOGpvp36pjNJS+oC7xMhoLE2nvcVKNumw443Lt1NTrwTrEmLbsUIIF1fV1XZUSlwkxuEU+dVvjpXQZ89fFm6+4aHEqwntDJsHlM824OJX+Yk= tester >> /root/.ssh/authorized_keys
 echo "end of file" >> /root/user_data.log
@@ -132,7 +151,9 @@ sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
 docker pull dragoscampean/testrepo:jmetrumaster
 docker pull dragoscampean/testrepo:jmetruslave
 HostIP=$(ip route show | awk '/default/ {print $9}')
-docker run -dit --name slave01 --network host -e HostIP=$HostIP -e Xms=10g -e Xmx=10g dragoscampean/testrepo:jmetruslave /bin/bash
+docker run -dit --name slave01 --network host -e HostIP=$HostIP -e Xms=512m -e Xmx=512m dragoscampean/testrepo:jmetruslave /bin/bash
+cat /home/ubuntu/.ssh/authorized_keys > /root/.ssh/authorized_keys
+echo ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQCkUls/JN5Jlv3wdSliF86Z5HEBLm1QiqX9/oJDLCte26Towk9dLaqBihyqEQtDbHWqoZDUfg8LZW65A56u2MXu4duPNa+cFSu6hcnpmQX4jpKnMOYsAD349LqOExl6Oge+/tc9PwU+t5xlsNTjGGMTtTCEZUnrWnHcPIdIlXC0IpVJik7x5qNMTZ4zxtc9OzMeIRXjtcUrmHbVNP8IsofzpRFSWZ6scB6Jwue9bskvMl2gENxkcd1blUclJqCQGXEX/4zvImtj/RmqlXBDPAbWjqLMAwKBwHCT5sOY3AT3NVrcs4IhCnksIR4AWKobWX///dnxtZGtEoQ1FigZGCBeQUh9DezALMBG1UhiTBe/Cz4ryQh18/z1rq53T+fgvGbKtQdkAALJtPH9j18lV0fYOGpvp36pjNJS+oC7xMhoLE2nvcVKNumw443Lt1NTrwTrEmLbsUIIF1fV1XZUSlwkxuEU+dVvjpXQZ89fFm6+4aHEqwntDJsHlM824OJX+Yk= tester >> /root/.ssh/authorized_keys
 echo "end of file" >> /root/user_data.log
   EOF
   key_name               = var.key_name
