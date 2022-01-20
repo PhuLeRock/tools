@@ -1,0 +1,5 @@
+timeStamp,elapsed,label,responseCode,responseMessage,threadName,dataType,success,failureMessage,bytes,sentBytes,grpThreads,allThreads,URL,Latency,IdleTime,Connect
+1641963837641,135,Get Client Brand,200,OK,172.31.4.198-Thread Group 1-1,text,true,,832,169,1,1,https://amp.qc.adurolife.com/v1/referral/get-client-brand/program-for-perf-a2,135,0,18
+1641963837659,141,Get Client Brand,200,OK,172.31.7.178-Thread Group 1-1,text,true,,832,169,1,1,https://amp.qc.adurolife.com/v1/referral/get-client-brand/program-for-perf-a2,141,0,41
+1641963837806,218,Auth-Config,200,OK,172.31.7.178-Thread Group 1-1,text,true,,484,161,1,1,https://amp.qc.adurolife.com/v1/auth-config/perf_a2_00001@yopmail.com,218,0,0
+1641963837802,230,Auth-Config,200,OK,172.31.4.198-Thread Group 1-1,text,true,,484,161,1,1,https://amp.qc.adurolife.com/v1/auth-config/perf_a2_00001@yopmail.com,230,0,0

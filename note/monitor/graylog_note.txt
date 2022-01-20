@@ -1,7 +1,8 @@
 https://www.youtube.com/watch?v=rtfj6W5X0YA
 short describe: loggin app base on Elastisearch, but much easier to use.
 Flow: 
-create input bind_address:port, number of worker -> 
-EXTRACTOR (is parser) is optional, when log come to graylog server through INPUT, EXTRACTOR filter log before push it into stream. 10:18
-
-create stream (rule, index) -> index
+- create input bind_address:port, number of worker -> no. worker is number of threads will handle network connections in this input.
+- EXTRACTOR (is parser) is optional, when log come to graylog server through INPUT, EXTRACTOR filter log before push it into stream. 10:18
+- create stream (rules) -> in this part, stream is parsing rules, you will choose the input, set the rule ex: hostname: DBserver will write to index named DB, hostname: web01 .. web09 will write to index named webserver.
+- index: that means storage of your logs, you can set the size limit by GB of indices or arhive them in period.
+create input: go to system/input -> edit input you will see the port, tcp/udp proctocol, then just setup that configure to client.

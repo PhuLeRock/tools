@@ -1,29 +1,81 @@
-2022-01-10 12:26:00,052 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
-2022-01-10 12:26:00,065 INFO o.a.j.JMeter: Loading user properties from: /opt/homebrew/Cellar/jmeter/5.4.3/libexec/bin/user.properties
-2022-01-10 12:26:00,065 INFO o.a.j.JMeter: Loading system properties from: /opt/homebrew/Cellar/jmeter/5.4.3/libexec/bin/system.properties
-2022-01-10 12:26:00,069 INFO o.a.j.JMeter: Copyright (c) 1998-2021 The Apache Software Foundation
-2022-01-10 12:26:00,069 INFO o.a.j.JMeter: Version 5.4.3
-2022-01-10 12:26:00,069 INFO o.a.j.JMeter: java.version=17.0.1
-2022-01-10 12:26:00,069 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
-2022-01-10 12:26:00,069 INFO o.a.j.JMeter: os.name=Mac OS X
-2022-01-10 12:26:00,069 INFO o.a.j.JMeter: os.arch=aarch64
-2022-01-10 12:26:00,069 INFO o.a.j.JMeter: os.version=12.1
-2022-01-10 12:26:00,069 INFO o.a.j.JMeter: file.encoding=UTF-8
-2022-01-10 12:26:00,069 INFO o.a.j.JMeter: java.awt.headless=null
-2022-01-10 12:26:00,069 INFO o.a.j.JMeter: Max memory     =1073741824
-2022-01-10 12:26:00,069 INFO o.a.j.JMeter: Available Processors =8
-2022-01-10 12:26:00,075 INFO o.a.j.JMeter: Default Locale=English (EN)
-2022-01-10 12:26:00,075 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
-2022-01-10 12:26:00,075 INFO o.a.j.JMeter: JMeterHome=/opt/homebrew/Cellar/jmeter/5.4.3/libexec
-2022-01-10 12:26:00,075 INFO o.a.j.JMeter: user.dir  =/Users/ball/Documents/code/phulerock/tools/terraform/jmeter_distributed
-2022-01-10 12:26:00,076 INFO o.a.j.JMeter: PWD       =/Users/ball/Documents/code/phulerock/tools/terraform/jmeter_distributed
-2022-01-10 12:26:00,076 INFO o.a.j.JMeter: IP: 192.168.1.29 Name: ip-192-168-1-29.us-west-2.compute.internal FullName: ip-192-168-1-29.us-west-2.compute.internal
-2022-01-10 12:26:00,516 INFO o.a.j.JMeter: Setting LAF to: com.github.weisj.darklaf.DarkLaf:com.github.weisj.darklaf.theme.DarculaTheme
-2022-01-10 12:26:01,177 INFO o.a.j.JMeter: Loaded icon properties from org/apache/jmeter/images/icon.properties
-2022-01-10 12:26:01,758 INFO o.j.r.JARSourceHTTP: Requesting https://jmeter-plugins.org/repo/?installID=mac_os_x-d44f7d464b9bce60b093b7c7ddcb38e5-gui
-2022-01-10 12:26:03,912 INFO o.j.r.PluginManager: Plugins Status: [jpgc-plugins-manager=1.7, jmeter-core=5.4.3, jmeter-ftp=5.4.3, jmeter-http=5.4.3, jmeter-jdbc=5.4.3, jmeter-jms=5.4.3, jmeter-junit=5.4.3, jmeter-java=5.4.3, jmeter-ldap=5.4.3, jmeter-mail=5.4.3, jmeter-mongodb=5.4.3, jmeter-native=5.4.3, jmeter-tcp=5.4.3, jmeter-components=5.4.3]
-2022-01-10 12:41:40,102 INFO o.a.j.e.DistributedRunner: Stopping remote engines
-2022-01-10 12:41:40,106 WARN o.a.j.e.DistributedRunner: Host not found in list of active engines: 127.0.0.1
-2022-01-10 12:41:40,106 WARN o.a.j.e.DistributedRunner: Host not found in list of active engines:  52.38.160.148
-2022-01-10 12:41:40,106 WARN o.a.j.e.DistributedRunner: Host not found in list of active engines:  54.149.220.3
-2022-01-10 12:41:40,107 INFO o.a.j.e.DistributedRunner: Remote engines have been stopped
+2022-01-11 11:30:46,480 INFO o.a.j.u.JMeterUtils: Setting Locale to en_EN
+2022-01-11 11:30:46,519 INFO o.a.j.JMeter: Loading user properties from: /opt/apache-jmeter-5.1.1/bin/user.properties
+2022-01-11 11:30:46,520 INFO o.a.j.JMeter: Loading system properties from: /opt/apache-jmeter-5.1.1/bin/system.properties
+2022-01-11 11:30:46,520 INFO o.a.j.JMeter: Setting System property: server.rmi.ssl.disable=true
+2022-01-11 11:30:46,520 INFO o.a.j.JMeter: Setting System property: THREADS=3
+2022-01-11 11:30:46,520 INFO o.a.j.JMeter: Setting System property: RAMP_UP=3
+2022-01-11 11:30:46,520 INFO o.a.j.JMeter: Setting System property: DURATION=30
+2022-01-11 11:30:46,525 INFO o.a.j.JMeter: Copyright (c) 1998-2019 The Apache Software Foundation
+2022-01-11 11:30:46,525 INFO o.a.j.JMeter: Version 5.1.1 r1855137
+2022-01-11 11:30:46,526 INFO o.a.j.JMeter: java.version=11.0.2
+2022-01-11 11:30:46,526 INFO o.a.j.JMeter: java.vm.name=OpenJDK 64-Bit Server VM
+2022-01-11 11:30:46,526 INFO o.a.j.JMeter: os.name=Linux
+2022-01-11 11:30:46,526 INFO o.a.j.JMeter: os.arch=amd64
+2022-01-11 11:30:46,526 INFO o.a.j.JMeter: os.version=5.4.0-1045-aws
+2022-01-11 11:30:46,526 INFO o.a.j.JMeter: file.encoding=ANSI_X3.4-1968
+2022-01-11 11:30:46,526 INFO o.a.j.JMeter: java.awt.headless=true
+2022-01-11 11:30:46,526 INFO o.a.j.JMeter: Max memory     =536870912
+2022-01-11 11:30:46,527 INFO o.a.j.JMeter: Available Processors =2
+2022-01-11 11:30:46,535 INFO o.a.j.JMeter: Default Locale=English (EN)
+2022-01-11 11:30:46,535 INFO o.a.j.JMeter: JMeter  Locale=English (EN)
+2022-01-11 11:30:46,535 INFO o.a.j.JMeter: JMeterHome=/opt/apache-jmeter-5.1.1
+2022-01-11 11:30:46,535 INFO o.a.j.JMeter: user.dir  =/opt/Sharedvolume
+2022-01-11 11:30:46,535 INFO o.a.j.JMeter: PWD       =/opt/Sharedvolume
+2022-01-11 11:30:46,538 INFO o.a.j.JMeter: IP: 172.31.6.186 Name: ip-172-31-6-186 FullName: ip-172-31-6-186.us-west-2.compute.internal
+2022-01-11 11:30:46,542 INFO o.a.j.s.FileServer: Default base='/opt/Sharedvolume'
+2022-01-11 11:30:46,544 INFO o.a.j.s.FileServer: Set new base='/opt/Sharedvolume'
+2022-01-11 11:30:46,672 INFO o.a.j.s.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2
+2022-01-11 11:30:46,691 INFO o.a.j.s.SaveService: Using SaveService properties version 5.0
+2022-01-11 11:30:46,695 INFO o.a.j.s.SaveService: Using SaveService properties file encoding UTF-8
+2022-01-11 11:30:46,699 INFO o.a.j.s.SaveService: Loading file: vnexpress.net.jmx
+2022-01-11 11:30:46,742 INFO o.a.j.p.h.c.CookieManager: Settings: Delete null: true Check: true Allow variable: true Save: false Prefix: COOKIE_
+2022-01-11 11:30:46,775 INFO o.a.j.p.h.c.CacheManager: Will only cache the following methods: [GET]
+2022-01-11 11:30:46,788 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/html is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2022-01-11 11:30:46,788 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xhtml+xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2022-01-11 11:30:46,788 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for application/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2022-01-11 11:30:46,788 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/xml is org.apache.jmeter.protocol.http.parser.LagartoBasedHtmlParser
+2022-01-11 11:30:46,788 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/vnd.wap.wml is org.apache.jmeter.protocol.http.parser.RegexpHTMLParser
+2022-01-11 11:30:46,788 INFO o.a.j.p.h.s.HTTPSamplerBase: Parser for text/css is org.apache.jmeter.protocol.http.parser.CssParser
+2022-01-11 11:30:47,105 INFO o.a.j.JMeter: Creating summariser <summary>
+2022-01-11 11:30:47,109 INFO o.a.j.e.DistributedRunner: Configuring remote engine: 34.219.8.138
+2022-01-11 11:30:47,112 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:30:47,276 INFO o.a.j.e.DistributedRunner: Configuring remote engine: 54.202.65.47
+2022-01-11 11:30:47,277 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:30:47,371 INFO o.a.j.e.DistributedRunner: Starting remote engines
+2022-01-11 11:30:47,374 INFO o.a.j.e.DistributedRunner: Starting the test @ Tue Jan 11 11:30:47 EET 2022 (1641893447371)
+2022-01-11 11:30:47,374 INFO o.a.j.e.ClientJMeterEngine: running clientengine run method
+2022-01-11 11:30:47,381 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must contain the string: '.functions.'
+2022-01-11 11:30:47,381 INFO o.a.j.e.u.CompoundVariable: Note: Function class names must not contain the string: '.gui.'
+2022-01-11 11:30:47,791 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:30:47,791 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:30:47,794 INFO o.a.j.s.SampleEvent: List of sample_variables: []
+2022-01-11 11:30:47,821 INFO o.a.j.s.BatchSampleSender: Using batching (client settings) for this run. Thresholds: num=100, time=60000
+2022-01-11 11:30:47,821 INFO o.a.j.s.DataStrippingSampleSender: Using DataStrippingSampleSender for this run
+2022-01-11 11:30:47,822 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:30:47,822 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:30:47,822 INFO o.a.j.s.BatchSampleSender: Using batching (client settings) for this run. Thresholds: num=100, time=60000
+2022-01-11 11:30:47,822 INFO o.a.j.s.DataStrippingSampleSender: Using DataStrippingSampleSender for this run
+2022-01-11 11:30:47,823 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:30:47,823 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:30:48,128 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:30:48,129 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:32:57,551 INFO o.a.j.e.ClientJMeterEngine: sent test to 34.219.8.138 basedir='.'
+2022-01-11 11:32:57,552 INFO o.a.j.e.ClientJMeterEngine: Sending properties {}
+2022-01-11 11:32:57,566 INFO o.a.j.e.ClientJMeterEngine: sent run command to 34.219.8.138
+2022-01-11 11:32:57,566 INFO o.a.j.e.ClientJMeterEngine: running clientengine run method
+2022-01-11 11:32:57,571 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:32:57,571 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:32:57,571 INFO o.a.j.s.BatchSampleSender: Using batching (client settings) for this run. Thresholds: num=100, time=60000
+2022-01-11 11:32:57,571 INFO o.a.j.s.DataStrippingSampleSender: Using DataStrippingSampleSender for this run
+2022-01-11 11:32:57,571 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:32:57,571 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:32:57,572 INFO o.a.j.s.BatchSampleSender: Using batching (client settings) for this run. Thresholds: num=100, time=60000
+2022-01-11 11:32:57,572 INFO o.a.j.s.DataStrippingSampleSender: Using DataStrippingSampleSender for this run
+2022-01-11 11:32:57,572 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:32:57,572 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:32:57,579 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:32:57,579 INFO o.a.j.r.RmiUtils: Disabling SSL for RMI as server.rmi.ssl.disable is set to 'true'
+2022-01-11 11:35:07,526 INFO o.a.j.e.ClientJMeterEngine: sent test to 54.202.65.47 basedir='.'
+2022-01-11 11:35:07,526 INFO o.a.j.e.ClientJMeterEngine: Sending properties {}
+2022-01-11 11:35:07,535 INFO o.a.j.e.ClientJMeterEngine: sent run command to 54.202.65.47
+2022-01-11 11:35:07,536 INFO o.a.j.e.DistributedRunner: Remote engines have been started
