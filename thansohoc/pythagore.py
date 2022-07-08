@@ -1,5 +1,7 @@
 name = input("Ho va ten:")
+# remove blank space by using replace function
 splitname = list(name.replace(" ", ""))
+
 
 nguyenam = ["a" , "e" , "o" , "i" , "u"]
 phuam = ["b", "c", "d", "f", "g", "h", "j", "k" , "l", "m", "n", "p", "q", "r", "s", "t", "v", "w", "x", "y", "z"]
