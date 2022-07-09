@@ -47,3 +47,15 @@ resource "aws_dynamodb_table" "terraform-state" {
    type = "S"
  }
 }
+
+# this is second steps
+terraform {
+ backend "s3" {
+   bucket         = "aduro-terraform-state"
+   key            = "state/terraform.tfstate"
+   region         = "us-west-2"
+   encrypt        = true
+   kms_key_id     = "alias/terraform-bucket-key"
+   dynamodb_table = "terraform-state"
+ }
+}
