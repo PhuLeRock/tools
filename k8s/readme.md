@@ -17,3 +17,9 @@ làm tiếp: chạy apply để tạo backend xong rồi mới add backend vào 
 đã chạy terraform plan
 tới khúc này coi như xong document s3 backend
 
+đi tìm document về eks, qtrong là coi role tạo trước như nào, hoặc dùng role có sẵn của aduro thì làm cách nào
+https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster (trong này có hướng dẫn tạo role cơ bản coi coi đủ dùng không)
+
+how to: https://www.techtarget.com/searchcloudcomputing/tutorial/How-to-deploy-an-EKS-cluster-using-Terraform (chỉ có subnet mà ko có vpcid, là sao nhỉ ?)
+
+
