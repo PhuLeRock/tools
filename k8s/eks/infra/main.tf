@@ -27,7 +27,7 @@ resource "aws_iam_role_policy_attachment" "AmazonEC2ContainerRegistryReadOnly-EK
 }
 
 resource "aws_eks_cluster" "devopsthehardway-eks" {
- name = "devopsthehardway-cluster"
+ name = var.eks_clustername
  role_arn = aws_iam_role.eks-iam-role.arn
 
  vpc_config {

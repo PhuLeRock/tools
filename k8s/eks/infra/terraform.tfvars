@@ -2,7 +2,7 @@ region = "us-west-2"
 profile = "default"
 subnet_id_1 = "subnet-3e623678" #RedShiftDev02
 subnet_id_2 = "subnet-3e623678" #RedShiftDev03
-
+eks_clustername = "aduro-eks-demo"
 eks_iam_role_name = "aduro-eks-role"
 eks_node_group_role_name = "aduro-eks-nodegroup-role"
 eks_node_group_name = "aduro-eks-nodegroup"

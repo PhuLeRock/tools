@@ -2,6 +2,7 @@ variable "region" { }
 variable "profile" { }
 variable "subnet_id_1" { }
 variable "subnet_id_2" { }
+variable "eks_clustername" { }
 variable "eks_iam_role_name" { }
 variable "eks_node_group_role_name" {}
 variable "eks_node_group_name" { }
