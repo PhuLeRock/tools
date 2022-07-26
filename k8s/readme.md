@@ -21,9 +21,13 @@ tới khúc này coi như xong document s3 backend
 https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster (trong này có hướng dẫn tạo role cơ bản coi coi đủ dùng không)
 
 how to: https://www.techtarget.com/searchcloudcomputing/tutorial/How-to-deploy-an-EKS-cluster-using-Terraform (chỉ có subnet mà ko có vpcid, là sao nhỉ ?)
+https://learn.hashicorp.com/tutorials/terraform/eks
+https://aws.github.io/aws-eks-best-practices/reliability/docs/
+https://www.youtube.com/watch?v=J67CHCXHMxw
 
 tới khúc này làm cho lẹ coi phần how to sau đó chuyển subnet, các name, profile rồi dựng cluster lên, kèm với script get kubeconf mới để khi reset cluster thì cac deployment chạy bt
-   Mình thử chạy vpc_config chỉ với 1subnet xem có bị lõi không, nếu không thì ghi chép lại
+
+phải 2 subnet, xem thêm các phần logging là gì, xem fargate   
 
 
 

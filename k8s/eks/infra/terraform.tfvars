@@ -1,11 +1,13 @@
 region = "us-west-2"
 profile = "default"
-subnet_id_1 = "subnet-3e623678" #RedShiftDev02
+vpcid = "vpc-88aca7ea"
+subnet_id_1 = "subnet-743f3416" #RedShiftDev02
 subnet_id_2 = "subnet-3e623678" #RedShiftDev03
 eks_clustername = "aduro-eks-demo"
 eks_iam_role_name = "aduro-eks-role"
 eks_node_group_role_name = "aduro-eks-nodegroup-role"
-eks_node_group_name = "aduro-eks-nodegroup"
+eks_node_group01_name = "aduro-eks-nodegroup01"
+eks_node_group02_name = "aduro-eks-nodegroup02"
 eks_node_group_instance_type = "t2.medium"
 eks_node_group_desired_size = "1"
 eks_node_group_minsize = "1"
