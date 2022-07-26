@@ -28,13 +28,17 @@ https://www.youtube.com/watch?v=J67CHCXHMxw
 tới khúc này làm cho lẹ coi phần how to sau đó chuyển subnet, các name, profile rồi dựng cluster lên, kèm với script get kubeconf mới để khi reset cluster thì cac deployment chạy bt
 
 phải 2 subnet, xem thêm các phần logging là gì, xem fargate   
-
+dã tạo xong 2 nodegroup
+giờ làm tiếp add thêm fargate profile vào terraform và lấy kubeconfig - chọn context như nào ?
 
 
 note:
 - k8s vs eks (kube >1.16): we can use iam role as k8s's service account by using OpenID Connect. By this feature we can manage users inside k8s cluter by leveraging IAM. We can also use Cognito user pool or another system that support oauth2 to authenticate against the cluster. BUT AWS RECOMMEND ADMIN SHOULD YOU THEIR OWN OPENID PROVIDER INSTEAD IAM, BECAUSE MANY DEV TEAM DON'T HAVE ADMINISTRATOR ACCOUNT 
 - kubeadmin upgrade plan && kubeadm upgrade apply v1.22.0
+- need more than 1 subnet.
 
 QUEST:
 - How we manager users, service account, ENVs when using k8s ? 
-each namespace have their own user, 
+each namespace have their own user
+- how to deploy to specific node groupd ? label
+- 
