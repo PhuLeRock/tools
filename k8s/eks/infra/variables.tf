@@ -3,6 +3,8 @@ variable "profile" { }
 variable "vpcid" { }
 variable "subnet_id_1" { }
 variable "subnet_id_2" { }
+variable "subnet_id_3" { }
+variable "subnet_id_4" { }
 variable "eks_clustername" { }
 variable "eks_iam_role_name" { }
 variable "eks_node_group_role_name" {}

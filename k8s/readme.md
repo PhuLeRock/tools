@@ -28,14 +28,24 @@ https://www.youtube.com/watch?v=J67CHCXHMxw
 tới khúc này làm cho lẹ coi phần how to sau đó chuyển subnet, các name, profile rồi dựng cluster lên, kèm với script get kubeconf mới để khi reset cluster thì cac deployment chạy bt
 
 phải 2 subnet, xem thêm các phần logging là gì, xem fargate   
-dã tạo xong 2 nodegroup
+dã tạo xong 2 nodegroup, test xong sau đó comment lại 1 nodegroup để chạy cho nhanh hơn.
 giờ làm tiếp add thêm fargate profile vào terraform và lấy kubeconfig - chọn context như nào ?
 https://www.youtube.com/watch?time_continue=36&v=acNFzmblj6U&feature=emb_logo   coi fargate ở đây
+đã xong farget profile và các pod kube-system đã vào được fargate
+giờ tới helm, suy nghĩ xem helm gì, tốt nhất là cho monitoring prometheus và dashboard dĩ nhiên dashbaord của aws xịn hơn nhưng deploy chơi, xem cách nào cho helm nó dùng volume và alb.
+
+
 
 note:
+- chạy s3 backend xong thì nhớ rem phần đó lại, để khi destroy nó ko báo lỗi.
 - k8s vs eks (kube >1.16): we can use iam role as k8s's service account by using OpenID Connect. By this feature we can manage users inside k8s cluter by leveraging IAM. We can also use Cognito user pool or another system that support oauth2 to authenticate against the cluster. BUT AWS RECOMMEND ADMIN SHOULD YOU THEIR OWN OPENID PROVIDER INSTEAD IAM, BECAUSE MANY DEV TEAM DON'T HAVE ADMINISTRATOR ACCOUNT 
 - kubeadmin upgrade plan && kubeadm upgrade apply v1.22.0
 - need more than 1 subnet.
+- fargate profile chỉ cho add các private subnet, nó là 1 serverless có namespace, cứ deployment trúng namespace đó là vào fargate
+- kubectl event
+- eks khác với k8s là nó gom hết mớ control plane đi đâu đó mà get pod -A không thấy etcd và các thứ khác đâu cả
+- coi chừng version k8s mới quá thì kubectl authen ko được, test kĩ phần này
+- terraform destroy thì cũng ko có xóa cloudwatch group
 
 QUEST:
 - How we manager users, service account, ENVs when using k8s ? 
