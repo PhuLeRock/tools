@@ -5,35 +5,17 @@ touch infra/{version.tf,main.tf,output.tf,terraform.tfvars,variables.tf}
 
 install tfswitch then choose version 1.1.0
 
-from S3 backend https://technology.doximity.com/articles/terraform-s3-backend-best-practices
-đầu tiên là viết file state.tf, trong đó có deploy các s3 kms dynamo để lưu tf state. Nhớ kiểm tra đang dùng profile nào
-làm tiếp: chạy apply để tạo backend xong rồi mới add backend vào terraform { }. giờ lo học lái xe đã
-.
-.
-.
-đã chạy terraform apply
-đã add terraform backend state và state.tf
-đã chạy terraform init (chạy lại lần này để đổi state management), nhớ coi log output có thông báo
-đã chạy terraform plan
-tới khúc này coi như xong document s3 backend
+tạo state trước rồi rem lại
 
-đi tìm document về eks, qtrong là coi role tạo trước như nào, hoặc dùng role có sẵn của aduro thì làm cách nào
-https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/eks_cluster (trong này có hướng dẫn tạo role cơ bản coi coi đủ dùng không)
+install helm = coi trong thư mục helm  (đã compatible với k8s rồi)
 
-how to: https://www.techtarget.com/searchcloudcomputing/tutorial/How-to-deploy-an-EKS-cluster-using-Terraform (chỉ có subnet mà ko có vpcid, là sao nhỉ ?)
-https://learn.hashicorp.com/tutorials/terraform/eks
-https://aws.github.io/aws-eks-best-practices/reliability/docs/
-https://www.youtube.com/watch?v=J67CHCXHMxw
+helm upgrade -i prometheus prometheus-community/prometheus \
+    --namespace prometheus \
+    --set alertmanager.persistentVolume.storageClass="gp2",server.persistentVolume.storageClass="gp2"
+xong rồi, nhưng thiếu grafana
 
-tới khúc này làm cho lẹ coi phần how to sau đó chuyển subnet, các name, profile rồi dựng cluster lên, kèm với script get kubeconf mới để khi reset cluster thì cac deployment chạy bt
+xem https://www.eksworkshop.com/intermediate/240_monitoring/
 
-phải 2 subnet, xem thêm các phần logging là gì, xem fargate   
-dã tạo xong 2 nodegroup, test xong sau đó comment lại 1 nodegroup để chạy cho nhanh hơn.
-giờ làm tiếp add thêm fargate profile vào terraform và lấy kubeconfig - chọn context như nào ?
-https://www.youtube.com/watch?time_continue=36&v=acNFzmblj6U&feature=emb_logo   coi fargate ở đây
-đã xong farget profile và các pod kube-system đã vào được fargate
-giờ tới helm, suy nghĩ xem helm gì, tốt nhất là cho monitoring prometheus và dashboard dĩ nhiên dashbaord của aws xịn hơn nhưng deploy chơi, xem cách nào cho helm nó dùng volume và alb. https://docs.aws.amazon.com/eks/latest/userguide/prometheus.html
-https://raw.githubusercontent.com/helm/charts/master/stable/prometheus/values.yaml
 
 
 

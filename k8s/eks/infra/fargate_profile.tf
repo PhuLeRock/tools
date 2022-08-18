@@ -51,7 +51,7 @@ resource "null_resource" "k8s_patcher" {
 cat >/tmp/ca.crt <<EOF
 ${base64decode(aws_eks_cluster.devopsthehardway-eks.certificate_authority[0].data)}
 EOF
-kubectl \
+ ~/Downloads/kubectl  \
   --server="${aws_eks_cluster.devopsthehardway-eks.endpoint}" \
   --certificate_authority=/tmp/ca.crt \
   --token="${data.aws_eks_cluster_auth.eks.token}" \
