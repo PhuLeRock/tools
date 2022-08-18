@@ -32,7 +32,8 @@ dã tạo xong 2 nodegroup, test xong sau đó comment lại 1 nodegroup để c
 giờ làm tiếp add thêm fargate profile vào terraform và lấy kubeconfig - chọn context như nào ?
 https://www.youtube.com/watch?time_continue=36&v=acNFzmblj6U&feature=emb_logo   coi fargate ở đây
 đã xong farget profile và các pod kube-system đã vào được fargate
-giờ tới helm, suy nghĩ xem helm gì, tốt nhất là cho monitoring prometheus và dashboard dĩ nhiên dashbaord của aws xịn hơn nhưng deploy chơi, xem cách nào cho helm nó dùng volume và alb.
+giờ tới helm, suy nghĩ xem helm gì, tốt nhất là cho monitoring prometheus và dashboard dĩ nhiên dashbaord của aws xịn hơn nhưng deploy chơi, xem cách nào cho helm nó dùng volume và alb. https://docs.aws.amazon.com/eks/latest/userguide/prometheus.html
+https://raw.githubusercontent.com/helm/charts/master/stable/prometheus/values.yaml
 
 
 
@@ -46,6 +47,7 @@ note:
 - eks khác với k8s là nó gom hết mớ control plane đi đâu đó mà get pod -A không thấy etcd và các thứ khác đâu cả
 - coi chừng version k8s mới quá thì kubectl authen ko được, test kĩ phần này
 - terraform destroy thì cũng ko có xóa cloudwatch group
+- cách dùng namespace: ngoài việc cho các env thì cũng nên tạo trước các ns platform dùng chung cho toàn bộ env, như monitoring.
 
 QUEST:
 - How we manager users, service account, ENVs when using k8s ? 
