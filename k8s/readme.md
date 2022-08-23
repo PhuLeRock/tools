@@ -14,7 +14,12 @@ helm upgrade -i prometheus prometheus-community/prometheus \
     --set alertmanager.persistentVolume.storageClass="gp2",server.persistentVolume.storageClass="gp2"
 xong rồi, nhưng thiếu grafana
 
-xem https://www.eksworkshop.com/intermediate/240_monitoring/
+xem https://www.eksworkshop.com/intermediate/240_monitoring/ rồi làm grafa prome 
+tới khúc này nên dùng desktop được rồi, thử dựng monitor trên local và wordpress local, rồi chạy loadtest mysql coi coi grafana nó sao, tiếp tục thì làm ELK coi log luôn
+
+giờ cài tiếp grafana trong file dockerdesktop rồi lên luôn wp
+giờ lên hết rồi, có pod alpine cho test luôn, ngồi coi link này rồi làm tiếp, chưa add mysql exporter vào grafana
+https://www.techrepublic.com/article/how-do-i-stress-test-mysql-with-mysqlslap/
 
 
 
