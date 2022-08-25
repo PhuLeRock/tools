@@ -21,7 +21,9 @@ giờ cài tiếp grafana trong file dockerdesktop rồi lên luôn wp
 giờ lên hết rồi, có pod alpine cho test luôn, ngồi coi link này rồi làm tiếp, chưa add mysql exporter vào grafana
 https://www.techrepublic.com/article/how-do-i-stress-test-mysql-with-mysqlslap/
 
-
+giờ làm tới mysql exporter cho grafana:31925  EKS!sAWSome 
+đang coi phần chỉnh values cho mysql export, phần service monitor
+đang làm tới exxporter phari được confgi vào prometheus mới được https://www.devopsschool.com/blog/install-and-configure-prometheus-mysql-exporter/ -> vào chỉnh trong configmap
 
 
 note:
