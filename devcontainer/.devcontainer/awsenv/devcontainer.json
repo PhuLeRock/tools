@@ -1,0 +1,6 @@
+{
+  "dockerComposeFile": "Docker-compose.yaml",
+  "service": "awsdevcontainer",
+  "workspaceFolder": "/workspace/",
+  "shutdownAction": "stopCompose"
+}

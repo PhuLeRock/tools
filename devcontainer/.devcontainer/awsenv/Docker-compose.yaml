@@ -1,0 +1,17 @@
+# docker-compose build
+#version: '3.9'
+
+services:
+  awsdevcontainer:
+    environment:
+      AWS_ACCESS_KEY_ID: "xx"
+      AWS_SECRET_ACCESS_KEY: "xx"
+      AWS_DEFAULT_REGION: "ap-southeast-1"
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: arm
+    image: phulerock/awsdevcontainer
+    volumes:
+      - ..:/workspace:rw
+    command: ["sleep", "infinity"]
